@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReserveRoverAPI", "ReserveRoverAPI\ReserveRoverAPI.csproj", "{6B38ADDA-D606-4BBA-88CE-A76732F8D4BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReserveRoverBLL", "ReserveRoverBLL\ReserveRoverBLL.csproj", "{A1AA261D-55EC-4C63-97AB-B33CE177FAC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReserveRoverDAL", "ReserveRoverDAL\ReserveRoverDAL.csproj", "{DAD9A6AE-E04A-4021-B4B7-CC81CA551FAA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6B38ADDA-D606-4BBA-88CE-A76732F8D4BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B38ADDA-D606-4BBA-88CE-A76732F8D4BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B38ADDA-D606-4BBA-88CE-A76732F8D4BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B38ADDA-D606-4BBA-88CE-A76732F8D4BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1AA261D-55EC-4C63-97AB-B33CE177FAC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1AA261D-55EC-4C63-97AB-B33CE177FAC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1AA261D-55EC-4C63-97AB-B33CE177FAC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1AA261D-55EC-4C63-97AB-B33CE177FAC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAD9A6AE-E04A-4021-B4B7-CC81CA551FAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAD9A6AE-E04A-4021-B4B7-CC81CA551FAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAD9A6AE-E04A-4021-B4B7-CC81CA551FAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAD9A6AE-E04A-4021-B4B7-CC81CA551FAA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
