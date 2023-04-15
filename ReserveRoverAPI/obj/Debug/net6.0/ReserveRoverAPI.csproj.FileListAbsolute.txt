@@ -52,3 +52,4 @@
 /Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverAPI/bin/Debug/net6.0/System.Text.Encodings.Web.dll
 /Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverAPI/bin/Debug/net6.0/System.Text.Json.dll
 /Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverAPI/bin/Debug/net6.0/runtimes/browser/lib/net6.0/System.Text.Encodings.Web.dll
+/Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverAPI/bin/Debug/net6.0/Newtonsoft.Json.dll

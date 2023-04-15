@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using NpgsqlTypes;
 using ReserveRoverDAL;
 
 #nullable disable
@@ -157,7 +158,7 @@ namespace ReserveRoverDAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("cb8fde55-ead5-4fd3-a770-603ef40e79f4"),
+                            Id = new Guid("38bda491-6143-4bac-b7b0-c3d266d3b299"),
                             Date = new DateOnly(2023, 3, 8),
                             ModeratorId = "Mod1",
                             PlaceId = 1,
@@ -165,7 +166,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("383de7d6-127c-4cba-8d0d-7c5a5a9ef4a8"),
+                            Id = new Guid("18222309-30ee-45da-ad90-bd85ad908110"),
                             Date = new DateOnly(2023, 3, 28),
                             ModeratorId = "Mod2",
                             PlaceId = 2,
@@ -173,7 +174,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("9d50330d-6a94-417a-9a6a-11589e712499"),
+                            Id = new Guid("307acd21-a79c-4bcc-9f4c-c224901b2fad"),
                             Date = new DateOnly(2023, 4, 2),
                             ModeratorId = "Mod3",
                             PlaceId = 3,
@@ -181,7 +182,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("5e593796-f5dd-4ea8-93a9-fa7e4caa514f"),
+                            Id = new Guid("4ee19b79-d2ac-47b1-a21f-71b000890e3e"),
                             Date = new DateOnly(2023, 4, 17),
                             ModeratorId = "Mod4",
                             PlaceId = 4,
@@ -189,14 +190,14 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("99c7a460-5616-44cc-b410-5929dfffe600"),
+                            Id = new Guid("cbcd97ee-b902-4366-8247-87f79d5da802"),
                             ModeratorId = "Mod5",
                             PlaceId = 5,
                             Status = (short)0
                         },
                         new
                         {
-                            Id = new Guid("0fd2d2b3-e7f7-4eaf-a800-d5793719a4f1"),
+                            Id = new Guid("225b53dd-b62a-4ff9-a3ec-93c74152bad5"),
                             Date = new DateOnly(2023, 4, 2),
                             ModeratorId = "Mod6",
                             PlaceId = 6,
@@ -237,6 +238,15 @@ namespace ReserveRoverDAL.Migrations
                         .HasColumnType("time without time zone")
                         .HasColumnName("closes_at");
 
+                    b.Property<short>("ImagesCount")
+                        .HasColumnType("smallint");
+
+                    b.Property<string>("MainImageUrl")
+                        .IsRequired()
+                        .HasMaxLength(105)
+                        .HasColumnType("character varying(105)")
+                        .HasColumnName("main_image_url");
+
                     b.Property<string>("ManagerId")
                         .IsRequired()
                         .HasMaxLength(28)
@@ -252,9 +262,21 @@ namespace ReserveRoverDAL.Migrations
                         .HasColumnType("time without time zone")
                         .HasColumnName("opens_at");
 
+                    b.Property<int>("Popularity")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
                     b.Property<DateOnly?>("PublicDate")
                         .HasColumnType("date")
                         .HasColumnName("public_date");
+
+                    b.Property<NpgsqlTsVector>("SearchVector")
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("tsvector")
+                        .HasAnnotation("Npgsql:TsVectorConfig", "english")
+                        .HasAnnotation("Npgsql:TsVectorProperties", new[] { "Title" });
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -267,6 +289,10 @@ namespace ReserveRoverDAL.Migrations
 
                     b.HasIndex("CityId");
 
+                    b.HasIndex("SearchVector");
+
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("SearchVector"), "GIN");
+
                     b.ToTable("places", (string)null);
 
                     b.HasData(
@@ -278,9 +304,12 @@ namespace ReserveRoverDAL.Migrations
                             AvgMark = 4.7m,
                             CityId = 1,
                             ClosesAt = new TimeOnly(20, 0, 0),
+                            ImagesCount = (short)3,
+                            MainImageUrl = "https://assets.dots.live/misteram-public/1606a7ce-cf02-46c4-a097-7fe6759bde43.png",
                             ManagerId = "M1",
                             ModerationStatus = (short)2,
                             OpensAt = new TimeOnly(10, 0, 0),
+                            Popularity = 4,
                             PublicDate = new DateOnly(2023, 3, 8),
                             Title = "Familia Grande"
                         },
@@ -291,9 +320,12 @@ namespace ReserveRoverDAL.Migrations
                             AvgBill = 300m,
                             CityId = 1,
                             ClosesAt = new TimeOnly(20, 0, 0),
+                            ImagesCount = (short)2,
+                            MainImageUrl = "https://assets.dots.live/misteram-public/0627f92845e66bd4fdb662e3e6129ccc.png",
                             ManagerId = "M2",
                             ModerationStatus = (short)2,
                             OpensAt = new TimeOnly(8, 0, 0),
+                            Popularity = 2,
                             PublicDate = new DateOnly(2023, 3, 28),
                             Title = "Піца парк"
                         },
@@ -305,9 +337,12 @@ namespace ReserveRoverDAL.Migrations
                             AvgMark = 4.8m,
                             CityId = 2,
                             ClosesAt = new TimeOnly(22, 0, 0),
+                            ImagesCount = (short)2,
+                            MainImageUrl = "https://assets.dots.live/misteram-public/2821669b-9921-4af9-acf8-a9b7e2e49a14.png",
                             ManagerId = "M3",
                             ModerationStatus = (short)2,
                             OpensAt = new TimeOnly(12, 0, 0),
+                            Popularity = 12,
                             PublicDate = new DateOnly(2023, 4, 2),
                             Title = "Pang"
                         },
@@ -318,9 +353,12 @@ namespace ReserveRoverDAL.Migrations
                             AvgBill = 800m,
                             CityId = 2,
                             ClosesAt = new TimeOnly(22, 0, 0),
+                            ImagesCount = (short)1,
+                            MainImageUrl = "https://assets.dots.live/misteram-public/f1d85bcd-7b2f-4180-8a89-b55ad10fe019.png",
                             ManagerId = "M4",
                             ModerationStatus = (short)1,
                             OpensAt = new TimeOnly(10, 30, 0),
+                            Popularity = 0,
                             Title = "LAPASTA"
                         },
                         new
@@ -330,9 +368,12 @@ namespace ReserveRoverDAL.Migrations
                             AvgBill = 400m,
                             CityId = 2,
                             ClosesAt = new TimeOnly(22, 0, 0),
+                            ImagesCount = (short)2,
+                            MainImageUrl = "https://assets.dots.live/misteram-public/7b5d6db7213f6e9d012f625024b94cb7.png",
                             ManagerId = "M5",
                             ModerationStatus = (short)0,
                             OpensAt = new TimeOnly(13, 0, 0),
+                            Popularity = 0,
                             Title = "Пікантіко"
                         },
                         new
@@ -343,11 +384,64 @@ namespace ReserveRoverDAL.Migrations
                             AvgMark = 4.6m,
                             CityId = 3,
                             ClosesAt = new TimeOnly(21, 30, 0),
+                            ImagesCount = (short)2,
+                            MainImageUrl = "https://assets.dots.live/misteram-public/fd01592e-08b9-4058-bd77-dcfd74201b72.png",
                             ManagerId = "M6",
                             ModerationStatus = (short)2,
                             OpensAt = new TimeOnly(11, 30, 0),
+                            Popularity = 3,
                             PublicDate = new DateOnly(2023, 4, 2),
                             Title = "Ребра та вогонь"
+                        });
+                });
+
+            modelBuilder.Entity("ReserveRoverDAL.Entities.PlaceDescription", b =>
+                {
+                    b.Property<int>("PlaceId")
+                        .HasColumnType("integer")
+                        .HasColumnName("place_id");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1500)
+                        .HasColumnType("character varying(1500)")
+                        .HasColumnName("description");
+
+                    b.HasKey("PlaceId")
+                        .HasName("places_descriptions_pkey");
+
+                    b.ToTable("places_descriptions", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            PlaceId = 1,
+                            Description = "Famiglia Grande – справжня Неаполітанська Піцерія,яка поєднує в собі найкращі традиції приготування піци.\n\nТільки справжня піч - ми випікаємо нашу піцу в справжній італійській печі при температурі 400 С, від всесвітньо відомого виробника. Завдяки цьому піца Famiglia Grande має досконалий неаполітанський смак. Спеціальне борошно - ми використовуємо італійське цільнозернове борошно найвищої якості. Воно створене спеціально для тіста тривалого визрівання, з додаванням закваски для ферментації. Саме тому піца Famiglia Grande така смачна та низькокалорійна.\n\nФерментоване тісто на заквасці - наше тісто визріває 32 години........... ! Фірмовий італійський соус Pomodoro - соус для нашої піци готується з очищених перетертих томатів, привезених прямо з сонячної Італії.Справжня італійська Моцарелла - традиційно входить до складу неаполітанської піци. Це молодий сир. У кожну піцу ми додаємо саме його. Піцайоло - смак нашої піци залежить від його вміння, досвіду та натхнення. Тому люди, які готують для Вас, пройшли відмінну школу у провідного майстра."
+                        },
+                        new
+                        {
+                            PlaceId = 2,
+                            Description = "Ваші улюблені, перевірені часом страви, затишна атмосефера, фірмова піца.У нас смачно."
+                        },
+                        new
+                        {
+                            PlaceId = 3,
+                            Description = "'Pang' - це в першу чергу про смак та турботу. Поняття азіатської кухні асоціюється з корисними свіжими продуктами, легкими стравами і маленькими смачними закусками. Азіатська кухня - це можливість експериментувати зі смаками і коштувати самі незвичайні поєднання продуктів, відкриваючи для себе незвичайний світ традицій та екзотики! З нами ти відчуєш усі відтінки смаків, від гострого до солодкого. Поринь в атмосферу східної культури!"
+                        },
+                        new
+                        {
+                            PlaceId = 4,
+                            Description = "LAPASTA - енотека/пастерія. 👨🏻‍🍳🍕\nСімейний ресторан справжньої італійської кухні.\nВ нашому меню можна зустріти всю палітру смаків Італії.\nНаша піца - це кращі італійські традиції.\nГарячі страви та салати - невимовна насолода від шеф кухаря."
+                        },
+                        new
+                        {
+                            PlaceId = 5,
+                            Description = "Пікантіко - смачна домашня кухня за помірними цінами. Великий асортимент пива: завжди свіже розливне крафтове пиво, від кращих пивоварень. Закуски до пива: свинні вушка, крендель, домашні чіпси, чебурек величезного розміру. Піцца на любий смак за помірними цінами."
+                        },
+                        new
+                        {
+                            PlaceId = 6,
+                            Description = "Рецепт наших ребер ми випробовували аж три роки. А щоб вони були правдивими, ми розробили спеціальні мангали (єдині у своєму роді), що дозволяють готувати на відкритому вогні, аби ребра виходили зі скоринкою та присмаком диму. Як любиш готувати ребра самотужки – нема питань, можеш придбати наш маринад окремо. Смакує він добре, і не лише до ребер. Ми – демократичний заклад, тому тут не маємо посуду та їмо руками (ну, й так, зрештою, смачніше). І, певна річ, до нас вхід без краваток."
                         });
                 });
 
@@ -377,108 +471,72 @@ namespace ReserveRoverDAL.Migrations
                         {
                             PlaceId = 1,
                             SequenceIndex = (short)0,
-                            ImageUrl = "https://assets.dots.live/misteram-public/1606a7ce-cf02-46c4-a097-7fe6759bde43.png"
-                        },
-                        new
-                        {
-                            PlaceId = 1,
-                            SequenceIndex = (short)1,
                             ImageUrl = "https://famigliagrande.ua/wp-content/uploads/2022/11/foto-prosciutto-pear11.jpg"
                         },
                         new
                         {
                             PlaceId = 1,
-                            SequenceIndex = (short)2,
+                            SequenceIndex = (short)1,
                             ImageUrl = "https://famigliagrande.ua/wp-content/uploads/2022/10/prosciuttopear.jpg"
                         },
                         new
                         {
                             PlaceId = 1,
-                            SequenceIndex = (short)3,
+                            SequenceIndex = (short)2,
                             ImageUrl = "https://famigliagrande.ua/wp-content/uploads/2022/10/foto-angel.jpg"
                         },
                         new
                         {
                             PlaceId = 2,
                             SequenceIndex = (short)0,
-                            ImageUrl = "https://assets.dots.live/misteram-public/0627f92845e66bd4fdb662e3e6129ccc.png"
-                        },
-                        new
-                        {
-                            PlaceId = 2,
-                            SequenceIndex = (short)1,
                             ImageUrl = "https://fastly.4sqi.net/img/general/600x600/186926302_7174fhsnxGKw_KYjrmEl6Mro1oz6NwjaygTiWZEsJUI.jpg"
                         },
                         new
                         {
                             PlaceId = 2,
-                            SequenceIndex = (short)2,
+                            SequenceIndex = (short)1,
                             ImageUrl = "https://fastly.4sqi.net/img/general/600x600/51690195_-M0XtE0y0jbTS9sUFC7C72Q9rXxVSUNqmpjuO6v6O_0.jpg"
                         },
                         new
                         {
                             PlaceId = 3,
                             SequenceIndex = (short)0,
-                            ImageUrl = "https://assets.dots.live/misteram-public/2821669b-9921-4af9-acf8-a9b7e2e49a14.png"
-                        },
-                        new
-                        {
-                            PlaceId = 3,
-                            SequenceIndex = (short)1,
                             ImageUrl = "https://assets.dots.live/misteram-public/f210f2ed-5e88-4ac6-8a88-d7bb1e8e0188-826x0.png"
                         },
                         new
                         {
                             PlaceId = 3,
-                            SequenceIndex = (short)2,
+                            SequenceIndex = (short)1,
                             ImageUrl = "https://travel.chernivtsi.ua/storage/posts/July2022/vxr25w9G6MqZd4qYRdiN.jpg"
                         },
                         new
                         {
                             PlaceId = 4,
                             SequenceIndex = (short)0,
-                            ImageUrl = "https://assets.dots.live/misteram-public/f1d85bcd-7b2f-4180-8a89-b55ad10fe019.png"
-                        },
-                        new
-                        {
-                            PlaceId = 4,
-                            SequenceIndex = (short)1,
                             ImageUrl = "https://lh3.googleusercontent.com/p/AF1QipO2b0cC1uaE836xZwwHE1OeiA_dDi_e41vL1UFt=w1080-h608-p-no-v0"
                         },
                         new
                         {
                             PlaceId = 5,
                             SequenceIndex = (short)0,
-                            ImageUrl = "https://assets.dots.live/misteram-public/7b5d6db7213f6e9d012f625024b94cb7.png"
-                        },
-                        new
-                        {
-                            PlaceId = 5,
-                            SequenceIndex = (short)1,
                             ImageUrl = "https://pyvtrest.com.ua/images/C43D7D64-90E1-418C-B4DE-F18C038D0F47.jpeg"
                         },
                         new
                         {
                             PlaceId = 5,
-                            SequenceIndex = (short)2,
+                            SequenceIndex = (short)1,
                             ImageUrl = "https://files.ratelist.top/uploads/images/bs/71875/photos/660872aa5b09e20adc70fdf8628f3e66-original.webp"
                         },
                         new
                         {
                             PlaceId = 6,
                             SequenceIndex = (short)0,
-                            ImageUrl = "https://assets.dots.live/misteram-public/fd01592e-08b9-4058-bd77-dcfd74201b72.png"
-                        },
-                        new
-                        {
-                            PlaceId = 6,
-                            SequenceIndex = (short)1,
                             ImageUrl = "https://lh3.googleusercontent.com/p/AF1QipNdBerwXQBA6Ltb4Am5snYPi2e0Ph2lvtu4Io_S=s1360-w1360-h1020"
                         },
                         new
                         {
                             PlaceId = 6,
-                            SequenceIndex = (short)2,
+                            SequenceIndex = (short)1,
                             ImageUrl = "https://onedeal.com.ua/wp-content/uploads/2021/02/2018-07-17-4-1.jpg"
                         });
                 });
@@ -551,56 +609,6 @@ namespace ReserveRoverDAL.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ReserveRoverDAL.Entities.PlacesDescription", b =>
-                {
-                    b.Property<int>("PlaceId")
-                        .HasColumnType("integer")
-                        .HasColumnName("place_id");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(1500)
-                        .HasColumnType("character varying(1500)")
-                        .HasColumnName("description");
-
-                    b.HasKey("PlaceId")
-                        .HasName("places_descriptions_pkey");
-
-                    b.ToTable("places_descriptions", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            PlaceId = 1,
-                            Description = "Famiglia Grande – справжня Неаполітанська Піцерія,яка поєднує в собі найкращі традиції приготування піци.\n\nТільки справжня піч - ми випікаємо нашу піцу в справжній італійській печі при температурі 400 С, від всесвітньо відомого виробника. Завдяки цьому піца Famiglia Grande має досконалий неаполітанський смак. Спеціальне борошно - ми використовуємо італійське цільнозернове борошно найвищої якості. Воно створене спеціально для тіста тривалого визрівання, з додаванням закваски для ферментації. Саме тому піца Famiglia Grande така смачна та низькокалорійна.\n\nФерментоване тісто на заквасці - наше тісто визріває 32 години........... ! Фірмовий італійський соус Pomodoro - соус для нашої піци готується з очищених перетертих томатів, привезених прямо з сонячної Італії.Справжня італійська Моцарелла - традиційно входить до складу неаполітанської піци. Це молодий сир. У кожну піцу ми додаємо саме його. Піцайоло - смак нашої піци залежить від його вміння, досвіду та натхнення. Тому люди, які готують для Вас, пройшли відмінну школу у провідного майстра."
-                        },
-                        new
-                        {
-                            PlaceId = 2,
-                            Description = "Ваші улюблені, перевірені часом страви, затишна атмосефера, фірмова піца.У нас смачно."
-                        },
-                        new
-                        {
-                            PlaceId = 3,
-                            Description = "'Pang' - це в першу чергу про смак та турботу. Поняття азіатської кухні асоціюється з корисними свіжими продуктами, легкими стравами і маленькими смачними закусками. Азіатська кухня - це можливість експериментувати зі смаками і коштувати самі незвичайні поєднання продуктів, відкриваючи для себе незвичайний світ традицій та екзотики! З нами ти відчуєш усі відтінки смаків, від гострого до солодкого. Поринь в атмосферу східної культури!"
-                        },
-                        new
-                        {
-                            PlaceId = 4,
-                            Description = "LAPASTA - енотека/пастерія. 👨🏻‍🍳🍕\nСімейний ресторан справжньої італійської кухні.\nВ нашому меню можна зустріти всю палітру смаків Італії.\nНаша піца - це кращі італійські традиції.\nГарячі страви та салати - невимовна насолода від шеф кухаря."
-                        },
-                        new
-                        {
-                            PlaceId = 5,
-                            Description = "Пікантіко - смачна домашня кухня за помірними цінами. Великий асортимент пива: завжди свіже розливне крафтове пиво, від кращих пивоварень. Закуски до пива: свинні вушка, крендель, домашні чіпси, чебурек величезного розміру. Піцца на любий смак за помірними цінами."
-                        },
-                        new
-                        {
-                            PlaceId = 6,
-                            Description = "Рецепт наших ребер ми випробовували аж три роки. А щоб вони були правдивими, ми розробили спеціальні мангали (єдині у своєму роді), що дозволяють готувати на відкритому вогні, аби ребра виходили зі скоринкою та присмаком диму. Як любиш готувати ребра самотужки – нема питань, можеш придбати наш маринад окремо. Смакує він добре, і не лише до ребер. Ми – демократичний заклад, тому тут не маємо посуду та їмо руками (ну, й так, зрештою, смачніше). І, певна річ, до нас вхід без краваток."
-                        });
-                });
-
             modelBuilder.Entity("ReserveRoverDAL.Entities.Reservation", b =>
                 {
                     b.Property<Guid>("Id")
@@ -654,7 +662,7 @@ namespace ReserveRoverDAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("3b625d67-10e4-4000-997d-3a6b586d6a97"),
+                            Id = new Guid("f2f69bc7-a17b-4ad8-9a01-f5b7fbde425a"),
                             BeginTime = new TimeOnly(14, 0, 0),
                             CreationDateTime = new DateTime(2023, 4, 10, 7, 20, 58, 0, DateTimeKind.Unspecified),
                             EndTime = new TimeOnly(16, 0, 0),
@@ -666,7 +674,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ac230e8e-b750-4305-b17a-8a6d55e57af7"),
+                            Id = new Guid("e74668e2-7471-4451-b63a-926a95672d68"),
                             BeginTime = new TimeOnly(16, 30, 0),
                             CreationDateTime = new DateTime(2023, 4, 5, 17, 3, 34, 0, DateTimeKind.Unspecified),
                             EndTime = new TimeOnly(19, 30, 0),
@@ -678,7 +686,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("695d5278-9533-4e70-86d0-f3f2d9dd0435"),
+                            Id = new Guid("b58c120d-b69a-41cb-8e4a-8560cfeae5e5"),
                             BeginTime = new TimeOnly(14, 0, 0),
                             CreationDateTime = new DateTime(2023, 4, 8, 16, 18, 2, 0, DateTimeKind.Unspecified),
                             EndTime = new TimeOnly(16, 0, 0),
@@ -690,7 +698,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("cee5cd06-d680-4ad2-b4f3-3edca0bfc004"),
+                            Id = new Guid("f4714642-1b52-4965-9320-f242f4382554"),
                             BeginTime = new TimeOnly(14, 0, 0),
                             CreationDateTime = new DateTime(2023, 4, 16, 21, 46, 27, 0, DateTimeKind.Unspecified),
                             EndTime = new TimeOnly(16, 0, 0),
@@ -702,7 +710,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e57b3f43-520c-407d-9739-7b7b2a1bfb1e"),
+                            Id = new Guid("009403b4-b67b-4269-9979-4c47ca79fbcb"),
                             BeginTime = new TimeOnly(17, 0, 0),
                             CreationDateTime = new DateTime(2023, 4, 19, 13, 6, 12, 0, DateTimeKind.Unspecified),
                             EndTime = new TimeOnly(19, 0, 0),
@@ -714,7 +722,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("08cc4909-f414-4e48-a1b8-481c1691672c"),
+                            Id = new Guid("b605bebd-fe7a-4888-a354-4485e32d2fa9"),
                             BeginTime = new TimeOnly(11, 30, 0),
                             CreationDateTime = new DateTime(2023, 4, 5, 19, 46, 11, 0, DateTimeKind.Unspecified),
                             EndTime = new TimeOnly(13, 0, 0),
@@ -726,7 +734,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("60290d67-2f37-4d97-9961-55041757b481"),
+                            Id = new Guid("dd97511a-542c-4c66-a2ec-408045e69df9"),
                             BeginTime = new TimeOnly(14, 0, 0),
                             CreationDateTime = new DateTime(2023, 4, 9, 8, 57, 15, 0, DateTimeKind.Unspecified),
                             EndTime = new TimeOnly(16, 0, 0),
@@ -738,7 +746,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ef209645-63f0-46a1-9b05-db57c0662828"),
+                            Id = new Guid("fa3a6ed0-af79-415c-91af-4af04f05d9b6"),
                             BeginTime = new TimeOnly(14, 0, 0),
                             CreationDateTime = new DateTime(2023, 4, 11, 15, 7, 4, 0, DateTimeKind.Unspecified),
                             EndTime = new TimeOnly(16, 0, 0),
@@ -750,7 +758,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("93b18e55-97f3-40c6-b114-01fb0ad3a6ec"),
+                            Id = new Guid("cfc1fb61-537d-4b4d-b13b-9797cf779b9e"),
                             BeginTime = new TimeOnly(16, 0, 0),
                             CreationDateTime = new DateTime(2023, 4, 20, 23, 42, 9, 0, DateTimeKind.Unspecified),
                             EndTime = new TimeOnly(18, 30, 0),
@@ -805,7 +813,7 @@ namespace ReserveRoverDAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("329320cf-ae4b-4cce-ab19-0a3c543bcb85"),
+                            Id = new Guid("d01b8a11-7347-460a-bf34-571b438d674e"),
                             AuthorId = "U1",
                             Comment = "",
                             CreationDate = new DateOnly(2023, 4, 9),
@@ -814,7 +822,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("dc54019c-1d9b-4a85-bc6d-273716f80a25"),
+                            Id = new Guid("c2636fd0-2af9-4637-83ac-57bf067e8388"),
                             AuthorId = "U2",
                             Comment = "",
                             CreationDate = new DateOnly(2023, 4, 11),
@@ -823,7 +831,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("461cfc67-0161-48e1-94b1-f1072f120799"),
+                            Id = new Guid("ce8726c8-af11-4945-b4cf-4e06388cdb16"),
                             AuthorId = "U10",
                             Comment = "Сама смачна піцца в Че. Я ваш клієнт на віки-вічні",
                             CreationDate = new DateOnly(2023, 4, 12),
@@ -832,7 +840,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("67f57dbd-028b-4ee6-885a-0933ed1c2afc"),
+                            Id = new Guid("a8422476-dbd7-48a5-b5b1-55f22da21584"),
                             AuthorId = "U11",
                             Comment = "Піца була смачна. Рекомендую)",
                             CreationDate = new DateOnly(2023, 4, 13),
@@ -841,7 +849,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("436931b5-6f4a-4c23-a521-5eb214110727"),
+                            Id = new Guid("565af573-51ab-48dd-9a5d-cc13785a31a3"),
                             AuthorId = "U12",
                             Comment = "",
                             CreationDate = new DateOnly(2023, 4, 14),
@@ -850,7 +858,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("c786f93c-ef40-44cd-886d-8d405fc6a6c0"),
+                            Id = new Guid("d0f2a1ef-d465-4661-8ddc-acaea08c091c"),
                             AuthorId = "U13",
                             Comment = "",
                             CreationDate = new DateOnly(2023, 4, 17),
@@ -859,7 +867,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b4deca11-7b7c-4cb0-8a21-52067f112235"),
+                            Id = new Guid("6073b093-9cc9-4a7a-b59f-394c4068b347"),
                             AuthorId = "U14",
                             Comment = "Вже другий раз не дають прибори.",
                             CreationDate = new DateOnly(2023, 4, 18),
@@ -868,7 +876,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("9c515fec-fc20-4fee-a436-5be3ec77f616"),
+                            Id = new Guid("ae05ec8c-ae9e-493d-85d4-9cabf7ded8fa"),
                             AuthorId = "U15",
                             Comment = "",
                             CreationDate = new DateOnly(2023, 4, 5),
@@ -877,7 +885,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("4ae51fc6-1d00-4786-81bc-8baf72637ed7"),
+                            Id = new Guid("4bba8abe-e77a-4586-a4de-03b5fe39c4fd"),
                             AuthorId = "U16",
                             Comment = "Страви не підписані, мусили вгадувати.",
                             CreationDate = new DateOnly(2023, 4, 14),
@@ -886,7 +894,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("82c66039-fb8b-4a04-8b42-3d825412cf6c"),
+                            Id = new Guid("24b13890-c422-47a4-92fd-360dcc9c79d9"),
                             AuthorId = "U17",
                             Comment = "",
                             CreationDate = new DateOnly(2023, 4, 4),
@@ -895,7 +903,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("57a7cd73-1959-424d-8ec8-803532e5d539"),
+                            Id = new Guid("573bc050-b883-4dff-bd44-6e85e79c7b8e"),
                             AuthorId = "U18",
                             Comment = "",
                             CreationDate = new DateOnly(2023, 4, 8),
@@ -904,7 +912,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("6c59268e-e86c-4b1b-97da-598dd48dbf49"),
+                            Id = new Guid("bc71e166-7671-4370-aba9-23f564ef452d"),
                             AuthorId = "U19",
                             Comment = "",
                             CreationDate = new DateOnly(2023, 4, 9),
@@ -913,7 +921,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("036ce13b-00ae-45b3-9ce6-03e89323ddc4"),
+                            Id = new Guid("2d257690-5aa5-477c-9ad6-ca67f68f1964"),
                             AuthorId = "U20",
                             Comment = "Копчене курча бездоганне, а от свиня за життя займалася фітнесом, міцна та підтягнута занадто)",
                             CreationDate = new DateOnly(2023, 4, 11),
@@ -922,7 +930,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b920c561-5055-4552-838d-8959cdd234f9"),
+                            Id = new Guid("ee1e6f82-88d0-4289-8c60-be2a3669c3c3"),
                             AuthorId = "U21",
                             Comment = "Такої смачної їжі давно не куштувала",
                             CreationDate = new DateOnly(2023, 4, 12),
@@ -931,7 +939,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ec67b623-7763-4b80-950e-6a213ce16f35"),
+                            Id = new Guid("a284b2f3-601e-4dda-afdf-d7f4ec95191c"),
                             AuthorId = "U22",
                             Comment = "Шашлик з купою жил, сала, ледь жувався.",
                             CreationDate = new DateOnly(2023, 4, 16),
@@ -940,7 +948,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("85ff3813-ab3b-47b2-af20-9e365ea294c3"),
+                            Id = new Guid("11133236-6a2c-4bd0-b7f0-a5494f9a48d4"),
                             AuthorId = "U23",
                             Comment = "",
                             CreationDate = new DateOnly(2023, 4, 16),
@@ -1135,6 +1143,18 @@ namespace ReserveRoverDAL.Migrations
                     b.Navigation("City");
                 });
 
+            modelBuilder.Entity("ReserveRoverDAL.Entities.PlaceDescription", b =>
+                {
+                    b.HasOne("ReserveRoverDAL.Entities.Place", "Place")
+                        .WithOne("PlaceDescription")
+                        .HasForeignKey("ReserveRoverDAL.Entities.PlaceDescription", "PlaceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("places_descriptions_place_id_fkey");
+
+                    b.Navigation("Place");
+                });
+
             modelBuilder.Entity("ReserveRoverDAL.Entities.PlaceImage", b =>
                 {
                     b.HasOne("ReserveRoverDAL.Entities.Place", "Place")
@@ -1155,18 +1175,6 @@ namespace ReserveRoverDAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("place_payment_methods_place_id_fkey");
-
-                    b.Navigation("Place");
-                });
-
-            modelBuilder.Entity("ReserveRoverDAL.Entities.PlacesDescription", b =>
-                {
-                    b.HasOne("ReserveRoverDAL.Entities.Place", "Place")
-                        .WithMany()
-                        .HasForeignKey("PlaceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("places_descriptions_place_id_fkey");
 
                     b.Navigation("Place");
                 });
@@ -1217,6 +1225,9 @@ namespace ReserveRoverDAL.Migrations
                     b.Navigation("Location");
 
                     b.Navigation("Moderations");
+
+                    b.Navigation("PlaceDescription")
+                        .IsRequired();
 
                     b.Navigation("PlaceImages");
 

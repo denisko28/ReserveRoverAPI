@@ -1,6 +1,6 @@
 ﻿namespace ReserveRoverDAL.Entities;
 
-public class PlacesDescription
+public class PlaceDescription
 {
     public int PlaceId { get; set; }
 

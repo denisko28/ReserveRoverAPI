@@ -1,4 +1,6 @@
-﻿namespace ReserveRoverDAL.Entities;
+﻿using NpgsqlTypes;
+
+namespace ReserveRoverDAL.Entities;
 
 public class Place
 {
@@ -7,6 +9,8 @@ public class Place
     public string ManagerId { get; set; } = null!;
 
     public int CityId { get; set; }
+    
+    public string MainImageUrl { get; set; } = null!;
 
     public string Title { get; set; } = null!;
 
@@ -15,14 +19,22 @@ public class Place
     public TimeOnly ClosesAt { get; set; }
 
     public decimal? AvgMark { get; set; }
+    
+    public int Popularity { get; set; }
 
     public decimal AvgBill { get; set; }
 
     public string Address { get; set; } = null!;
+    
+    public short ImagesCount { get; set; }
 
     public DateOnly? PublicDate { get; set; }
 
     public short ModerationStatus { get; set; }
+    
+    public NpgsqlTsVector SearchVector { get; set; }
+    
+    public virtual PlaceDescription PlaceDescription { get; set; }
 
     public virtual City City { get; set; } = null!;
 

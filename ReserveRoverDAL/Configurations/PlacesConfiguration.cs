@@ -14,6 +14,9 @@ public class PlacesConfiguration : IEntityTypeConfiguration<Place>
         builder.ToTable("places");
 
         builder.Property(e => e.Id).HasColumnName("id");
+        builder.Property(e => e.MainImageUrl)
+            .HasMaxLength(105)
+            .HasColumnName("main_image_url");
         builder.Property(e => e.Address)
             .HasMaxLength(120)
             .HasColumnName("address");
@@ -23,6 +26,8 @@ public class PlacesConfiguration : IEntityTypeConfiguration<Place>
         builder.Property(e => e.AvgMark)
             .HasPrecision(2, 1)
             .HasColumnName("avg_mark");
+        builder.Property(e => e.Popularity)
+            .HasDefaultValue(0);
         builder.Property(e => e.CityId).HasColumnName("city_id");
         builder.Property(e => e.ClosesAt).HasColumnName("closes_at");
         builder.Property(e => e.ManagerId)
@@ -40,7 +45,14 @@ public class PlacesConfiguration : IEntityTypeConfiguration<Place>
             .HasForeignKey(d => d.CityId)
             .OnDelete(DeleteBehavior.SetNull)
             .HasConstraintName("places_city_id_fkey");
-        
+
+        builder.HasGeneratedTsVectorColumn(
+                p => p.SearchVector,
+                "english",
+                p => new {p.Title})
+            .HasIndex(p => p.SearchVector)
+            .HasMethod("GIN");
+
         new PlacesSeeder().Seed(builder);
     }
 }

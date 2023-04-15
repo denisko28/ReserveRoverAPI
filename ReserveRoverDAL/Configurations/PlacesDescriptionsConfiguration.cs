@@ -5,9 +5,9 @@ using ReserveRoverDAL.Seeding.Concrete;
 
 namespace ReserveRoverDAL.Configurations;
 
-public class PlacesDescriptionsConfiguration : IEntityTypeConfiguration<PlacesDescription>
+public class PlacesDescriptionsConfiguration : IEntityTypeConfiguration<PlaceDescription>
 {
-    public void Configure(EntityTypeBuilder<PlacesDescription> builder)
+    public void Configure(EntityTypeBuilder<PlaceDescription> builder)
     {
         builder.HasKey(e => e.PlaceId).HasName("places_descriptions_pkey");
 
@@ -18,8 +18,9 @@ public class PlacesDescriptionsConfiguration : IEntityTypeConfiguration<PlacesDe
             .HasColumnName("description");
         builder.Property(e => e.PlaceId).HasColumnName("place_id");
 
-        builder.HasOne(d => d.Place).WithMany()
-            .HasForeignKey(d => d.PlaceId)
+        builder.HasOne(d => d.Place)
+            .WithOne(e => e.PlaceDescription)
+            .HasForeignKey<PlaceDescription>(d => d.PlaceId)
             .HasConstraintName("places_descriptions_place_id_fkey");
 
         new PlacesDescriptionsSeeder().Seed(builder);

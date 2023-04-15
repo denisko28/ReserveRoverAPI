@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "0paADCfdq/SSQb07L8nNWZLduqOWNgZi6KElEfQ4IWg9KBakmerG2/VEZS1SBhCriHCfls9KT8PujD7bfKSjQQ==",
+  "dgSpecHash": "HQNGI3RD/EZp+l9MmwyO6rEAbqlrn42tKBwo/zXISvORXDgW45PuvWoKW6/ErnR4weYRi8MoaG4/el1oBq6XKA==",
   "success": true,
   "projectFilePath": "/Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverAPI/ReserveRoverAPI.csproj",
   "expectedPackageFiles": [
@@ -25,6 +25,7 @@
     "/Users/deniskharitesku/.nuget/packages/microsoft.extensions.primitives/7.0.0/microsoft.extensions.primitives.7.0.0.nupkg.sha512",
     "/Users/deniskharitesku/.nuget/packages/microsoft.openapi/1.2.3/microsoft.openapi.1.2.3.nupkg.sha512",
     "/Users/deniskharitesku/.nuget/packages/mono.texttemplating/2.2.1/mono.texttemplating.2.2.1.nupkg.sha512",
+    "/Users/deniskharitesku/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512",
     "/Users/deniskharitesku/.nuget/packages/npgsql/7.0.2/npgsql.7.0.2.nupkg.sha512",
     "/Users/deniskharitesku/.nuget/packages/npgsql.entityframeworkcore.postgresql/7.0.3/npgsql.entityframeworkcore.postgresql.7.0.3.nupkg.sha512",
     "/Users/deniskharitesku/.nuget/packages/swashbuckle.aspnetcore/6.2.3/swashbuckle.aspnetcore.6.2.3.nupkg.sha512",

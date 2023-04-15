@@ -1,19 +1,36 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ReserveRoverBLL.Configurations;
+using ReserveRoverBLL.Services.Abstract;
+using ReserveRoverBLL.Services.Concrete;
 using ReserveRoverDAL;
+using ReserveRoverDAL.Repositories.Abstract;
+using ReserveRoverDAL.Repositories.Concrete;
+using ReserveRoverDAL.UnitOfWork.Abstract;
+using ReserveRoverDAL.UnitOfWork.Concrete;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var connection = builder.Configuration.GetConnectionString("PGSQLConnection");
+
+// Add DAL services
+builder.Services
+    .AddDbContext<ReserveRoverDbContext>(options => options.UseNpgsql(connection))
+    .AddTransient<ILocationsRepository, LocationsRepository>()
+    .AddTransient<IPlacesRepository, PlacesRepository>()
+    .AddTransient<IPlaceImagesRepository, PlaceImagesRepository>()
+    .AddTransient<IPlacesPaymentMethodsRepository, PlacesPaymentMethodsRepository>()
+    .AddTransient<ITablesRepository, TablesRepository>()
+    .AddTransient<IUnitOfWork, UnitOfWork>();
+
+//Add BLL services
 var mapperConfig = new MapperConfiguration(mc =>
     mc.AddProfile(new AutoMapperProfile()));
 var mapper = mapperConfig.CreateMapper();
 
-// Add services to the container.
 builder.Services
     .AddSingleton(mapper)
-    .AddDbContext<ReserveRoverDbContext>(options => options.UseNpgsql(connection));
+    .AddTransient<IPlacesService, PlacesService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
