@@ -20,12 +20,11 @@ public class PlacesService : IPlacesService
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<PlaceSearchResponse>> Search(int cityId, string? titleQuery, int sortOrder,
-        int pageNumber, int pageSize)
+    public async Task<IEnumerable<PlaceSearchResponse>> Search(PlaceSearchRequest request)
     {
-        var result = await _unitOfWork.PlacesRepository.GetAsync(cityId, titleQuery,
+        var result = await _unitOfWork.PlacesRepository.GetAsync(request.cityId, request.titleQuery,
             (short) ModerationStatus.Approved,
-            (PlacesSortOrder) sortOrder, pageNumber, pageSize);
+            (PlacesSortOrder) request.sortOrder, request.pageNumber, request.pageSize);
 
         return result.Select(_mapper.Map<Place, PlaceSearchResponse>);
     }

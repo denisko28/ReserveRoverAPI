@@ -22,13 +22,11 @@ public class PlacesController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<IEnumerable<PlaceSearchResponse>>> Search(int cityId, string? titleQuery,
-        int sortOrder, int pageNumber, int pageSize)
+    public async Task<ActionResult<IEnumerable<PlaceSearchResponse>>> Search([FromQuery] PlaceSearchRequest request)
     {
         try
         {
-            var results = await _placesService.Search(cityId, titleQuery, sortOrder, 
-                pageNumber, pageSize);
+            var results = await _placesService.Search(request);
             return Ok(results);
         }
         catch (Exception e)

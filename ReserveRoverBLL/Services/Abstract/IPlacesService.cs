@@ -5,8 +5,7 @@ namespace ReserveRoverBLL.Services.Abstract;
 
 public interface IPlacesService
 {
-    Task<IEnumerable<PlaceSearchResponse>> Search(int cityId, string? titleQuery, int sortOrder,
-        int pageNumber, int pageSize);
+    Task<IEnumerable<PlaceSearchResponse>> Search(PlaceSearchRequest request);
 
     Task<PlaceDetailsResponse> GetPlaceDetails(int placeId);
 
