@@ -1,4 +1,5 @@
 /Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverDAL/bin/Debug/net6.0/ReserveRoverDAL.deps.json
+/Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverDAL/bin/Debug/net6.0/ReserveRoverDAL.runtimeconfig.json
 /Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverDAL/bin/Debug/net6.0/ReserveRoverDAL.dll
 /Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverDAL/bin/Debug/net6.0/ReserveRoverDAL.pdb
 /Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverDAL/obj/Debug/net6.0/ReserveRoverDAL.csproj.AssemblyReference.cache
@@ -9,6 +10,5 @@
 /Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverDAL/obj/Debug/net6.0/ReserveRoverDAL.dll
 /Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverDAL/obj/Debug/net6.0/refint/ReserveRoverDAL.dll
 /Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverDAL/obj/Debug/net6.0/ReserveRoverDAL.pdb
-/Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverDAL/obj/Debug/net6.0/ref/ReserveRoverDAL.dll
-/Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverDAL/bin/Debug/net6.0/ReserveRoverDAL.runtimeconfig.json
 /Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverDAL/obj/Debug/net6.0/ReserveRoverDAL.genruntimeconfig.cache
+/Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverDAL/obj/Debug/net6.0/ref/ReserveRoverDAL.dll

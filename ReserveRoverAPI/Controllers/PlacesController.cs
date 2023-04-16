@@ -80,6 +80,23 @@ public class PlacesController : ControllerBase
     }
 
     // [Authorize(Roles = "Manager")]
+    [HttpPost("uploadImage")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<string>> UploadImage(IFormFile image)
+    {
+        try
+        {
+            var results = await _placesService.UploadImage(image, HttpContext);
+            return Ok(results);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, new {e.Message});
+        }
+    }
+
+    // [Authorize(Roles = "Manager")]
     [HttpPost("createPlace")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]

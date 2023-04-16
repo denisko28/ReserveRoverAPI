@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using ReserveRoverBLL.DTO.Requests;
 using ReserveRoverBLL.DTO.Responses;
 
@@ -10,6 +11,8 @@ public interface IPlacesService
     Task<PlaceDetailsResponse> GetPlaceDetails(int placeId);
 
     Task<PlaceDetailsResponse> GetManagersPlace(string managerId);
+
+    Task<string> UploadImage(IFormFile image, HttpContext httpContext);
 
     Task<int> CreatePlace(AddPlaceRequest placeRequest);
 }

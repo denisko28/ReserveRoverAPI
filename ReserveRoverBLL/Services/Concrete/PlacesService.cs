@@ -1,4 +1,6 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using ReserveRoverBLL.DTO.Requests;
 using ReserveRoverBLL.DTO.Responses;
 using ReserveRoverBLL.Enums;
@@ -13,11 +15,13 @@ public class PlacesService : IPlacesService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly IHostingEnvironment _environment;
 
-    public PlacesService(IUnitOfWork unitOfWork, IMapper mapper)
+    public PlacesService(IUnitOfWork unitOfWork, IMapper mapper, IHostingEnvironment environment)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _environment = environment;
     }
 
     public async Task<IEnumerable<PlaceSearchResponse>> Search(PlaceSearchRequest request)
@@ -52,6 +56,27 @@ public class PlacesService : IPlacesService
     {
         var place = await _unitOfWork.PlacesRepository.GetByManagerAsync(managerId);
         return await PlaceToPlaceDetails(place);
+    }
+
+    public async Task<string> UploadImage(IFormFile image, HttpContext httpContext)
+    {
+        // var userId = UserClaimsHelper.GetUserId(httpContext);
+        const string userId = "M34";
+        var imagesFolderPath = $"/Images/{userId}";
+
+        if (!Directory.Exists($"{_environment.WebRootPath}/{imagesFolderPath}/"))
+        {
+            Directory.CreateDirectory($"{_environment.WebRootPath}/{imagesFolderPath}/");
+        }
+
+        var fileExtension = Path.GetExtension(image.FileName);
+        var newFileName = $"{DateTime.Now:yyyyMMddHHmmssffff}{fileExtension}";
+
+        await using var fileStream = File.Create($"{_environment.WebRootPath}/{imagesFolderPath}/{newFileName}");
+        await image.CopyToAsync(fileStream)!;
+        await fileStream.FlushAsync();
+
+        return $"{imagesFolderPath}/{newFileName}";
     }
 
     public async Task<int> CreatePlace(AddPlaceRequest placeRequest)
