@@ -83,6 +83,7 @@ public class PlacesService : IPlacesService
     {
         var place = _mapper.Map<AddPlaceRequest, Place>(placeRequest);
         place.ImagesCount = (short) placeRequest.ImageUrls.Length;
+        place.SubmissionDateTime = DateTime.Now;
         await using var transaction = await _unitOfWork.DbContext.Database.BeginTransactionAsync();
         try
         {

@@ -4,7 +4,7 @@ public class PlaceSearchResponse
 {
     public int Id { get; set; }
     
-    public string MainImageUrl { get; set; }
+    public string MainImageUrl { get; set; } = null!;
 
     public string Title { get; set; } = null!;
 

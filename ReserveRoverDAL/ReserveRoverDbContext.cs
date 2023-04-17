@@ -8,27 +8,8 @@ public class ReserveRoverDbContext : DbContext
     public ReserveRoverDbContext(DbContextOptions<ReserveRoverDbContext> options)
         : base(options)
     {
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
     }
-
-    // public virtual DbSet<City> Cities { get; set; }
-    //
-    // public virtual DbSet<Location> Locations { get; set; }
-    //
-    // public virtual DbSet<Moderation> Moderations { get; set; }
-    //
-    // public virtual DbSet<Place> Places { get; set; }
-    //
-    // public virtual DbSet<PlaceImage> PlaceImages { get; set; }
-    //
-    // public virtual DbSet<PlacePaymentMethod> PlacePaymentMethods { get; set; }
-    //
-    // public virtual DbSet<PlacesDescription> PlacesDescriptions { get; set; }
-    //
-    // public virtual DbSet<Reservation> Reservations { get; set; }
-    //
-    // public virtual DbSet<Review> Reviews { get; set; }
-    //
-    // public virtual DbSet<Table> Tables { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

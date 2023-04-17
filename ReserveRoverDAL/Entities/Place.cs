@@ -27,6 +27,8 @@ public class Place
     public string Address { get; set; } = null!;
     
     public short ImagesCount { get; set; }
+    
+    public DateTime SubmissionDateTime { get; set; }
 
     public DateOnly? PublicDate { get; set; }
 

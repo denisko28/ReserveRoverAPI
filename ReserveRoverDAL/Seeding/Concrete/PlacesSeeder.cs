@@ -22,6 +22,7 @@ public class PlacesSeeder : ISeeder<Place>
             AvgBill = 600,
             Address = "вул. Заньковецької, 20",
             ImagesCount = 3,
+            SubmissionDateTime = DateTime.Parse("2023/03/07 07:22:16"),
             PublicDate = DateOnly.Parse("2023-03-08"),
             ModerationStatus = 2
         },
@@ -39,6 +40,7 @@ public class PlacesSeeder : ISeeder<Place>
             AvgBill = 300,
             Address = "вул. Небесної сотні 5а",
             ImagesCount = 2,
+            SubmissionDateTime = DateTime.Parse("2023/03/26 18:44:09"),
             PublicDate = DateOnly.Parse("2023-03-28"),
             ModerationStatus = 2
         },
@@ -56,6 +58,7 @@ public class PlacesSeeder : ISeeder<Place>
             AvgBill = 950,
             Address = "вул. Івана Франка, 42Г",
             ImagesCount = 2,
+            SubmissionDateTime = DateTime.Parse("2023/04/01 14:31:57"),
             PublicDate = DateOnly.Parse("2023-04-02"),
             ModerationStatus = 2
         },
@@ -73,6 +76,7 @@ public class PlacesSeeder : ISeeder<Place>
             AvgBill = 800,
             Address = "вул. академіка Амосова, 96В",
             ImagesCount = 1,
+            SubmissionDateTime = DateTime.Parse("2023/04/01 11:12:19"),
             PublicDate = null,
             ModerationStatus = 1
         },
@@ -90,6 +94,7 @@ public class PlacesSeeder : ISeeder<Place>
             AvgBill = 400,
             Address = "вул. Івана Мазепи, 17Е",
             ImagesCount = 2,
+            SubmissionDateTime = DateTime.Parse("2023/04/02 23:43:37"),
             PublicDate = null,
             ModerationStatus = 0
         },
@@ -107,7 +112,8 @@ public class PlacesSeeder : ISeeder<Place>
             AvgBill = 1250,
             Address = "вул. Січевих Стрільців, 119Б, заїзд з пр. Дорошенка",
             ImagesCount = 2,
-            PublicDate = DateOnly.Parse("2023-04-02"),
+            SubmissionDateTime = DateTime.Parse("2023/04/02 16:50:28"),
+            PublicDate = DateOnly.Parse("2023-04-03"),
             ModerationStatus = 2
         }
     };

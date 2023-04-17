@@ -8,7 +8,7 @@ public class Moderation
 
     public string ModeratorId { get; set; } = null!;
 
-    public DateOnly? Date { get; set; }
+    public DateTime DateTime { get; set; }
 
     public short Status { get; set; }
 

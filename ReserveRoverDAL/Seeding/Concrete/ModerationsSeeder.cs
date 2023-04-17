@@ -13,7 +13,7 @@ public class ModerationsSeeder : ISeeder<Moderation>
             Id = Guid.NewGuid(),
             PlaceId = 1,
             ModeratorId = "Mod1",
-            Date = DateOnly.Parse("2023-03-08"),
+            DateTime = DateTime.Parse("2023/03/08 11:23:04"),
             Status = 2
         },
         new Moderation
@@ -21,39 +21,31 @@ public class ModerationsSeeder : ISeeder<Moderation>
             Id = Guid.NewGuid(),
             PlaceId = 2,
             ModeratorId = "Mod2",
-            Date = DateOnly.Parse("2023-03-28"),
+            DateTime = DateTime.Parse("2023/03/28 09:31:46"),
             Status = 2
         },
         new Moderation
         {
             Id = Guid.NewGuid(),
             PlaceId = 3,
-            ModeratorId = "Mod3",
-            Date = DateOnly.Parse("2023-04-02"),
+            ModeratorId = "Mod1",
+            DateTime = DateTime.Parse("2023/04/02 17:20:03"),
             Status = 2
         },
         new Moderation
         {
             Id = Guid.NewGuid(),
             PlaceId = 4,
-            ModeratorId = "Mod4",
-            Date = DateOnly.Parse("2023-04-17"),
+            ModeratorId = "Mod2",
+            DateTime = DateTime.Parse("2023/04/01 16:04:15"),
             Status = 1
         },
         new Moderation
         {
             Id = Guid.NewGuid(),
-            PlaceId = 5,
-            ModeratorId = "Mod5",
-            Date = null,
-            Status = 0
-        },
-        new Moderation
-        {
-            Id = Guid.NewGuid(),
             PlaceId = 6,
-            ModeratorId = "Mod6",
-            Date = DateOnly.Parse("2023-04-02"),
+            ModeratorId = "Mod2",
+            DateTime = DateTime.Parse("2023/04/03 10:53:06"),
             Status = 2
         }
     };

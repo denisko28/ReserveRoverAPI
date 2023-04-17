@@ -21,6 +21,7 @@ builder.Services
     .AddTransient<IPlaceImagesRepository, PlaceImagesRepository>()
     .AddTransient<IPlacesPaymentMethodsRepository, PlacesPaymentMethodsRepository>()
     .AddTransient<ITablesRepository, TablesRepository>()
+    .AddTransient<IModerationRepository, ModerationRepository>()
     .AddTransient<IUnitOfWork, UnitOfWork>();
 
 //Add BLL services
@@ -30,7 +31,8 @@ var mapper = mapperConfig.CreateMapper();
 
 builder.Services
     .AddSingleton(mapper)
-    .AddTransient<IPlacesService, PlacesService>();
+    .AddTransient<IPlacesService, PlacesService>()
+    .AddTransient<IModerationService, ModerationService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

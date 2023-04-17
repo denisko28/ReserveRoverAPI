@@ -10,6 +10,7 @@ public class AutoMapperProfile : Profile
     public AutoMapperProfile()
     {
         CreatePlacesMaps();
+        CreateModerationMaps();
         CreateLocationMaps();
     }
 
@@ -29,6 +30,16 @@ public class AutoMapperProfile : Profile
                 option => option.Ignore())
             .ForMember(place => place.Tables, 
                 option => option.Ignore());
+    }
+    
+    private void CreateModerationMaps()
+    {
+        CreateMap<Place, ModerationPlaceSearchResponse>()
+            .ForMember(response => response.CityName,
+                options =>
+                    options.MapFrom(place => place.City.Name));
+
+        CreateMap<Moderation, ModerationResponse>();
     }
 
     private void CreateLocationMaps()

@@ -45,6 +45,7 @@ namespace ReserveRoverDAL.Migrations
                     avg_bill = table.Column<decimal>(type: "numeric(7,2)", precision: 7, scale: 2, nullable: false),
                     address = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
                     ImagesCount = table.Column<short>(type: "smallint", nullable: false),
+                    SubmissionDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     public_date = table.Column<DateOnly>(type: "date", nullable: true),
                     moderation_status = table.Column<short>(type: "smallint", nullable: false),
                     SearchVector = table.Column<NpgsqlTsVector>(type: "tsvector", nullable: false)
@@ -88,7 +89,7 @@ namespace ReserveRoverDAL.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "gen_random_uuid()"),
                     place_id = table.Column<int>(type: "integer", nullable: false),
                     moderator_id = table.Column<string>(type: "character(28)", fixedLength: true, maxLength: 28, nullable: false),
-                    date = table.Column<DateOnly>(type: "date", nullable: true),
+                    date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     status = table.Column<short>(type: "smallint", nullable: false)
                 },
                 constraints: table =>
@@ -237,27 +238,27 @@ namespace ReserveRoverDAL.Migrations
 
             migrationBuilder.InsertData(
                 table: "places",
-                columns: new[] { "id", "address", "avg_bill", "avg_mark", "city_id", "closes_at", "ImagesCount", "main_image_url", "manager_id", "moderation_status", "opens_at", "Popularity", "public_date", "title" },
+                columns: new[] { "id", "address", "avg_bill", "avg_mark", "city_id", "closes_at", "ImagesCount", "main_image_url", "manager_id", "moderation_status", "opens_at", "Popularity", "public_date", "SubmissionDateTime", "title" },
                 values: new object[,]
                 {
-                    { 1, "вул. Заньковецької, 20", 600m, 4.7m, 1, new TimeOnly(20, 0, 0), (short)3, "https://assets.dots.live/misteram-public/1606a7ce-cf02-46c4-a097-7fe6759bde43.png", "M1", (short)2, new TimeOnly(10, 0, 0), 4, new DateOnly(2023, 3, 8), "Familia Grande" },
-                    { 2, "вул. Небесної сотні 5а", 300m, null, 1, new TimeOnly(20, 0, 0), (short)2, "https://assets.dots.live/misteram-public/0627f92845e66bd4fdb662e3e6129ccc.png", "M2", (short)2, new TimeOnly(8, 0, 0), 2, new DateOnly(2023, 3, 28), "Піца парк" },
-                    { 3, "вул. Івана Франка, 42Г", 950m, 4.8m, 2, new TimeOnly(22, 0, 0), (short)2, "https://assets.dots.live/misteram-public/2821669b-9921-4af9-acf8-a9b7e2e49a14.png", "M3", (short)2, new TimeOnly(12, 0, 0), 12, new DateOnly(2023, 4, 2), "Pang" }
+                    { 1, "вул. Заньковецької, 20", 600m, 4.7m, 1, new TimeOnly(20, 0, 0), (short)3, "https://assets.dots.live/misteram-public/1606a7ce-cf02-46c4-a097-7fe6759bde43.png", "M1", (short)2, new TimeOnly(10, 0, 0), 4, new DateOnly(2023, 3, 8), new DateTime(2023, 3, 7, 7, 22, 16, 0, DateTimeKind.Unspecified), "Familia Grande" },
+                    { 2, "вул. Небесної сотні 5а", 300m, null, 1, new TimeOnly(20, 0, 0), (short)2, "https://assets.dots.live/misteram-public/0627f92845e66bd4fdb662e3e6129ccc.png", "M2", (short)2, new TimeOnly(8, 0, 0), 2, new DateOnly(2023, 3, 28), new DateTime(2023, 3, 26, 18, 44, 9, 0, DateTimeKind.Unspecified), "Піца парк" },
+                    { 3, "вул. Івана Франка, 42Г", 950m, 4.8m, 2, new TimeOnly(22, 0, 0), (short)2, "https://assets.dots.live/misteram-public/2821669b-9921-4af9-acf8-a9b7e2e49a14.png", "M3", (short)2, new TimeOnly(12, 0, 0), 12, new DateOnly(2023, 4, 2), new DateTime(2023, 4, 1, 14, 31, 57, 0, DateTimeKind.Unspecified), "Pang" }
                 });
 
             migrationBuilder.InsertData(
                 table: "places",
-                columns: new[] { "id", "address", "avg_bill", "avg_mark", "city_id", "closes_at", "ImagesCount", "main_image_url", "manager_id", "moderation_status", "opens_at", "public_date", "title" },
+                columns: new[] { "id", "address", "avg_bill", "avg_mark", "city_id", "closes_at", "ImagesCount", "main_image_url", "manager_id", "moderation_status", "opens_at", "public_date", "SubmissionDateTime", "title" },
                 values: new object[,]
                 {
-                    { 4, "вул. академіка Амосова, 96В", 800m, null, 2, new TimeOnly(22, 0, 0), (short)1, "https://assets.dots.live/misteram-public/f1d85bcd-7b2f-4180-8a89-b55ad10fe019.png", "M4", (short)1, new TimeOnly(10, 30, 0), null, "LAPASTA" },
-                    { 5, "вул. Івана Мазепи, 17Е", 400m, null, 2, new TimeOnly(22, 0, 0), (short)2, "https://assets.dots.live/misteram-public/7b5d6db7213f6e9d012f625024b94cb7.png", "M5", (short)0, new TimeOnly(13, 0, 0), null, "Пікантіко" }
+                    { 4, "вул. академіка Амосова, 96В", 800m, null, 2, new TimeOnly(22, 0, 0), (short)1, "https://assets.dots.live/misteram-public/f1d85bcd-7b2f-4180-8a89-b55ad10fe019.png", "M4", (short)1, new TimeOnly(10, 30, 0), null, new DateTime(2023, 4, 1, 11, 12, 19, 0, DateTimeKind.Unspecified), "LAPASTA" },
+                    { 5, "вул. Івана Мазепи, 17Е", 400m, null, 2, new TimeOnly(22, 0, 0), (short)2, "https://assets.dots.live/misteram-public/7b5d6db7213f6e9d012f625024b94cb7.png", "M5", (short)0, new TimeOnly(13, 0, 0), null, new DateTime(2023, 4, 2, 23, 43, 37, 0, DateTimeKind.Unspecified), "Пікантіко" }
                 });
 
             migrationBuilder.InsertData(
                 table: "places",
-                columns: new[] { "id", "address", "avg_bill", "avg_mark", "city_id", "closes_at", "ImagesCount", "main_image_url", "manager_id", "moderation_status", "opens_at", "Popularity", "public_date", "title" },
-                values: new object[] { 6, "вул. Січевих Стрільців, 119Б, заїзд з пр. Дорошенка", 1250m, 4.6m, 3, new TimeOnly(21, 30, 0), (short)2, "https://assets.dots.live/misteram-public/fd01592e-08b9-4058-bd77-dcfd74201b72.png", "M6", (short)2, new TimeOnly(11, 30, 0), 3, new DateOnly(2023, 4, 2), "Ребра та вогонь" });
+                columns: new[] { "id", "address", "avg_bill", "avg_mark", "city_id", "closes_at", "ImagesCount", "main_image_url", "manager_id", "moderation_status", "opens_at", "Popularity", "public_date", "SubmissionDateTime", "title" },
+                values: new object[] { 6, "вул. Січевих Стрільців, 119Б, заїзд з пр. Дорошенка", 1250m, 4.6m, 3, new TimeOnly(21, 30, 0), (short)2, "https://assets.dots.live/misteram-public/fd01592e-08b9-4058-bd77-dcfd74201b72.png", "M6", (short)2, new TimeOnly(11, 30, 0), 3, new DateOnly(2023, 4, 3), new DateTime(2023, 4, 2, 16, 50, 28, 0, DateTimeKind.Unspecified), "Ребра та вогонь" });
 
             migrationBuilder.InsertData(
                 table: "locations",
@@ -277,12 +278,11 @@ namespace ReserveRoverDAL.Migrations
                 columns: new[] { "id", "date", "moderator_id", "place_id", "status" },
                 values: new object[,]
                 {
-                    { new Guid("18222309-30ee-45da-ad90-bd85ad908110"), new DateOnly(2023, 3, 28), "Mod2", 2, (short)2 },
-                    { new Guid("225b53dd-b62a-4ff9-a3ec-93c74152bad5"), new DateOnly(2023, 4, 2), "Mod6", 6, (short)2 },
-                    { new Guid("307acd21-a79c-4bcc-9f4c-c224901b2fad"), new DateOnly(2023, 4, 2), "Mod3", 3, (short)2 },
-                    { new Guid("38bda491-6143-4bac-b7b0-c3d266d3b299"), new DateOnly(2023, 3, 8), "Mod1", 1, (short)2 },
-                    { new Guid("4ee19b79-d2ac-47b1-a21f-71b000890e3e"), new DateOnly(2023, 4, 17), "Mod4", 4, (short)1 },
-                    { new Guid("cbcd97ee-b902-4366-8247-87f79d5da802"), null, "Mod5", 5, (short)0 }
+                    { new Guid("1b5d0d36-a1c3-4798-9358-8133e0315676"), new DateTime(2023, 4, 1, 16, 4, 15, 0, DateTimeKind.Unspecified), "Mod2", 4, (short)1 },
+                    { new Guid("632afec5-f8dc-48ed-93ba-06c5b24d4860"), new DateTime(2023, 3, 28, 9, 31, 46, 0, DateTimeKind.Unspecified), "Mod2", 2, (short)2 },
+                    { new Guid("825635dd-3e9e-4a6a-98ba-a96c2608fb98"), new DateTime(2023, 3, 8, 11, 23, 4, 0, DateTimeKind.Unspecified), "Mod1", 1, (short)2 },
+                    { new Guid("a37c0780-755b-4d14-b5ae-6795dbafc95c"), new DateTime(2023, 4, 2, 17, 20, 3, 0, DateTimeKind.Unspecified), "Mod1", 3, (short)2 },
+                    { new Guid("f11a0c73-2799-4b54-aae4-cbc4e76d8ddf"), new DateTime(2023, 4, 3, 10, 53, 6, 0, DateTimeKind.Unspecified), "Mod2", 6, (short)2 }
                 });
 
             migrationBuilder.InsertData(
@@ -339,22 +339,22 @@ namespace ReserveRoverDAL.Migrations
                 columns: new[] { "id", "author_id", "comment", "creation_date", "mark", "place_id" },
                 values: new object[,]
                 {
-                    { new Guid("11133236-6a2c-4bd0-b7f0-a5494f9a48d4"), "U23", "", new DateOnly(2023, 4, 16), 5m, 6 },
-                    { new Guid("24b13890-c422-47a4-92fd-360dcc9c79d9"), "U17", "", new DateOnly(2023, 4, 4), 5m, 6 },
-                    { new Guid("2d257690-5aa5-477c-9ad6-ca67f68f1964"), "U20", "Копчене курча бездоганне, а от свиня за життя займалася фітнесом, міцна та підтягнута занадто)", new DateOnly(2023, 4, 11), 5m, 6 },
-                    { new Guid("4bba8abe-e77a-4586-a4de-03b5fe39c4fd"), "U16", "Страви не підписані, мусили вгадувати.", new DateOnly(2023, 4, 14), 4m, 3 },
-                    { new Guid("565af573-51ab-48dd-9a5d-cc13785a31a3"), "U12", "", new DateOnly(2023, 4, 14), 5m, 1 },
-                    { new Guid("573bc050-b883-4dff-bd44-6e85e79c7b8e"), "U18", "", new DateOnly(2023, 4, 8), 4m, 6 },
-                    { new Guid("6073b093-9cc9-4a7a-b59f-394c4068b347"), "U14", "Вже другий раз не дають прибори.", new DateOnly(2023, 4, 18), 4m, 1 },
-                    { new Guid("a284b2f3-601e-4dda-afdf-d7f4ec95191c"), "U22", "Шашлик з купою жил, сала, ледь жувався.", new DateOnly(2023, 4, 16), 3m, 6 },
-                    { new Guid("a8422476-dbd7-48a5-b5b1-55f22da21584"), "U11", "Піца була смачна. Рекомендую)", new DateOnly(2023, 4, 13), 5m, 3 },
-                    { new Guid("ae05ec8c-ae9e-493d-85d4-9cabf7ded8fa"), "U15", "", new DateOnly(2023, 4, 5), 5m, 3 },
-                    { new Guid("bc71e166-7671-4370-aba9-23f564ef452d"), "U19", "", new DateOnly(2023, 4, 9), 5m, 6 },
-                    { new Guid("c2636fd0-2af9-4637-83ac-57bf067e8388"), "U2", "", new DateOnly(2023, 4, 11), 5m, 3 },
-                    { new Guid("ce8726c8-af11-4945-b4cf-4e06388cdb16"), "U10", "Сама смачна піцца в Че. Я ваш клієнт на віки-вічні", new DateOnly(2023, 4, 12), 5m, 1 },
-                    { new Guid("d01b8a11-7347-460a-bf34-571b438d674e"), "U1", "", new DateOnly(2023, 4, 9), 5m, 3 },
-                    { new Guid("d0f2a1ef-d465-4661-8ddc-acaea08c091c"), "U13", "", new DateOnly(2023, 4, 17), 5m, 1 },
-                    { new Guid("ee1e6f82-88d0-4289-8c60-be2a3669c3c3"), "U21", "Такої смачної їжі давно не куштувала", new DateOnly(2023, 4, 12), 5m, 6 }
+                    { new Guid("0a558774-e67f-41d2-9924-03ac079eca7e"), "U20", "Копчене курча бездоганне, а от свиня за життя займалася фітнесом, міцна та підтягнута занадто)", new DateOnly(2023, 4, 11), 5m, 6 },
+                    { new Guid("2b64248e-ef82-4234-b398-e5a5fcff7f26"), "U14", "Вже другий раз не дають прибори.", new DateOnly(2023, 4, 18), 4m, 1 },
+                    { new Guid("2c3a1af9-434b-4f23-b8df-5180e7548943"), "U19", "", new DateOnly(2023, 4, 9), 5m, 6 },
+                    { new Guid("30a032de-c21f-4df3-b29f-2ef5255cbf96"), "U2", "", new DateOnly(2023, 4, 11), 5m, 3 },
+                    { new Guid("32cc5464-940f-4032-87f5-c5e50cfe1ad8"), "U17", "", new DateOnly(2023, 4, 4), 5m, 6 },
+                    { new Guid("3db56adf-20f7-4780-8b42-a9889e4a0d3e"), "U16", "Страви не підписані, мусили вгадувати.", new DateOnly(2023, 4, 14), 4m, 3 },
+                    { new Guid("46433d49-6c1b-40db-b7f1-d9a3d001fae0"), "U23", "", new DateOnly(2023, 4, 16), 5m, 6 },
+                    { new Guid("4ad256fa-f8f8-42e0-b985-7e99a2d389b5"), "U13", "", new DateOnly(2023, 4, 17), 5m, 1 },
+                    { new Guid("993a944c-a4cc-4daa-963a-eb2514d6483a"), "U18", "", new DateOnly(2023, 4, 8), 4m, 6 },
+                    { new Guid("a2d938ff-b2a8-461e-bc0d-87059e3c4dd3"), "U21", "Такої смачної їжі давно не куштувала", new DateOnly(2023, 4, 12), 5m, 6 },
+                    { new Guid("bc5307e4-d5cc-417d-93e0-ec9a0f6ed25f"), "U15", "", new DateOnly(2023, 4, 5), 5m, 3 },
+                    { new Guid("c0e725c6-fc45-4269-a8cb-a633db25f20f"), "U11", "Піца була смачна. Рекомендую)", new DateOnly(2023, 4, 13), 5m, 3 },
+                    { new Guid("dab71c70-7f52-4dd2-8749-efa8db4c835f"), "U10", "Сама смачна піцца в Че. Я ваш клієнт на віки-вічні", new DateOnly(2023, 4, 12), 5m, 1 },
+                    { new Guid("e4604588-b4cb-4c0f-b5e4-8fd74f34776f"), "U22", "Шашлик з купою жил, сала, ледь жувався.", new DateOnly(2023, 4, 16), 3m, 6 },
+                    { new Guid("f09a4404-efaa-4732-8cc8-8f13b5e0f648"), "U12", "", new DateOnly(2023, 4, 14), 5m, 1 },
+                    { new Guid("ffe157cc-5047-463c-b790-3bc7416fd4ec"), "U1", "", new DateOnly(2023, 4, 9), 5m, 3 }
                 });
 
             migrationBuilder.InsertData(
@@ -386,15 +386,15 @@ namespace ReserveRoverDAL.Migrations
                 columns: new[] { "id", "begin_time", "creation_date_time", "end_time", "people_num", "reserv_date", "status", "table_id", "user_id" },
                 values: new object[,]
                 {
-                    { new Guid("009403b4-b67b-4269-9979-4c47ca79fbcb"), new TimeOnly(17, 0, 0), new DateTime(2023, 4, 19, 13, 6, 12, 0, DateTimeKind.Unspecified), new TimeOnly(19, 0, 0), (short)2, new DateOnly(2023, 4, 22), (short)0, 1, "U5" },
-                    { new Guid("b58c120d-b69a-41cb-8e4a-8560cfeae5e5"), new TimeOnly(14, 0, 0), new DateTime(2023, 4, 8, 16, 18, 2, 0, DateTimeKind.Unspecified), new TimeOnly(16, 0, 0), (short)2, new DateOnly(2023, 4, 12), (short)2, 1, "U3" },
-                    { new Guid("b605bebd-fe7a-4888-a354-4485e32d2fa9"), new TimeOnly(11, 30, 0), new DateTime(2023, 4, 5, 19, 46, 11, 0, DateTimeKind.Unspecified), new TimeOnly(13, 0, 0), (short)2, new DateOnly(2023, 4, 9), (short)0, 15, "U6" },
-                    { new Guid("cfc1fb61-537d-4b4d-b13b-9797cf779b9e"), new TimeOnly(16, 0, 0), new DateTime(2023, 4, 20, 23, 42, 9, 0, DateTimeKind.Unspecified), new TimeOnly(18, 30, 0), (short)5, new DateOnly(2023, 4, 29), (short)0, 17, "U9" },
-                    { new Guid("dd97511a-542c-4c66-a2ec-408045e69df9"), new TimeOnly(14, 0, 0), new DateTime(2023, 4, 9, 8, 57, 15, 0, DateTimeKind.Unspecified), new TimeOnly(16, 0, 0), (short)4, new DateOnly(2023, 4, 10), (short)0, 16, "U7" },
-                    { new Guid("e74668e2-7471-4451-b63a-926a95672d68"), new TimeOnly(16, 30, 0), new DateTime(2023, 4, 5, 17, 3, 34, 0, DateTimeKind.Unspecified), new TimeOnly(19, 30, 0), (short)2, new DateOnly(2023, 4, 12), (short)1, 1, "U2" },
-                    { new Guid("f2f69bc7-a17b-4ad8-9a01-f5b7fbde425a"), new TimeOnly(14, 0, 0), new DateTime(2023, 4, 10, 7, 20, 58, 0, DateTimeKind.Unspecified), new TimeOnly(16, 0, 0), (short)2, new DateOnly(2023, 4, 12), (short)2, 1, "U1" },
-                    { new Guid("f4714642-1b52-4965-9320-f242f4382554"), new TimeOnly(14, 0, 0), new DateTime(2023, 4, 16, 21, 46, 27, 0, DateTimeKind.Unspecified), new TimeOnly(16, 0, 0), (short)2, new DateOnly(2023, 4, 22), (short)0, 1, "U4" },
-                    { new Guid("fa3a6ed0-af79-415c-91af-4af04f05d9b6"), new TimeOnly(14, 0, 0), new DateTime(2023, 4, 11, 15, 7, 4, 0, DateTimeKind.Unspecified), new TimeOnly(16, 0, 0), (short)2, new DateOnly(2023, 4, 17), (short)1, 15, "U8" }
+                    { new Guid("2798ed92-8fa6-4ebc-ab1e-e675945d6063"), new TimeOnly(17, 0, 0), new DateTime(2023, 4, 19, 13, 6, 12, 0, DateTimeKind.Unspecified), new TimeOnly(19, 0, 0), (short)2, new DateOnly(2023, 4, 22), (short)0, 1, "U5" },
+                    { new Guid("3b130e4e-18db-4cde-bed1-68c08d69e4e8"), new TimeOnly(14, 0, 0), new DateTime(2023, 4, 11, 15, 7, 4, 0, DateTimeKind.Unspecified), new TimeOnly(16, 0, 0), (short)2, new DateOnly(2023, 4, 17), (short)1, 15, "U8" },
+                    { new Guid("46fe9136-13cd-4da3-b955-e804d0aec398"), new TimeOnly(14, 0, 0), new DateTime(2023, 4, 10, 7, 20, 58, 0, DateTimeKind.Unspecified), new TimeOnly(16, 0, 0), (short)2, new DateOnly(2023, 4, 12), (short)2, 1, "U1" },
+                    { new Guid("980aeeb8-ea38-4d77-a9b2-baa40c952972"), new TimeOnly(14, 0, 0), new DateTime(2023, 4, 16, 21, 46, 27, 0, DateTimeKind.Unspecified), new TimeOnly(16, 0, 0), (short)2, new DateOnly(2023, 4, 22), (short)0, 1, "U4" },
+                    { new Guid("d6fa60fb-cecb-48ba-b63d-0d71f864ec3b"), new TimeOnly(14, 0, 0), new DateTime(2023, 4, 9, 8, 57, 15, 0, DateTimeKind.Unspecified), new TimeOnly(16, 0, 0), (short)4, new DateOnly(2023, 4, 10), (short)0, 16, "U7" },
+                    { new Guid("db103b4e-1466-4da2-be90-bad628548b37"), new TimeOnly(16, 0, 0), new DateTime(2023, 4, 20, 23, 42, 9, 0, DateTimeKind.Unspecified), new TimeOnly(18, 30, 0), (short)5, new DateOnly(2023, 4, 29), (short)0, 17, "U9" },
+                    { new Guid("db6802a6-b46a-4bce-a9f9-2dc534d3aa67"), new TimeOnly(14, 0, 0), new DateTime(2023, 4, 8, 16, 18, 2, 0, DateTimeKind.Unspecified), new TimeOnly(16, 0, 0), (short)2, new DateOnly(2023, 4, 12), (short)2, 1, "U3" },
+                    { new Guid("f27288fc-8c47-4212-ad16-67013e477d1d"), new TimeOnly(16, 30, 0), new DateTime(2023, 4, 5, 17, 3, 34, 0, DateTimeKind.Unspecified), new TimeOnly(19, 30, 0), (short)2, new DateOnly(2023, 4, 12), (short)1, 1, "U2" },
+                    { new Guid("f28e3a71-4f63-4db3-b8c7-cec34c08e3f3"), new TimeOnly(11, 30, 0), new DateTime(2023, 4, 5, 19, 46, 11, 0, DateTimeKind.Unspecified), new TimeOnly(13, 0, 0), (short)2, new DateOnly(2023, 4, 9), (short)0, 15, "U6" }
                 });
 
             migrationBuilder.CreateIndex(

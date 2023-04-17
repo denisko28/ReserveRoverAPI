@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "7l1Mwe5LZ/+jWimreTHeOw61qYjm1PfCveMSkldd3Oo=",
+  "Hash": "Ntgv3su7FbNQyAYh6Di3/3SUOqca4jxZWZGuLgHgt1c=",
   "Source": "ReserveRoverAPI",
   "BasePath": "_content/ReserveRoverAPI",
   "Mode": "Default",
@@ -15,40 +15,5 @@
       "Pattern": "**"
     }
   ],
-  "Assets": [
-    {
-      "Identity": "/Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverAPI/wwwroot/Images/M34/202304161853492500.png",
-      "SourceId": "ReserveRoverAPI",
-      "SourceType": "Discovered",
-      "ContentRoot": "/Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverAPI/wwwroot/",
-      "BasePath": "_content/ReserveRoverAPI",
-      "RelativePath": "Images/M34/202304161853492500.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/Images/M34/202304161853492500.png"
-    },
-    {
-      "Identity": "/Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverAPI/wwwroot/Images/M34/202304161923282513.png",
-      "SourceId": "ReserveRoverAPI",
-      "SourceType": "Discovered",
-      "ContentRoot": "/Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverAPI/wwwroot/",
-      "BasePath": "_content/ReserveRoverAPI",
-      "RelativePath": "Images/M34/202304161923282513.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/Images/M34/202304161923282513.png"
-    }
-  ]
+  "Assets": []
 }

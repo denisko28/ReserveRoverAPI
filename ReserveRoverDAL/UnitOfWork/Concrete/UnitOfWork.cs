@@ -11,15 +11,17 @@ namespace ReserveRoverDAL.UnitOfWork.Concrete
 
         public IPlaceImagesRepository PlaceImagesRepository { get; }
 
-        public IPlacesPaymentMethodsRepository PlacesPaymentMethodsRepository { get; set; }
+        public IPlacesPaymentMethodsRepository PlacesPaymentMethodsRepository { get; }
         
-        public ILocationsRepository LocationsRepository { get; set; }
+        public ILocationsRepository LocationsRepository { get; }
         
-        public ITablesRepository TablesRepository { get; set; }
+        public ITablesRepository TablesRepository { get; }
+        
+        public IModerationRepository ModerationRepository { get; }
 
         public UnitOfWork(ReserveRoverDbContext dbContext, IPlacesRepository placesRepository,
             IPlaceImagesRepository placeImagesRepository,
-            IPlacesPaymentMethodsRepository placesPaymentMethodsRepository, ILocationsRepository locationsRepository, ITablesRepository tablesRepository)
+            IPlacesPaymentMethodsRepository placesPaymentMethodsRepository, ILocationsRepository locationsRepository, ITablesRepository tablesRepository, IModerationRepository moderationRepository)
         {
             DbContext = dbContext;
             PlacesRepository = placesRepository;
@@ -27,6 +29,7 @@ namespace ReserveRoverDAL.UnitOfWork.Concrete
             PlacesPaymentMethodsRepository = placesPaymentMethodsRepository;
             LocationsRepository = locationsRepository;
             TablesRepository = tablesRepository;
+            ModerationRepository = moderationRepository;
         }
 
         public async Task SaveChangesAsync()

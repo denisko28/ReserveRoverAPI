@@ -129,8 +129,8 @@ namespace ReserveRoverDAL.Migrations
                         .HasColumnName("id")
                         .HasDefaultValueSql("gen_random_uuid()");
 
-                    b.Property<DateOnly?>("Date")
-                        .HasColumnType("date")
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("date");
 
                     b.Property<string>("ModeratorId")
@@ -158,48 +158,41 @@ namespace ReserveRoverDAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("38bda491-6143-4bac-b7b0-c3d266d3b299"),
-                            Date = new DateOnly(2023, 3, 8),
+                            Id = new Guid("825635dd-3e9e-4a6a-98ba-a96c2608fb98"),
+                            DateTime = new DateTime(2023, 3, 8, 11, 23, 4, 0, DateTimeKind.Unspecified),
                             ModeratorId = "Mod1",
                             PlaceId = 1,
                             Status = (short)2
                         },
                         new
                         {
-                            Id = new Guid("18222309-30ee-45da-ad90-bd85ad908110"),
-                            Date = new DateOnly(2023, 3, 28),
+                            Id = new Guid("632afec5-f8dc-48ed-93ba-06c5b24d4860"),
+                            DateTime = new DateTime(2023, 3, 28, 9, 31, 46, 0, DateTimeKind.Unspecified),
                             ModeratorId = "Mod2",
                             PlaceId = 2,
                             Status = (short)2
                         },
                         new
                         {
-                            Id = new Guid("307acd21-a79c-4bcc-9f4c-c224901b2fad"),
-                            Date = new DateOnly(2023, 4, 2),
-                            ModeratorId = "Mod3",
+                            Id = new Guid("a37c0780-755b-4d14-b5ae-6795dbafc95c"),
+                            DateTime = new DateTime(2023, 4, 2, 17, 20, 3, 0, DateTimeKind.Unspecified),
+                            ModeratorId = "Mod1",
                             PlaceId = 3,
                             Status = (short)2
                         },
                         new
                         {
-                            Id = new Guid("4ee19b79-d2ac-47b1-a21f-71b000890e3e"),
-                            Date = new DateOnly(2023, 4, 17),
-                            ModeratorId = "Mod4",
+                            Id = new Guid("1b5d0d36-a1c3-4798-9358-8133e0315676"),
+                            DateTime = new DateTime(2023, 4, 1, 16, 4, 15, 0, DateTimeKind.Unspecified),
+                            ModeratorId = "Mod2",
                             PlaceId = 4,
                             Status = (short)1
                         },
                         new
                         {
-                            Id = new Guid("cbcd97ee-b902-4366-8247-87f79d5da802"),
-                            ModeratorId = "Mod5",
-                            PlaceId = 5,
-                            Status = (short)0
-                        },
-                        new
-                        {
-                            Id = new Guid("225b53dd-b62a-4ff9-a3ec-93c74152bad5"),
-                            Date = new DateOnly(2023, 4, 2),
-                            ModeratorId = "Mod6",
+                            Id = new Guid("f11a0c73-2799-4b54-aae4-cbc4e76d8ddf"),
+                            DateTime = new DateTime(2023, 4, 3, 10, 53, 6, 0, DateTimeKind.Unspecified),
+                            ModeratorId = "Mod2",
                             PlaceId = 6,
                             Status = (short)2
                         });
@@ -278,6 +271,9 @@ namespace ReserveRoverDAL.Migrations
                         .HasAnnotation("Npgsql:TsVectorConfig", "english")
                         .HasAnnotation("Npgsql:TsVectorProperties", new[] { "Title" });
 
+                    b.Property<DateTime>("SubmissionDateTime")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(80)
@@ -311,6 +307,7 @@ namespace ReserveRoverDAL.Migrations
                             OpensAt = new TimeOnly(10, 0, 0),
                             Popularity = 4,
                             PublicDate = new DateOnly(2023, 3, 8),
+                            SubmissionDateTime = new DateTime(2023, 3, 7, 7, 22, 16, 0, DateTimeKind.Unspecified),
                             Title = "Familia Grande"
                         },
                         new
@@ -327,6 +324,7 @@ namespace ReserveRoverDAL.Migrations
                             OpensAt = new TimeOnly(8, 0, 0),
                             Popularity = 2,
                             PublicDate = new DateOnly(2023, 3, 28),
+                            SubmissionDateTime = new DateTime(2023, 3, 26, 18, 44, 9, 0, DateTimeKind.Unspecified),
                             Title = "Піца парк"
                         },
                         new
@@ -344,6 +342,7 @@ namespace ReserveRoverDAL.Migrations
                             OpensAt = new TimeOnly(12, 0, 0),
                             Popularity = 12,
                             PublicDate = new DateOnly(2023, 4, 2),
+                            SubmissionDateTime = new DateTime(2023, 4, 1, 14, 31, 57, 0, DateTimeKind.Unspecified),
                             Title = "Pang"
                         },
                         new
@@ -359,6 +358,7 @@ namespace ReserveRoverDAL.Migrations
                             ModerationStatus = (short)1,
                             OpensAt = new TimeOnly(10, 30, 0),
                             Popularity = 0,
+                            SubmissionDateTime = new DateTime(2023, 4, 1, 11, 12, 19, 0, DateTimeKind.Unspecified),
                             Title = "LAPASTA"
                         },
                         new
@@ -374,6 +374,7 @@ namespace ReserveRoverDAL.Migrations
                             ModerationStatus = (short)0,
                             OpensAt = new TimeOnly(13, 0, 0),
                             Popularity = 0,
+                            SubmissionDateTime = new DateTime(2023, 4, 2, 23, 43, 37, 0, DateTimeKind.Unspecified),
                             Title = "Пікантіко"
                         },
                         new
@@ -390,7 +391,8 @@ namespace ReserveRoverDAL.Migrations
                             ModerationStatus = (short)2,
                             OpensAt = new TimeOnly(11, 30, 0),
                             Popularity = 3,
-                            PublicDate = new DateOnly(2023, 4, 2),
+                            PublicDate = new DateOnly(2023, 4, 3),
+                            SubmissionDateTime = new DateTime(2023, 4, 2, 16, 50, 28, 0, DateTimeKind.Unspecified),
                             Title = "Ребра та вогонь"
                         });
                 });
@@ -662,7 +664,7 @@ namespace ReserveRoverDAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f2f69bc7-a17b-4ad8-9a01-f5b7fbde425a"),
+                            Id = new Guid("46fe9136-13cd-4da3-b955-e804d0aec398"),
                             BeginTime = new TimeOnly(14, 0, 0),
                             CreationDateTime = new DateTime(2023, 4, 10, 7, 20, 58, 0, DateTimeKind.Unspecified),
                             EndTime = new TimeOnly(16, 0, 0),
@@ -674,7 +676,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e74668e2-7471-4451-b63a-926a95672d68"),
+                            Id = new Guid("f27288fc-8c47-4212-ad16-67013e477d1d"),
                             BeginTime = new TimeOnly(16, 30, 0),
                             CreationDateTime = new DateTime(2023, 4, 5, 17, 3, 34, 0, DateTimeKind.Unspecified),
                             EndTime = new TimeOnly(19, 30, 0),
@@ -686,7 +688,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b58c120d-b69a-41cb-8e4a-8560cfeae5e5"),
+                            Id = new Guid("db6802a6-b46a-4bce-a9f9-2dc534d3aa67"),
                             BeginTime = new TimeOnly(14, 0, 0),
                             CreationDateTime = new DateTime(2023, 4, 8, 16, 18, 2, 0, DateTimeKind.Unspecified),
                             EndTime = new TimeOnly(16, 0, 0),
@@ -698,7 +700,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f4714642-1b52-4965-9320-f242f4382554"),
+                            Id = new Guid("980aeeb8-ea38-4d77-a9b2-baa40c952972"),
                             BeginTime = new TimeOnly(14, 0, 0),
                             CreationDateTime = new DateTime(2023, 4, 16, 21, 46, 27, 0, DateTimeKind.Unspecified),
                             EndTime = new TimeOnly(16, 0, 0),
@@ -710,7 +712,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("009403b4-b67b-4269-9979-4c47ca79fbcb"),
+                            Id = new Guid("2798ed92-8fa6-4ebc-ab1e-e675945d6063"),
                             BeginTime = new TimeOnly(17, 0, 0),
                             CreationDateTime = new DateTime(2023, 4, 19, 13, 6, 12, 0, DateTimeKind.Unspecified),
                             EndTime = new TimeOnly(19, 0, 0),
@@ -722,7 +724,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b605bebd-fe7a-4888-a354-4485e32d2fa9"),
+                            Id = new Guid("f28e3a71-4f63-4db3-b8c7-cec34c08e3f3"),
                             BeginTime = new TimeOnly(11, 30, 0),
                             CreationDateTime = new DateTime(2023, 4, 5, 19, 46, 11, 0, DateTimeKind.Unspecified),
                             EndTime = new TimeOnly(13, 0, 0),
@@ -734,7 +736,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("dd97511a-542c-4c66-a2ec-408045e69df9"),
+                            Id = new Guid("d6fa60fb-cecb-48ba-b63d-0d71f864ec3b"),
                             BeginTime = new TimeOnly(14, 0, 0),
                             CreationDateTime = new DateTime(2023, 4, 9, 8, 57, 15, 0, DateTimeKind.Unspecified),
                             EndTime = new TimeOnly(16, 0, 0),
@@ -746,7 +748,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("fa3a6ed0-af79-415c-91af-4af04f05d9b6"),
+                            Id = new Guid("3b130e4e-18db-4cde-bed1-68c08d69e4e8"),
                             BeginTime = new TimeOnly(14, 0, 0),
                             CreationDateTime = new DateTime(2023, 4, 11, 15, 7, 4, 0, DateTimeKind.Unspecified),
                             EndTime = new TimeOnly(16, 0, 0),
@@ -758,7 +760,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("cfc1fb61-537d-4b4d-b13b-9797cf779b9e"),
+                            Id = new Guid("db103b4e-1466-4da2-be90-bad628548b37"),
                             BeginTime = new TimeOnly(16, 0, 0),
                             CreationDateTime = new DateTime(2023, 4, 20, 23, 42, 9, 0, DateTimeKind.Unspecified),
                             EndTime = new TimeOnly(18, 30, 0),
@@ -813,7 +815,7 @@ namespace ReserveRoverDAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d01b8a11-7347-460a-bf34-571b438d674e"),
+                            Id = new Guid("ffe157cc-5047-463c-b790-3bc7416fd4ec"),
                             AuthorId = "U1",
                             Comment = "",
                             CreationDate = new DateOnly(2023, 4, 9),
@@ -822,7 +824,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("c2636fd0-2af9-4637-83ac-57bf067e8388"),
+                            Id = new Guid("30a032de-c21f-4df3-b29f-2ef5255cbf96"),
                             AuthorId = "U2",
                             Comment = "",
                             CreationDate = new DateOnly(2023, 4, 11),
@@ -831,7 +833,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ce8726c8-af11-4945-b4cf-4e06388cdb16"),
+                            Id = new Guid("dab71c70-7f52-4dd2-8749-efa8db4c835f"),
                             AuthorId = "U10",
                             Comment = "Сама смачна піцца в Че. Я ваш клієнт на віки-вічні",
                             CreationDate = new DateOnly(2023, 4, 12),
@@ -840,7 +842,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a8422476-dbd7-48a5-b5b1-55f22da21584"),
+                            Id = new Guid("c0e725c6-fc45-4269-a8cb-a633db25f20f"),
                             AuthorId = "U11",
                             Comment = "Піца була смачна. Рекомендую)",
                             CreationDate = new DateOnly(2023, 4, 13),
@@ -849,7 +851,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("565af573-51ab-48dd-9a5d-cc13785a31a3"),
+                            Id = new Guid("f09a4404-efaa-4732-8cc8-8f13b5e0f648"),
                             AuthorId = "U12",
                             Comment = "",
                             CreationDate = new DateOnly(2023, 4, 14),
@@ -858,7 +860,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d0f2a1ef-d465-4661-8ddc-acaea08c091c"),
+                            Id = new Guid("4ad256fa-f8f8-42e0-b985-7e99a2d389b5"),
                             AuthorId = "U13",
                             Comment = "",
                             CreationDate = new DateOnly(2023, 4, 17),
@@ -867,7 +869,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("6073b093-9cc9-4a7a-b59f-394c4068b347"),
+                            Id = new Guid("2b64248e-ef82-4234-b398-e5a5fcff7f26"),
                             AuthorId = "U14",
                             Comment = "Вже другий раз не дають прибори.",
                             CreationDate = new DateOnly(2023, 4, 18),
@@ -876,7 +878,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ae05ec8c-ae9e-493d-85d4-9cabf7ded8fa"),
+                            Id = new Guid("bc5307e4-d5cc-417d-93e0-ec9a0f6ed25f"),
                             AuthorId = "U15",
                             Comment = "",
                             CreationDate = new DateOnly(2023, 4, 5),
@@ -885,7 +887,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("4bba8abe-e77a-4586-a4de-03b5fe39c4fd"),
+                            Id = new Guid("3db56adf-20f7-4780-8b42-a9889e4a0d3e"),
                             AuthorId = "U16",
                             Comment = "Страви не підписані, мусили вгадувати.",
                             CreationDate = new DateOnly(2023, 4, 14),
@@ -894,7 +896,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("24b13890-c422-47a4-92fd-360dcc9c79d9"),
+                            Id = new Guid("32cc5464-940f-4032-87f5-c5e50cfe1ad8"),
                             AuthorId = "U17",
                             Comment = "",
                             CreationDate = new DateOnly(2023, 4, 4),
@@ -903,7 +905,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("573bc050-b883-4dff-bd44-6e85e79c7b8e"),
+                            Id = new Guid("993a944c-a4cc-4daa-963a-eb2514d6483a"),
                             AuthorId = "U18",
                             Comment = "",
                             CreationDate = new DateOnly(2023, 4, 8),
@@ -912,7 +914,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("bc71e166-7671-4370-aba9-23f564ef452d"),
+                            Id = new Guid("2c3a1af9-434b-4f23-b8df-5180e7548943"),
                             AuthorId = "U19",
                             Comment = "",
                             CreationDate = new DateOnly(2023, 4, 9),
@@ -921,7 +923,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("2d257690-5aa5-477c-9ad6-ca67f68f1964"),
+                            Id = new Guid("0a558774-e67f-41d2-9924-03ac079eca7e"),
                             AuthorId = "U20",
                             Comment = "Копчене курча бездоганне, а от свиня за життя займалася фітнесом, міцна та підтягнута занадто)",
                             CreationDate = new DateOnly(2023, 4, 11),
@@ -930,7 +932,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ee1e6f82-88d0-4289-8c60-be2a3669c3c3"),
+                            Id = new Guid("a2d938ff-b2a8-461e-bc0d-87059e3c4dd3"),
                             AuthorId = "U21",
                             Comment = "Такої смачної їжі давно не куштувала",
                             CreationDate = new DateOnly(2023, 4, 12),
@@ -939,7 +941,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a284b2f3-601e-4dda-afdf-d7f4ec95191c"),
+                            Id = new Guid("e4604588-b4cb-4c0f-b5e4-8fd74f34776f"),
                             AuthorId = "U22",
                             Comment = "Шашлик з купою жил, сала, ледь жувався.",
                             CreationDate = new DateOnly(2023, 4, 16),
@@ -948,7 +950,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("11133236-6a2c-4bd0-b7f0-a5494f9a48d4"),
+                            Id = new Guid("46433d49-6c1b-40db-b7f1-d9a3d001fae0"),
                             AuthorId = "U23",
                             Comment = "",
                             CreationDate = new DateOnly(2023, 4, 16),

@@ -17,7 +17,7 @@ public class ModerationsConfiguration : IEntityTypeConfiguration<Moderation>
         builder.Property(e => e.Id)
             .HasDefaultValueSql("gen_random_uuid()")
             .HasColumnName("id");
-        builder.Property(e => e.Date).HasColumnName("date");
+        builder.Property(e => e.DateTime).HasColumnName("date");
         builder.Property(e => e.ModeratorId)
             .HasMaxLength(28)
             .IsFixedLength()
