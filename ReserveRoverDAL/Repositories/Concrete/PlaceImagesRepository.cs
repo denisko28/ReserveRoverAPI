@@ -22,7 +22,7 @@ public class PlaceImagesRepository : IPlaceImagesRepository
             .ToListAsync();
     }
 
-    public async Task Insert(PlaceImage placeImage)
+    public async Task InsertAsync(PlaceImage placeImage)
     {
         placeImage.PlaceId = 0;
         await _placeImages.AddAsync(placeImage);

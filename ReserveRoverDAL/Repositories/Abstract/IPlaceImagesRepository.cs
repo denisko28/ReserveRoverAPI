@@ -7,7 +7,7 @@ public interface IPlaceImagesRepository
 {
     Task<IEnumerable<PlaceImage>> GetAsync(int placeId);
 
-    Task Insert(PlaceImage placeImage);
+    Task InsertAsync(PlaceImage placeImage);
 
     Task InsertRangeAsync(IEnumerable<PlaceImage> placeImages);
 
