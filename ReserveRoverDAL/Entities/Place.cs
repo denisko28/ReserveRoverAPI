@@ -50,5 +50,5 @@ public class Place
 
     public virtual ICollection<Review> Reviews { get; } = new List<Review>();
 
-    public virtual ICollection<Table> Tables { get; } = new List<Table>();
+    public virtual ICollection<TableSet> TableSets { get; } = new List<TableSet>();
 }

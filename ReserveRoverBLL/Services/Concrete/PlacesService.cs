@@ -28,7 +28,7 @@ public class PlacesService : IPlacesService
     {
         var result = await _unitOfWork.PlacesRepository.GetAsync(request.cityId, request.titleQuery,
             (short) ModerationStatus.Approved,
-            (PlacesSortOrder) request.sortOrder, request.pageNumber, request.pageSize);
+            (PlacesSortOrder) request.sortOrder, request.PageNumber, request.PageSize);
 
         return result.Select(_mapper.Map<Place, PlaceSearchResponse>);
     }
@@ -108,9 +108,9 @@ public class PlacesService : IPlacesService
                 await _unitOfWork.LocationsRepository.InsertAsync(location);
             }
 
-            var tables = placeRequest.Tables.Select(table => new Table
-                {PlaceId = place.Id, TableCapacity = table.TableCapacity, TablesNum = table.TablesNum});
-            await _unitOfWork.TablesRepository.InsertRangeAsync(tables);
+            var tableSets = placeRequest.TableSets.Select(tableSet => new TableSet
+                {PlaceId = place.Id, TableCapacity = tableSet.TableCapacity, TablesNum = tableSet.TablesNum});
+            await _unitOfWork.TableSetsRepository.InsertRangeAsync(tableSets);
 
             await _unitOfWork.SaveChangesAsync();
             await transaction.CommitAsync();

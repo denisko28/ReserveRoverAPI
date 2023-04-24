@@ -23,7 +23,7 @@ public class ModerationService : IModerationService
     public async Task<IEnumerable<ModerationResponse>> GetModerations(GetModerationsRequest request)
     {
         var result = await _unitOfWork.ModerationRepository.GetAsync(request.PlaceId, request.ModeratorId, request.FromTime,
-            request.TillTime, request.pageNumber, request.pageSize);
+            request.TillTime, request.PageNumber, request.PageSize);
 
         return result.Select(_mapper.Map<Moderation, ModerationResponse>);
     }
@@ -31,7 +31,7 @@ public class ModerationService : IModerationService
     public async Task<IEnumerable<ModerationPlaceSearchResponse>> PlacesSearch(ModerationPlaceSearchRequest request)
     {
         var result = await _unitOfWork.PlacesRepository.GetByModerationStatusAsync(request.TitleQuery,
-            request.ModerationStatus, request.FromTime, request.TillTime, request.pageNumber, request.pageSize);
+            request.ModerationStatus, request.FromTime, request.TillTime, request.PageNumber, request.PageSize);
 
         return result.Select(_mapper.Map<Place, ModerationPlaceSearchResponse>);
     }

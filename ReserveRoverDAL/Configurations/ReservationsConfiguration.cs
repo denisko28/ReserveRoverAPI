@@ -24,14 +24,14 @@ public class ReservationsConfiguration : IEntityTypeConfiguration<Reservation>
         builder.Property(e => e.PeopleNum).HasColumnName("people_num");
         builder.Property(e => e.ReservDate).HasColumnName("reserv_date");
         builder.Property(e => e.Status).HasColumnName("status");
-        builder.Property(e => e.TableId).HasColumnName("table_id");
+        builder.Property(e => e.TableSetId).HasColumnName("table_id");
         builder.Property(e => e.UserId)
             .HasMaxLength(28)
             .IsFixedLength()
             .HasColumnName("user_id");
 
-        builder.HasOne(d => d.Table).WithMany(p => p.Reservations)
-            .HasForeignKey(d => d.TableId)
+        builder.HasOne(d => d.TableSet).WithMany(p => p.Reservations)
+            .HasForeignKey(d => d.TableSetId)
             .HasConstraintName("reservations_table_id_fkey");
         
         new ReservationsSeeder().Seed(builder);

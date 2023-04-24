@@ -5,9 +5,9 @@ using ReserveRoverDAL.Seeding.Concrete;
 
 namespace ReserveRoverDAL.Configurations;
 
-public class TablesConfiguration : IEntityTypeConfiguration<Table>
+public class TablesConfiguration : IEntityTypeConfiguration<TableSet>
 {
-    public void Configure(EntityTypeBuilder<Table> builder)
+    public void Configure(EntityTypeBuilder<TableSet> builder)
     {
         builder.HasKey(e => e.Id).HasName("tables_pkey");
 
@@ -18,10 +18,10 @@ public class TablesConfiguration : IEntityTypeConfiguration<Table>
         builder.Property(e => e.TableCapacity).HasColumnName("table_type");
         builder.Property(e => e.TablesNum).HasColumnName("tables_num");
 
-        builder.HasOne(d => d.Place).WithMany(p => p.Tables)
+        builder.HasOne(d => d.Place).WithMany(p => p.TableSets)
             .HasForeignKey(d => d.PlaceId)
             .HasConstraintName("tables_place_id_fkey");
 
-        new TablesSeeder().Seed(builder);
+        new TableSetsSeeder().Seed(builder);
     }
 }

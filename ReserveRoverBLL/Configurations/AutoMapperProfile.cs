@@ -10,6 +10,7 @@ public class AutoMapperProfile : Profile
     public AutoMapperProfile()
     {
         CreatePlacesMaps();
+        CreateReservationMaps();
         CreateModerationMaps();
         CreateLocationMaps();
     }
@@ -28,10 +29,16 @@ public class AutoMapperProfile : Profile
         CreateMap<AddPlaceRequest, Place>()
             .ForMember(place => place.Location, 
                 option => option.Ignore())
-            .ForMember(place => place.Tables, 
+            .ForMember(place => place.TableSets, 
                 option => option.Ignore());
     }
-    
+
+    private void CreateReservationMaps()
+    {
+        CreateMap<Reservation, ReservationResponse>();
+        CreateMap<CreateReservationRequest, Reservation>();
+    }
+
     private void CreateModerationMaps()
     {
         CreateMap<Place, ModerationPlaceSearchResponse>()

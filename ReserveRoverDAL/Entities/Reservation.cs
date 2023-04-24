@@ -3,8 +3,10 @@
 public class Reservation
 {
     public Guid Id { get; set; }
+    
+    public int PlaceId { get; set; } 
 
-    public int TableId { get; set; }
+    public int TableSetId { get; set; }
 
     public string UserId { get; set; } = null!;
 
@@ -20,5 +22,5 @@ public class Reservation
 
     public DateTime CreationDateTime { get; set; }
 
-    public virtual Table Table { get; set; } = null!;
+    public virtual TableSet TableSet { get; set; } = null!;
 }

@@ -158,7 +158,7 @@ namespace ReserveRoverDAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("825635dd-3e9e-4a6a-98ba-a96c2608fb98"),
+                            Id = new Guid("acf6044b-3be3-4056-836d-604377be902f"),
                             DateTime = new DateTime(2023, 3, 8, 11, 23, 4, 0, DateTimeKind.Unspecified),
                             ModeratorId = "Mod1",
                             PlaceId = 1,
@@ -166,7 +166,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("632afec5-f8dc-48ed-93ba-06c5b24d4860"),
+                            Id = new Guid("04596c5b-5956-44e3-8a50-0d070319e573"),
                             DateTime = new DateTime(2023, 3, 28, 9, 31, 46, 0, DateTimeKind.Unspecified),
                             ModeratorId = "Mod2",
                             PlaceId = 2,
@@ -174,7 +174,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a37c0780-755b-4d14-b5ae-6795dbafc95c"),
+                            Id = new Guid("a5559dcd-10a4-4faf-ad1c-534a349b614e"),
                             DateTime = new DateTime(2023, 4, 2, 17, 20, 3, 0, DateTimeKind.Unspecified),
                             ModeratorId = "Mod1",
                             PlaceId = 3,
@@ -182,7 +182,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("1b5d0d36-a1c3-4798-9358-8133e0315676"),
+                            Id = new Guid("ca9add4b-a4db-46e2-9c5f-d7e066af4db3"),
                             DateTime = new DateTime(2023, 4, 1, 16, 4, 15, 0, DateTimeKind.Unspecified),
                             ModeratorId = "Mod2",
                             PlaceId = 4,
@@ -190,7 +190,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f11a0c73-2799-4b54-aae4-cbc4e76d8ddf"),
+                            Id = new Guid("db07183d-0fc6-4202-b0d3-fc07514e995e"),
                             DateTime = new DateTime(2023, 4, 3, 10, 53, 6, 0, DateTimeKind.Unspecified),
                             ModeratorId = "Mod2",
                             PlaceId = 6,
@@ -635,6 +635,9 @@ namespace ReserveRoverDAL.Migrations
                         .HasColumnType("smallint")
                         .HasColumnName("people_num");
 
+                    b.Property<int>("PlaceId")
+                        .HasColumnType("integer");
+
                     b.Property<DateOnly>("ReservDate")
                         .HasColumnType("date")
                         .HasColumnName("reserv_date");
@@ -643,7 +646,7 @@ namespace ReserveRoverDAL.Migrations
                         .HasColumnType("smallint")
                         .HasColumnName("status");
 
-                    b.Property<int>("TableId")
+                    b.Property<int>("TableSetId")
                         .HasColumnType("integer")
                         .HasColumnName("table_id");
 
@@ -657,117 +660,139 @@ namespace ReserveRoverDAL.Migrations
                     b.HasKey("Id")
                         .HasName("reservations_pkey");
 
-                    b.HasIndex("TableId");
+                    b.HasIndex("TableSetId");
 
                     b.ToTable("reservations", (string)null);
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("46fe9136-13cd-4da3-b955-e804d0aec398"),
-                            BeginTime = new TimeOnly(14, 0, 0),
+                            Id = new Guid("01f8283a-e2ea-4918-b8bd-7d610176ba51"),
+                            BeginTime = new TimeOnly(10, 0, 0),
                             CreationDateTime = new DateTime(2023, 4, 10, 7, 20, 58, 0, DateTimeKind.Unspecified),
-                            EndTime = new TimeOnly(16, 0, 0),
+                            EndTime = new TimeOnly(12, 0, 0),
                             PeopleNum = (short)2,
-                            ReservDate = new DateOnly(2023, 4, 12),
-                            Status = (short)2,
-                            TableId = 1,
+                            PlaceId = 1,
+                            ReservDate = new DateOnly(2023, 4, 26),
+                            Status = (short)0,
+                            TableSetId = 1,
                             UserId = "U1"
                         },
                         new
                         {
-                            Id = new Guid("f27288fc-8c47-4212-ad16-67013e477d1d"),
-                            BeginTime = new TimeOnly(16, 30, 0),
+                            Id = new Guid("bb48fcb2-2ee5-46c3-9c1b-dd1c3078eac6"),
+                            BeginTime = new TimeOnly(10, 30, 0),
                             CreationDateTime = new DateTime(2023, 4, 5, 17, 3, 34, 0, DateTimeKind.Unspecified),
-                            EndTime = new TimeOnly(19, 30, 0),
+                            EndTime = new TimeOnly(11, 30, 0),
                             PeopleNum = (short)2,
-                            ReservDate = new DateOnly(2023, 4, 12),
-                            Status = (short)1,
-                            TableId = 1,
+                            PlaceId = 1,
+                            ReservDate = new DateOnly(2023, 4, 26),
+                            Status = (short)0,
+                            TableSetId = 1,
                             UserId = "U2"
                         },
                         new
                         {
-                            Id = new Guid("db6802a6-b46a-4bce-a9f9-2dc534d3aa67"),
-                            BeginTime = new TimeOnly(14, 0, 0),
+                            Id = new Guid("c85fd03b-ad0f-4881-aa81-1f412ad58cde"),
+                            BeginTime = new TimeOnly(14, 30, 0),
                             CreationDateTime = new DateTime(2023, 4, 8, 16, 18, 2, 0, DateTimeKind.Unspecified),
-                            EndTime = new TimeOnly(16, 0, 0),
+                            EndTime = new TimeOnly(16, 30, 0),
                             PeopleNum = (short)2,
-                            ReservDate = new DateOnly(2023, 4, 12),
-                            Status = (short)2,
-                            TableId = 1,
+                            PlaceId = 1,
+                            ReservDate = new DateOnly(2023, 4, 26),
+                            Status = (short)0,
+                            TableSetId = 1,
                             UserId = "U3"
                         },
                         new
                         {
-                            Id = new Guid("980aeeb8-ea38-4d77-a9b2-baa40c952972"),
-                            BeginTime = new TimeOnly(14, 0, 0),
+                            Id = new Guid("1dd520dc-13b8-4cc0-8700-c1a64176f70b"),
+                            BeginTime = new TimeOnly(12, 0, 0),
                             CreationDateTime = new DateTime(2023, 4, 16, 21, 46, 27, 0, DateTimeKind.Unspecified),
-                            EndTime = new TimeOnly(16, 0, 0),
+                            EndTime = new TimeOnly(14, 0, 0),
                             PeopleNum = (short)2,
-                            ReservDate = new DateOnly(2023, 4, 22),
+                            PlaceId = 1,
+                            ReservDate = new DateOnly(2023, 4, 26),
                             Status = (short)0,
-                            TableId = 1,
+                            TableSetId = 1,
                             UserId = "U4"
                         },
                         new
                         {
-                            Id = new Guid("2798ed92-8fa6-4ebc-ab1e-e675945d6063"),
-                            BeginTime = new TimeOnly(17, 0, 0),
+                            Id = new Guid("6cf59495-3755-4353-bc8b-7da41835ef98"),
+                            BeginTime = new TimeOnly(13, 0, 0),
                             CreationDateTime = new DateTime(2023, 4, 19, 13, 6, 12, 0, DateTimeKind.Unspecified),
-                            EndTime = new TimeOnly(19, 0, 0),
+                            EndTime = new TimeOnly(15, 0, 0),
                             PeopleNum = (short)2,
-                            ReservDate = new DateOnly(2023, 4, 22),
+                            PlaceId = 1,
+                            ReservDate = new DateOnly(2023, 4, 26),
                             Status = (short)0,
-                            TableId = 1,
+                            TableSetId = 1,
                             UserId = "U5"
                         },
                         new
                         {
-                            Id = new Guid("f28e3a71-4f63-4db3-b8c7-cec34c08e3f3"),
+                            Id = new Guid("44bc0e40-ce3c-4b5d-8e7c-5eb1c95a648b"),
+                            BeginTime = new TimeOnly(14, 0, 0),
+                            CreationDateTime = new DateTime(2023, 4, 21, 18, 15, 53, 0, DateTimeKind.Unspecified),
+                            EndTime = new TimeOnly(16, 0, 0),
+                            PeopleNum = (short)2,
+                            PlaceId = 1,
+                            ReservDate = new DateOnly(2023, 4, 26),
+                            Status = (short)0,
+                            TableSetId = 1,
+                            UserId = "U60"
+                        },
+                        new
+                        {
+                            Id = new Guid("c4c5f96d-15f5-4169-b806-460950f9de6c"),
                             BeginTime = new TimeOnly(11, 30, 0),
                             CreationDateTime = new DateTime(2023, 4, 5, 19, 46, 11, 0, DateTimeKind.Unspecified),
                             EndTime = new TimeOnly(13, 0, 0),
                             PeopleNum = (short)2,
+                            PlaceId = 6,
                             ReservDate = new DateOnly(2023, 4, 9),
                             Status = (short)0,
-                            TableId = 15,
+                            TableSetId = 15,
                             UserId = "U6"
                         },
                         new
                         {
-                            Id = new Guid("d6fa60fb-cecb-48ba-b63d-0d71f864ec3b"),
+                            Id = new Guid("c8ce7d95-f5cc-4ea4-85de-77dc0ac8e7fb"),
                             BeginTime = new TimeOnly(14, 0, 0),
                             CreationDateTime = new DateTime(2023, 4, 9, 8, 57, 15, 0, DateTimeKind.Unspecified),
                             EndTime = new TimeOnly(16, 0, 0),
                             PeopleNum = (short)4,
+                            PlaceId = 6,
                             ReservDate = new DateOnly(2023, 4, 10),
                             Status = (short)0,
-                            TableId = 16,
+                            TableSetId = 16,
                             UserId = "U7"
                         },
                         new
                         {
-                            Id = new Guid("3b130e4e-18db-4cde-bed1-68c08d69e4e8"),
+                            Id = new Guid("ce96f595-2069-4514-afec-934a63fdfa9d"),
                             BeginTime = new TimeOnly(14, 0, 0),
                             CreationDateTime = new DateTime(2023, 4, 11, 15, 7, 4, 0, DateTimeKind.Unspecified),
                             EndTime = new TimeOnly(16, 0, 0),
                             PeopleNum = (short)2,
+                            PlaceId = 6,
                             ReservDate = new DateOnly(2023, 4, 17),
                             Status = (short)1,
-                            TableId = 15,
+                            TableSetId = 15,
                             UserId = "U8"
                         },
                         new
                         {
-                            Id = new Guid("db103b4e-1466-4da2-be90-bad628548b37"),
+                            Id = new Guid("ac0b7680-fc30-440e-a952-0585b70e9569"),
                             BeginTime = new TimeOnly(16, 0, 0),
                             CreationDateTime = new DateTime(2023, 4, 20, 23, 42, 9, 0, DateTimeKind.Unspecified),
                             EndTime = new TimeOnly(18, 30, 0),
                             PeopleNum = (short)5,
+                            PlaceId = 6,
                             ReservDate = new DateOnly(2023, 4, 29),
                             Status = (short)0,
-                            TableId = 17,
+                            TableSetId = 17,
                             UserId = "U9"
                         });
                 });
@@ -815,7 +840,7 @@ namespace ReserveRoverDAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ffe157cc-5047-463c-b790-3bc7416fd4ec"),
+                            Id = new Guid("8079fbea-c284-447f-af67-68216d04042f"),
                             AuthorId = "U1",
                             Comment = "",
                             CreationDate = new DateOnly(2023, 4, 9),
@@ -824,7 +849,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("30a032de-c21f-4df3-b29f-2ef5255cbf96"),
+                            Id = new Guid("69546046-48fe-4acc-bf0b-179cb6532ea2"),
                             AuthorId = "U2",
                             Comment = "",
                             CreationDate = new DateOnly(2023, 4, 11),
@@ -833,7 +858,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("dab71c70-7f52-4dd2-8749-efa8db4c835f"),
+                            Id = new Guid("2038f7eb-2105-45d5-821f-7fadcfe86052"),
                             AuthorId = "U10",
                             Comment = "Сама смачна піцца в Че. Я ваш клієнт на віки-вічні",
                             CreationDate = new DateOnly(2023, 4, 12),
@@ -842,7 +867,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("c0e725c6-fc45-4269-a8cb-a633db25f20f"),
+                            Id = new Guid("9d8daeca-a478-40e6-bbc1-8f152bf72ff4"),
                             AuthorId = "U11",
                             Comment = "Піца була смачна. Рекомендую)",
                             CreationDate = new DateOnly(2023, 4, 13),
@@ -851,7 +876,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f09a4404-efaa-4732-8cc8-8f13b5e0f648"),
+                            Id = new Guid("9f11079e-8be9-4372-bb2f-93bf3bca3480"),
                             AuthorId = "U12",
                             Comment = "",
                             CreationDate = new DateOnly(2023, 4, 14),
@@ -860,7 +885,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("4ad256fa-f8f8-42e0-b985-7e99a2d389b5"),
+                            Id = new Guid("4788de7a-b061-4d0c-9756-06f521562380"),
                             AuthorId = "U13",
                             Comment = "",
                             CreationDate = new DateOnly(2023, 4, 17),
@@ -869,7 +894,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("2b64248e-ef82-4234-b398-e5a5fcff7f26"),
+                            Id = new Guid("6bbe4dcc-9d22-434b-9bd6-77386451bf69"),
                             AuthorId = "U14",
                             Comment = "Вже другий раз не дають прибори.",
                             CreationDate = new DateOnly(2023, 4, 18),
@@ -878,7 +903,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("bc5307e4-d5cc-417d-93e0-ec9a0f6ed25f"),
+                            Id = new Guid("96957d93-1da4-4ef0-ab85-a72c4885d1a1"),
                             AuthorId = "U15",
                             Comment = "",
                             CreationDate = new DateOnly(2023, 4, 5),
@@ -887,7 +912,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("3db56adf-20f7-4780-8b42-a9889e4a0d3e"),
+                            Id = new Guid("998765fe-24b4-4681-a7fb-6978a1436e08"),
                             AuthorId = "U16",
                             Comment = "Страви не підписані, мусили вгадувати.",
                             CreationDate = new DateOnly(2023, 4, 14),
@@ -896,7 +921,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("32cc5464-940f-4032-87f5-c5e50cfe1ad8"),
+                            Id = new Guid("e4866a1c-00fe-47d1-b71d-6f6a10cc146b"),
                             AuthorId = "U17",
                             Comment = "",
                             CreationDate = new DateOnly(2023, 4, 4),
@@ -905,7 +930,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("993a944c-a4cc-4daa-963a-eb2514d6483a"),
+                            Id = new Guid("c1a87601-0e19-48aa-8a99-12bddb56ebaa"),
                             AuthorId = "U18",
                             Comment = "",
                             CreationDate = new DateOnly(2023, 4, 8),
@@ -914,7 +939,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("2c3a1af9-434b-4f23-b8df-5180e7548943"),
+                            Id = new Guid("de4ffbe9-fe9e-43c0-9727-dccadef12d97"),
                             AuthorId = "U19",
                             Comment = "",
                             CreationDate = new DateOnly(2023, 4, 9),
@@ -923,7 +948,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("0a558774-e67f-41d2-9924-03ac079eca7e"),
+                            Id = new Guid("fe435e2a-13c3-48e4-a7b3-045feabc9fca"),
                             AuthorId = "U20",
                             Comment = "Копчене курча бездоганне, а от свиня за життя займалася фітнесом, міцна та підтягнута занадто)",
                             CreationDate = new DateOnly(2023, 4, 11),
@@ -932,7 +957,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a2d938ff-b2a8-461e-bc0d-87059e3c4dd3"),
+                            Id = new Guid("ce815fef-c5e5-40d1-940c-808bc9c9a624"),
                             AuthorId = "U21",
                             Comment = "Такої смачної їжі давно не куштувала",
                             CreationDate = new DateOnly(2023, 4, 12),
@@ -941,7 +966,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e4604588-b4cb-4c0f-b5e4-8fd74f34776f"),
+                            Id = new Guid("928d4f95-127d-4060-b096-bfca6a755cb7"),
                             AuthorId = "U22",
                             Comment = "Шашлик з купою жил, сала, ледь жувався.",
                             CreationDate = new DateOnly(2023, 4, 16),
@@ -950,7 +975,7 @@ namespace ReserveRoverDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("46433d49-6c1b-40db-b7f1-d9a3d001fae0"),
+                            Id = new Guid("c68d78b7-44fd-47c8-9508-2bbe84234b00"),
                             AuthorId = "U23",
                             Comment = "",
                             CreationDate = new DateOnly(2023, 4, 16),
@@ -959,7 +984,7 @@ namespace ReserveRoverDAL.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ReserveRoverDAL.Entities.Table", b =>
+            modelBuilder.Entity("ReserveRoverDAL.Entities.TableSet", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -993,7 +1018,7 @@ namespace ReserveRoverDAL.Migrations
                             Id = 1,
                             PlaceId = 1,
                             TableCapacity = (short)2,
-                            TablesNum = (short)2
+                            TablesNum = (short)3
                         },
                         new
                         {
@@ -1183,14 +1208,14 @@ namespace ReserveRoverDAL.Migrations
 
             modelBuilder.Entity("ReserveRoverDAL.Entities.Reservation", b =>
                 {
-                    b.HasOne("ReserveRoverDAL.Entities.Table", "Table")
+                    b.HasOne("ReserveRoverDAL.Entities.TableSet", "TableSet")
                         .WithMany("Reservations")
-                        .HasForeignKey("TableId")
+                        .HasForeignKey("TableSetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("reservations_table_id_fkey");
 
-                    b.Navigation("Table");
+                    b.Navigation("TableSet");
                 });
 
             modelBuilder.Entity("ReserveRoverDAL.Entities.Review", b =>
@@ -1205,7 +1230,7 @@ namespace ReserveRoverDAL.Migrations
                     b.Navigation("Place");
                 });
 
-            modelBuilder.Entity("ReserveRoverDAL.Entities.Table", b =>
+            modelBuilder.Entity("ReserveRoverDAL.Entities.TableSet", b =>
                 {
                     b.HasOne("ReserveRoverDAL.Entities.Place", "Place")
                         .WithMany("Tables")
@@ -1240,7 +1265,7 @@ namespace ReserveRoverDAL.Migrations
                     b.Navigation("Tables");
                 });
 
-            modelBuilder.Entity("ReserveRoverDAL.Entities.Table", b =>
+            modelBuilder.Entity("ReserveRoverDAL.Entities.TableSet", b =>
                 {
                     b.Navigation("Reservations");
                 });

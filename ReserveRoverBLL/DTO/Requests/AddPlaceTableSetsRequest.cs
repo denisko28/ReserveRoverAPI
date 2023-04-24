@@ -1,6 +1,6 @@
 namespace ReserveRoverBLL.DTO.Requests;
 
-public class AddPlaceTablesRequest
+public class AddPlaceTableSetsRequest
 {
     public short TableCapacity { get; set; }
 

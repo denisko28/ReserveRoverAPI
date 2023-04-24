@@ -206,6 +206,7 @@ namespace ReserveRoverDAL.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "gen_random_uuid()"),
+                    PlaceId = table.Column<int>(type: "integer", nullable: false),
                     table_id = table.Column<int>(type: "integer", nullable: false),
                     user_id = table.Column<string>(type: "character(28)", fixedLength: true, maxLength: 28, nullable: false),
                     reserv_date = table.Column<DateOnly>(type: "date", nullable: false),
@@ -278,11 +279,11 @@ namespace ReserveRoverDAL.Migrations
                 columns: new[] { "id", "date", "moderator_id", "place_id", "status" },
                 values: new object[,]
                 {
-                    { new Guid("1b5d0d36-a1c3-4798-9358-8133e0315676"), new DateTime(2023, 4, 1, 16, 4, 15, 0, DateTimeKind.Unspecified), "Mod2", 4, (short)1 },
-                    { new Guid("632afec5-f8dc-48ed-93ba-06c5b24d4860"), new DateTime(2023, 3, 28, 9, 31, 46, 0, DateTimeKind.Unspecified), "Mod2", 2, (short)2 },
-                    { new Guid("825635dd-3e9e-4a6a-98ba-a96c2608fb98"), new DateTime(2023, 3, 8, 11, 23, 4, 0, DateTimeKind.Unspecified), "Mod1", 1, (short)2 },
-                    { new Guid("a37c0780-755b-4d14-b5ae-6795dbafc95c"), new DateTime(2023, 4, 2, 17, 20, 3, 0, DateTimeKind.Unspecified), "Mod1", 3, (short)2 },
-                    { new Guid("f11a0c73-2799-4b54-aae4-cbc4e76d8ddf"), new DateTime(2023, 4, 3, 10, 53, 6, 0, DateTimeKind.Unspecified), "Mod2", 6, (short)2 }
+                    { new Guid("04596c5b-5956-44e3-8a50-0d070319e573"), new DateTime(2023, 3, 28, 9, 31, 46, 0, DateTimeKind.Unspecified), "Mod2", 2, (short)2 },
+                    { new Guid("a5559dcd-10a4-4faf-ad1c-534a349b614e"), new DateTime(2023, 4, 2, 17, 20, 3, 0, DateTimeKind.Unspecified), "Mod1", 3, (short)2 },
+                    { new Guid("acf6044b-3be3-4056-836d-604377be902f"), new DateTime(2023, 3, 8, 11, 23, 4, 0, DateTimeKind.Unspecified), "Mod1", 1, (short)2 },
+                    { new Guid("ca9add4b-a4db-46e2-9c5f-d7e066af4db3"), new DateTime(2023, 4, 1, 16, 4, 15, 0, DateTimeKind.Unspecified), "Mod2", 4, (short)1 },
+                    { new Guid("db07183d-0fc6-4202-b0d3-fc07514e995e"), new DateTime(2023, 4, 3, 10, 53, 6, 0, DateTimeKind.Unspecified), "Mod2", 6, (short)2 }
                 });
 
             migrationBuilder.InsertData(
@@ -339,22 +340,22 @@ namespace ReserveRoverDAL.Migrations
                 columns: new[] { "id", "author_id", "comment", "creation_date", "mark", "place_id" },
                 values: new object[,]
                 {
-                    { new Guid("0a558774-e67f-41d2-9924-03ac079eca7e"), "U20", "Копчене курча бездоганне, а от свиня за життя займалася фітнесом, міцна та підтягнута занадто)", new DateOnly(2023, 4, 11), 5m, 6 },
-                    { new Guid("2b64248e-ef82-4234-b398-e5a5fcff7f26"), "U14", "Вже другий раз не дають прибори.", new DateOnly(2023, 4, 18), 4m, 1 },
-                    { new Guid("2c3a1af9-434b-4f23-b8df-5180e7548943"), "U19", "", new DateOnly(2023, 4, 9), 5m, 6 },
-                    { new Guid("30a032de-c21f-4df3-b29f-2ef5255cbf96"), "U2", "", new DateOnly(2023, 4, 11), 5m, 3 },
-                    { new Guid("32cc5464-940f-4032-87f5-c5e50cfe1ad8"), "U17", "", new DateOnly(2023, 4, 4), 5m, 6 },
-                    { new Guid("3db56adf-20f7-4780-8b42-a9889e4a0d3e"), "U16", "Страви не підписані, мусили вгадувати.", new DateOnly(2023, 4, 14), 4m, 3 },
-                    { new Guid("46433d49-6c1b-40db-b7f1-d9a3d001fae0"), "U23", "", new DateOnly(2023, 4, 16), 5m, 6 },
-                    { new Guid("4ad256fa-f8f8-42e0-b985-7e99a2d389b5"), "U13", "", new DateOnly(2023, 4, 17), 5m, 1 },
-                    { new Guid("993a944c-a4cc-4daa-963a-eb2514d6483a"), "U18", "", new DateOnly(2023, 4, 8), 4m, 6 },
-                    { new Guid("a2d938ff-b2a8-461e-bc0d-87059e3c4dd3"), "U21", "Такої смачної їжі давно не куштувала", new DateOnly(2023, 4, 12), 5m, 6 },
-                    { new Guid("bc5307e4-d5cc-417d-93e0-ec9a0f6ed25f"), "U15", "", new DateOnly(2023, 4, 5), 5m, 3 },
-                    { new Guid("c0e725c6-fc45-4269-a8cb-a633db25f20f"), "U11", "Піца була смачна. Рекомендую)", new DateOnly(2023, 4, 13), 5m, 3 },
-                    { new Guid("dab71c70-7f52-4dd2-8749-efa8db4c835f"), "U10", "Сама смачна піцца в Че. Я ваш клієнт на віки-вічні", new DateOnly(2023, 4, 12), 5m, 1 },
-                    { new Guid("e4604588-b4cb-4c0f-b5e4-8fd74f34776f"), "U22", "Шашлик з купою жил, сала, ледь жувався.", new DateOnly(2023, 4, 16), 3m, 6 },
-                    { new Guid("f09a4404-efaa-4732-8cc8-8f13b5e0f648"), "U12", "", new DateOnly(2023, 4, 14), 5m, 1 },
-                    { new Guid("ffe157cc-5047-463c-b790-3bc7416fd4ec"), "U1", "", new DateOnly(2023, 4, 9), 5m, 3 }
+                    { new Guid("2038f7eb-2105-45d5-821f-7fadcfe86052"), "U10", "Сама смачна піцца в Че. Я ваш клієнт на віки-вічні", new DateOnly(2023, 4, 12), 5m, 1 },
+                    { new Guid("4788de7a-b061-4d0c-9756-06f521562380"), "U13", "", new DateOnly(2023, 4, 17), 5m, 1 },
+                    { new Guid("69546046-48fe-4acc-bf0b-179cb6532ea2"), "U2", "", new DateOnly(2023, 4, 11), 5m, 3 },
+                    { new Guid("6bbe4dcc-9d22-434b-9bd6-77386451bf69"), "U14", "Вже другий раз не дають прибори.", new DateOnly(2023, 4, 18), 4m, 1 },
+                    { new Guid("8079fbea-c284-447f-af67-68216d04042f"), "U1", "", new DateOnly(2023, 4, 9), 5m, 3 },
+                    { new Guid("928d4f95-127d-4060-b096-bfca6a755cb7"), "U22", "Шашлик з купою жил, сала, ледь жувався.", new DateOnly(2023, 4, 16), 3m, 6 },
+                    { new Guid("96957d93-1da4-4ef0-ab85-a72c4885d1a1"), "U15", "", new DateOnly(2023, 4, 5), 5m, 3 },
+                    { new Guid("998765fe-24b4-4681-a7fb-6978a1436e08"), "U16", "Страви не підписані, мусили вгадувати.", new DateOnly(2023, 4, 14), 4m, 3 },
+                    { new Guid("9d8daeca-a478-40e6-bbc1-8f152bf72ff4"), "U11", "Піца була смачна. Рекомендую)", new DateOnly(2023, 4, 13), 5m, 3 },
+                    { new Guid("9f11079e-8be9-4372-bb2f-93bf3bca3480"), "U12", "", new DateOnly(2023, 4, 14), 5m, 1 },
+                    { new Guid("c1a87601-0e19-48aa-8a99-12bddb56ebaa"), "U18", "", new DateOnly(2023, 4, 8), 4m, 6 },
+                    { new Guid("c68d78b7-44fd-47c8-9508-2bbe84234b00"), "U23", "", new DateOnly(2023, 4, 16), 5m, 6 },
+                    { new Guid("ce815fef-c5e5-40d1-940c-808bc9c9a624"), "U21", "Такої смачної їжі давно не куштувала", new DateOnly(2023, 4, 12), 5m, 6 },
+                    { new Guid("de4ffbe9-fe9e-43c0-9727-dccadef12d97"), "U19", "", new DateOnly(2023, 4, 9), 5m, 6 },
+                    { new Guid("e4866a1c-00fe-47d1-b71d-6f6a10cc146b"), "U17", "", new DateOnly(2023, 4, 4), 5m, 6 },
+                    { new Guid("fe435e2a-13c3-48e4-a7b3-045feabc9fca"), "U20", "Копчене курча бездоганне, а от свиня за життя займалася фітнесом, міцна та підтягнута занадто)", new DateOnly(2023, 4, 11), 5m, 6 }
                 });
 
             migrationBuilder.InsertData(
@@ -362,7 +363,7 @@ namespace ReserveRoverDAL.Migrations
                 columns: new[] { "id", "place_id", "table_type", "tables_num" },
                 values: new object[,]
                 {
-                    { 1, 1, (short)2, (short)2 },
+                    { 1, 1, (short)2, (short)3 },
                     { 2, 1, (short)3, (short)2 },
                     { 3, 1, (short)4, (short)3 },
                     { 4, 1, (short)6, (short)1 },
@@ -383,18 +384,19 @@ namespace ReserveRoverDAL.Migrations
 
             migrationBuilder.InsertData(
                 table: "reservations",
-                columns: new[] { "id", "begin_time", "creation_date_time", "end_time", "people_num", "reserv_date", "status", "table_id", "user_id" },
+                columns: new[] { "id", "begin_time", "creation_date_time", "end_time", "people_num", "PlaceId", "reserv_date", "status", "table_id", "user_id" },
                 values: new object[,]
                 {
-                    { new Guid("2798ed92-8fa6-4ebc-ab1e-e675945d6063"), new TimeOnly(17, 0, 0), new DateTime(2023, 4, 19, 13, 6, 12, 0, DateTimeKind.Unspecified), new TimeOnly(19, 0, 0), (short)2, new DateOnly(2023, 4, 22), (short)0, 1, "U5" },
-                    { new Guid("3b130e4e-18db-4cde-bed1-68c08d69e4e8"), new TimeOnly(14, 0, 0), new DateTime(2023, 4, 11, 15, 7, 4, 0, DateTimeKind.Unspecified), new TimeOnly(16, 0, 0), (short)2, new DateOnly(2023, 4, 17), (short)1, 15, "U8" },
-                    { new Guid("46fe9136-13cd-4da3-b955-e804d0aec398"), new TimeOnly(14, 0, 0), new DateTime(2023, 4, 10, 7, 20, 58, 0, DateTimeKind.Unspecified), new TimeOnly(16, 0, 0), (short)2, new DateOnly(2023, 4, 12), (short)2, 1, "U1" },
-                    { new Guid("980aeeb8-ea38-4d77-a9b2-baa40c952972"), new TimeOnly(14, 0, 0), new DateTime(2023, 4, 16, 21, 46, 27, 0, DateTimeKind.Unspecified), new TimeOnly(16, 0, 0), (short)2, new DateOnly(2023, 4, 22), (short)0, 1, "U4" },
-                    { new Guid("d6fa60fb-cecb-48ba-b63d-0d71f864ec3b"), new TimeOnly(14, 0, 0), new DateTime(2023, 4, 9, 8, 57, 15, 0, DateTimeKind.Unspecified), new TimeOnly(16, 0, 0), (short)4, new DateOnly(2023, 4, 10), (short)0, 16, "U7" },
-                    { new Guid("db103b4e-1466-4da2-be90-bad628548b37"), new TimeOnly(16, 0, 0), new DateTime(2023, 4, 20, 23, 42, 9, 0, DateTimeKind.Unspecified), new TimeOnly(18, 30, 0), (short)5, new DateOnly(2023, 4, 29), (short)0, 17, "U9" },
-                    { new Guid("db6802a6-b46a-4bce-a9f9-2dc534d3aa67"), new TimeOnly(14, 0, 0), new DateTime(2023, 4, 8, 16, 18, 2, 0, DateTimeKind.Unspecified), new TimeOnly(16, 0, 0), (short)2, new DateOnly(2023, 4, 12), (short)2, 1, "U3" },
-                    { new Guid("f27288fc-8c47-4212-ad16-67013e477d1d"), new TimeOnly(16, 30, 0), new DateTime(2023, 4, 5, 17, 3, 34, 0, DateTimeKind.Unspecified), new TimeOnly(19, 30, 0), (short)2, new DateOnly(2023, 4, 12), (short)1, 1, "U2" },
-                    { new Guid("f28e3a71-4f63-4db3-b8c7-cec34c08e3f3"), new TimeOnly(11, 30, 0), new DateTime(2023, 4, 5, 19, 46, 11, 0, DateTimeKind.Unspecified), new TimeOnly(13, 0, 0), (short)2, new DateOnly(2023, 4, 9), (short)0, 15, "U6" }
+                    { new Guid("01f8283a-e2ea-4918-b8bd-7d610176ba51"), new TimeOnly(10, 0, 0), new DateTime(2023, 4, 10, 7, 20, 58, 0, DateTimeKind.Unspecified), new TimeOnly(12, 0, 0), (short)2, 1, new DateOnly(2023, 4, 26), (short)0, 1, "U1" },
+                    { new Guid("1dd520dc-13b8-4cc0-8700-c1a64176f70b"), new TimeOnly(12, 0, 0), new DateTime(2023, 4, 16, 21, 46, 27, 0, DateTimeKind.Unspecified), new TimeOnly(14, 0, 0), (short)2, 1, new DateOnly(2023, 4, 26), (short)0, 1, "U4" },
+                    { new Guid("44bc0e40-ce3c-4b5d-8e7c-5eb1c95a648b"), new TimeOnly(14, 0, 0), new DateTime(2023, 4, 21, 18, 15, 53, 0, DateTimeKind.Unspecified), new TimeOnly(16, 0, 0), (short)2, 1, new DateOnly(2023, 4, 26), (short)0, 1, "U60" },
+                    { new Guid("6cf59495-3755-4353-bc8b-7da41835ef98"), new TimeOnly(13, 0, 0), new DateTime(2023, 4, 19, 13, 6, 12, 0, DateTimeKind.Unspecified), new TimeOnly(15, 0, 0), (short)2, 1, new DateOnly(2023, 4, 26), (short)0, 1, "U5" },
+                    { new Guid("ac0b7680-fc30-440e-a952-0585b70e9569"), new TimeOnly(16, 0, 0), new DateTime(2023, 4, 20, 23, 42, 9, 0, DateTimeKind.Unspecified), new TimeOnly(18, 30, 0), (short)5, 6, new DateOnly(2023, 4, 29), (short)0, 17, "U9" },
+                    { new Guid("bb48fcb2-2ee5-46c3-9c1b-dd1c3078eac6"), new TimeOnly(10, 30, 0), new DateTime(2023, 4, 5, 17, 3, 34, 0, DateTimeKind.Unspecified), new TimeOnly(11, 30, 0), (short)2, 1, new DateOnly(2023, 4, 26), (short)0, 1, "U2" },
+                    { new Guid("c4c5f96d-15f5-4169-b806-460950f9de6c"), new TimeOnly(11, 30, 0), new DateTime(2023, 4, 5, 19, 46, 11, 0, DateTimeKind.Unspecified), new TimeOnly(13, 0, 0), (short)2, 6, new DateOnly(2023, 4, 9), (short)0, 15, "U6" },
+                    { new Guid("c85fd03b-ad0f-4881-aa81-1f412ad58cde"), new TimeOnly(14, 30, 0), new DateTime(2023, 4, 8, 16, 18, 2, 0, DateTimeKind.Unspecified), new TimeOnly(16, 30, 0), (short)2, 1, new DateOnly(2023, 4, 26), (short)0, 1, "U3" },
+                    { new Guid("c8ce7d95-f5cc-4ea4-85de-77dc0ac8e7fb"), new TimeOnly(14, 0, 0), new DateTime(2023, 4, 9, 8, 57, 15, 0, DateTimeKind.Unspecified), new TimeOnly(16, 0, 0), (short)4, 6, new DateOnly(2023, 4, 10), (short)0, 16, "U7" },
+                    { new Guid("ce96f595-2069-4514-afec-934a63fdfa9d"), new TimeOnly(14, 0, 0), new DateTime(2023, 4, 11, 15, 7, 4, 0, DateTimeKind.Unspecified), new TimeOnly(16, 0, 0), (short)2, 6, new DateOnly(2023, 4, 17), (short)1, 15, "U8" }
                 });
 
             migrationBuilder.CreateIndex(

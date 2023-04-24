@@ -1,5 +1,7 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Any;
+using Microsoft.OpenApi.Models;
 using ReserveRoverBLL.Configurations;
 using ReserveRoverBLL.Services.Abstract;
 using ReserveRoverBLL.Services.Concrete;
@@ -20,8 +22,9 @@ builder.Services
     .AddTransient<IPlacesRepository, PlacesRepository>()
     .AddTransient<IPlaceImagesRepository, PlaceImagesRepository>()
     .AddTransient<IPlacesPaymentMethodsRepository, PlacesPaymentMethodsRepository>()
-    .AddTransient<ITablesRepository, TablesRepository>()
+    .AddTransient<ITableSetsRepository, TableSetsRepository>()
     .AddTransient<IModerationRepository, ModerationRepository>()
+    .AddTransient<IReservationsRepository, ReservationsRepository>()
     .AddTransient<IUnitOfWork, UnitOfWork>();
 
 //Add BLL services
@@ -32,12 +35,27 @@ var mapper = mapperConfig.CreateMapper();
 builder.Services
     .AddSingleton(mapper)
     .AddTransient<IPlacesService, PlacesService>()
-    .AddTransient<IModerationService, ModerationService>();
+    .AddTransient<IModerationService, ModerationService>()
+    .AddTransient<IReservationService, ReservationService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.MapType<DateOnly>(() => new OpenApiSchema
+    {
+        Type = "string",
+        Format = "date",
+        Example = new OpenApiString("2023-12-29")
+    });
+    options.MapType<TimeOnly>(() => new OpenApiSchema
+    {
+        Type = "string",
+        Format = "time",
+        Example = new OpenApiString("23:12:08")
+    });
+});
 
 var app = builder.Build();
 

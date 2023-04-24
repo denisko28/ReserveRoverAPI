@@ -26,5 +26,5 @@ public class AddPlaceRequest
 
     public AddPlaceLocationRequest? Location { get; set; }
     
-    public IEnumerable<AddPlaceTablesRequest> Tables { get; set; } = null!;
+    public IEnumerable<AddPlaceTableSetsRequest> TableSets { get; set; } = null!;
 }

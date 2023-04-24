@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "VEJUvUHO77FHBppPODXOIZcLv3dy7Hv2hEus1uqRViPujLAdDe/aqrTU5LI3T7+g5dRYNBiad4JovxvS1dySBQ==",
+  "dgSpecHash": "kJ6Hl7Hl5mgC9NXtzTkaIRF8/x1+9kvyqLoFXI5UZWAwETzPQT2fKF4Ey8+XjK31B8O004eIVcKXm6iQ94gFxQ==",
   "success": true,
   "projectFilePath": "/Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverBLL/ReserveRoverBLL.csproj",
   "expectedPackageFiles": [
@@ -19,6 +19,7 @@
     "/Users/deniskharitesku/.nuget/packages/microsoft.extensions.logging.abstractions/7.0.0/microsoft.extensions.logging.abstractions.7.0.0.nupkg.sha512",
     "/Users/deniskharitesku/.nuget/packages/microsoft.extensions.options/7.0.0/microsoft.extensions.options.7.0.0.nupkg.sha512",
     "/Users/deniskharitesku/.nuget/packages/microsoft.extensions.primitives/7.0.0/microsoft.extensions.primitives.7.0.0.nupkg.sha512",
+    "/Users/deniskharitesku/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512",
     "/Users/deniskharitesku/.nuget/packages/npgsql/7.0.2/npgsql.7.0.2.nupkg.sha512",
     "/Users/deniskharitesku/.nuget/packages/npgsql.entityframeworkcore.postgresql/7.0.3/npgsql.entityframeworkcore.postgresql.7.0.3.nupkg.sha512",
     "/Users/deniskharitesku/.nuget/packages/system.runtime.compilerservices.unsafe/6.0.0/system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
