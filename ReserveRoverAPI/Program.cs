@@ -1,8 +1,14 @@
 using AutoMapper;
+using Firebase.Auth;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using ReserveRoverBLL.Configurations;
+using ReserveRoverBLL.FirebaseAuth;
 using ReserveRoverBLL.Services.Abstract;
 using ReserveRoverBLL.Services.Concrete;
 using ReserveRoverDAL;
@@ -13,7 +19,19 @@ using ReserveRoverDAL.UnitOfWork.Concrete;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var authConfig = new FirebaseConfig(builder.Configuration["FirebaseClientKey"]);
+
 var connection = builder.Configuration.GetConnectionString("PGSQLConnection");
+
+builder.Services
+    .AddSingleton(new FirebaseAuthProvider(authConfig))
+    .AddSingleton(FirebaseApp.Create(new AppOptions
+    {
+        Credential = GoogleCredential.FromFile(builder.Configuration["FirebaseServerKeyPath"])
+    }))
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddScheme<AuthenticationSchemeOptions, FirebaseAuthenticationHandler>(JwtBearerDefaults.AuthenticationScheme,
+        _ => { });
 
 // Add DAL services
 builder.Services
@@ -36,7 +54,8 @@ builder.Services
     .AddSingleton(mapper)
     .AddTransient<IPlacesService, PlacesService>()
     .AddTransient<IModerationService, ModerationService>()
-    .AddTransient<IReservationService, ReservationService>();
+    .AddTransient<IReservationService, ReservationService>()
+    .AddTransient<IIdentityService, IdentityService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -68,8 +87,15 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors(options => options
+    .WithOrigins("http://localhost:5173")
+    .AllowAnyHeader()
+    .AllowAnyMethod()
+    .AllowCredentials());
+
 app.UseStaticFiles();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

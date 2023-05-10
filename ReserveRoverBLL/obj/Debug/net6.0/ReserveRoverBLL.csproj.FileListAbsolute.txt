@@ -6,16 +6,7 @@
 /Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverBLL/bin/Debug/net6.0/ReserveRoverBLL.deps.json
 /Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverBLL/bin/Debug/net6.0/ReserveRoverBLL.dll
 /Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverBLL/bin/Debug/net6.0/ReserveRoverBLL.pdb
-/Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverBLL/bin/Debug/net6.0/Microsoft.AspNetCore.Hosting.Abstractions.dll
-/Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverBLL/bin/Debug/net6.0/Microsoft.AspNetCore.Http.Abstractions.dll
-/Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverBLL/bin/Debug/net6.0/Microsoft.AspNetCore.Http.Features.dll
 /Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverBLL/bin/Debug/net6.0/ReserveRoverDAL.dll
-/Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverBLL/bin/Debug/net6.0/Microsoft.AspNetCore.Hosting.Server.Abstractions.dll
-/Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverBLL/bin/Debug/net6.0/Microsoft.Extensions.FileProviders.Abstractions.dll
-/Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverBLL/bin/Debug/net6.0/Microsoft.Extensions.Features.dll
-/Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverBLL/bin/Debug/net6.0/Microsoft.Extensions.Hosting.Abstractions.dll
-/Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverBLL/bin/Debug/net6.0/System.IO.Pipelines.dll
-/Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverBLL/bin/Debug/net6.0/Microsoft.Net.Http.Headers.dll
 /Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverBLL/bin/Debug/net6.0/ReserveRoverDAL.pdb
 /Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverBLL/obj/Debug/net6.0/ReserveRoverBLL.csproj.CopyComplete
 /Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverBLL/obj/Debug/net6.0/ReserveRoverBLL.dll
