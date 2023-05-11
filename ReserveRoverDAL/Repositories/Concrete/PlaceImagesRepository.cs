@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using ReserveRoverDAL.Entities;
-using ReserveRoverDAL.Exceptions;
 using ReserveRoverDAL.Repositories.Abstract;
 
 namespace ReserveRoverDAL.Repositories.Concrete;
@@ -33,18 +32,9 @@ public class PlaceImagesRepository : IPlaceImagesRepository
         await _placeImages.AddRangeAsync(placeImages);
     }
 
-    public async Task UpdateAsync(PlaceImage placeImage)
+    public async Task DeleteByPlaceAsync(int placeId)
     {
-        await Task.Run(() => _placeImages.Update(placeImage));
-    }
-
-    public async Task DeleteAsync(int placeId, short sequenceIndex)
-    {
-        var entity = await _placeImages.FirstOrDefaultAsync(place => place.PlaceId == placeId && place.SequenceIndex == sequenceIndex);
-        
-        if(entity == null)
-            throw new EntityNotFoundException(nameof(PlaceImage), $"placeId: {placeId} & sequenceIndex: {sequenceIndex}");
-        
-        await Task.Run(() => _placeImages.Remove(entity));
+        var entitiesToRemove = _placeImages.Where(e => e.PlaceId == placeId);
+        await Task.Run(() => _placeImages.RemoveRange(entitiesToRemove));
     }
 }

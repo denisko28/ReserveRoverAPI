@@ -16,6 +16,8 @@ public interface IPlacesService
 
     Task<string> UploadImage(IFormFile image, HttpContext httpContext);
 
+    Task SetImages(IEnumerable<string> imageUrls, HttpContext httpContext);
+
     Task<int> CreatePlace(AddPlaceRequest placeRequest);
 
     Task<ReviewResponse> CreateReview(CreatePlaceReviewRequest request, HttpContext httpContext);

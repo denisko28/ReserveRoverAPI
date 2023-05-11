@@ -87,9 +87,8 @@ public class PlacesService : IPlacesService
 
     public async Task<string> UploadImage(IFormFile image, HttpContext httpContext)
     {
-        // var userId = UserClaimsHelper.GetUserId(httpContext);
-        const string userId = "M34";
-        var imagesFolderPath = $"/Images/{userId}";
+        var managerId = UserClaimsHelper.GetUserId(httpContext);
+        var imagesFolderPath = $"/Images/managers/{managerId}";
 
         if (!Directory.Exists($"{_environment.WebRootPath}/{imagesFolderPath}/"))
         {
@@ -100,10 +99,47 @@ public class PlacesService : IPlacesService
         var newFileName = $"{DateTime.Now:yyyyMMddHHmmssffff}{fileExtension}";
 
         await using var fileStream = File.Create($"{_environment.WebRootPath}/{imagesFolderPath}/{newFileName}");
-        await image.CopyToAsync(fileStream)!;
+        await image.CopyToAsync(fileStream);
         await fileStream.FlushAsync();
 
         return $"{imagesFolderPath}/{newFileName}";
+    }
+    
+    public async Task SetImages(IEnumerable<string> imageUrls, HttpContext httpContext)
+    {
+        var imagesUrlsList = imageUrls.ToList();
+        if (imagesUrlsList.Count < 1)
+            throw new ArgumentException("The number of passed images should be greater than zero");
+        
+        var mainImageUrl = imagesUrlsList[0];
+        imagesUrlsList.RemoveAt(0);
+        var managerId = UserClaimsHelper.GetUserId(httpContext);
+        var place = await _unitOfWork.PlacesRepository.GetByManagerAsync(managerId);
+        
+        await using var transaction = await _unitOfWork.DbContext.Database.BeginTransactionAsync();
+        try
+        {
+            place.MainImageUrl = mainImageUrl;
+            await _unitOfWork.SaveChangesAsync();
+            
+            await _unitOfWork.PlaceImagesRepository.DeleteByPlaceAsync(place.Id);
+            await _unitOfWork.SaveChangesAsync();
+
+            if (imagesUrlsList.Count >= 1)
+            {
+                var placeImages = imagesUrlsList.Select((imageUrl, index) => new PlaceImage
+                    {PlaceId = place.Id, SequenceIndex = (short) index, ImageUrl = imageUrl});
+                await _unitOfWork.PlaceImagesRepository.InsertRangeAsync(placeImages);
+                await _unitOfWork.SaveChangesAsync();
+            }
+            
+            await transaction.CommitAsync();
+        }
+        catch (Exception)
+        {
+            await transaction.RollbackAsync();
+            throw;
+        }
     }
 
     public async Task<int> CreatePlace(AddPlaceRequest placeRequest)

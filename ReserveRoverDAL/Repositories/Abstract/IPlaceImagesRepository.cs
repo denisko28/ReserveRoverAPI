@@ -11,7 +11,5 @@ public interface IPlaceImagesRepository
 
     Task InsertRangeAsync(IEnumerable<PlaceImage> placeImages);
 
-    Task UpdateAsync(PlaceImage placeImage);
-
-    Task DeleteAsync(int placeId, short sequenceIndex);
+    Task DeleteByPlaceAsync(int placeId);
 }
