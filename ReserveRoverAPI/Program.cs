@@ -43,6 +43,7 @@ builder.Services
     .AddTransient<ITableSetsRepository, TableSetsRepository>()
     .AddTransient<IModerationRepository, ModerationRepository>()
     .AddTransient<IReservationsRepository, ReservationsRepository>()
+    .AddTransient<IReviewsRepository, ReviewsRepository>()
     .AddTransient<IUnitOfWork, UnitOfWork>();
 
 //Add BLL services

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Linq;
 
 namespace ReserveRoverBLL.FirebaseAuth;
 
@@ -60,17 +61,43 @@ public class FirebaseAuthenticationHandler : AuthenticationHandler<Authenticatio
 
     private static IEnumerable<Claim> ToClaims(IReadOnlyDictionary<string, object> claims)
     {
-        var emailVerified = claims.GetValueOrDefault("email_verified", "").ToString();
-        if (emailVerified != "True")
-            throw new Exception("Email is not verified.");
+        var firebase = claims.GetValueOrDefault("firebase", "").ToString();
+        var signInProvider = firebase?.Split(',')
+            .Select(s => s.Split(':'))
+            .FirstOrDefault(a => a[0] == "sign_in_provider")?[1];
+
+        var resultClaims = new List<Claim>();
         
-        return new List<Claim>
+        switch (signInProvider)
+        {
+            case "email":
+            {
+                var emailVerified = claims.GetValueOrDefault("email_verified", "").ToString();
+                if (emailVerified != "True")
+                    throw new Exception("Email is not verified.");
+
+                resultClaims.AddRange(new Claim[]
+                {
+                    new(FirebaseUserClaim.Email, claims.GetValueOrDefault("email", "").ToString()!),
+                    new(FirebaseUserClaim.EmailVerified, emailVerified)
+                });
+                break;
+            }
+            case "phone":
+                resultClaims.AddRange(new Claim[]
+                {
+                    new(FirebaseUserClaim.Phone, claims.GetValueOrDefault("phone", "").ToString()!)
+                });
+                break;
+        }
+
+        resultClaims.AddRange(new Claim[]
         {
             new(FirebaseUserClaim.Id, claims.GetValueOrDefault("user_id", "").ToString()!),
-            new(FirebaseUserClaim.Email, claims.GetValueOrDefault("email", "").ToString()!),
-            new(FirebaseUserClaim.EmailVerified, emailVerified),
             new(FirebaseUserClaim.Username, claims.GetValueOrDefault("name", "").ToString()!),
             new(ClaimTypes.Role, claims.GetValueOrDefault("role", "").ToString()!)
-        };
+        });
+        
+        return resultClaims;
     }
 }

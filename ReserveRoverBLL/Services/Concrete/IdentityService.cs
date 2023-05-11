@@ -1,4 +1,5 @@
 using Firebase.Auth;
+using FirebaseAdmin.Auth;
 using ReserveRoverBLL.DTO.Requests;
 using ReserveRoverBLL.Services.Abstract;
 
@@ -11,6 +12,16 @@ public class IdentityService : IIdentityService
     public IdentityService(FirebaseAuthProvider authProvider)
     {
         _authProvider = authProvider;
+    }
+
+    public async Task<UserRecord> GetUserById(string uid)
+    {
+        return await FirebaseAdmin.Auth.FirebaseAuth.DefaultInstance.GetUserAsync(uid);
+    }
+
+    public async Task<GetUsersResult> GetUsersById(IReadOnlyCollection<UserIdentifier> uid)
+    {
+        return await FirebaseAdmin.Auth.FirebaseAuth.DefaultInstance.GetUsersAsync(uid);
     }
 
     public async Task<bool> RegisterUser(RegisterUserRequest userRequest, string userRole)

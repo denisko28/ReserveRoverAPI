@@ -19,6 +19,8 @@ namespace ReserveRoverDAL.UnitOfWork.Abstract
         IModerationRepository ModerationRepository { get; }
         
         IReservationsRepository ReservationsRepository { get; }
+        
+        IReviewsRepository ReviewsRepository { get; }
 
         Task SaveChangesAsync();
     }

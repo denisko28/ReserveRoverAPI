@@ -20,12 +20,14 @@ namespace ReserveRoverDAL.UnitOfWork.Concrete
         public IModerationRepository ModerationRepository { get; }
 
         public IReservationsRepository ReservationsRepository { get; }
+        
+        public IReviewsRepository ReviewsRepository { get; }
 
         public UnitOfWork(ReserveRoverDbContext dbContext, IPlacesRepository placesRepository,
             IPlaceImagesRepository placeImagesRepository,
             IPlacesPaymentMethodsRepository placesPaymentMethodsRepository, ILocationsRepository locationsRepository,
             ITableSetsRepository tableSetsRepository, IModerationRepository moderationRepository,
-            IReservationsRepository reservationsRepository)
+            IReservationsRepository reservationsRepository, IReviewsRepository reviewsRepository)
         {
             DbContext = dbContext;
             PlacesRepository = placesRepository;
@@ -35,6 +37,7 @@ namespace ReserveRoverDAL.UnitOfWork.Concrete
             TableSetsRepository = tableSetsRepository;
             ModerationRepository = moderationRepository;
             ReservationsRepository = reservationsRepository;
+            ReviewsRepository = reviewsRepository;
         }
 
         public async Task SaveChangesAsync()

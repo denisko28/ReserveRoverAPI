@@ -1,9 +1,11 @@
 using AutoMapper;
+using FirebaseAdmin.Auth;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using ReserveRoverBLL.DTO.Requests;
 using ReserveRoverBLL.DTO.Responses;
 using ReserveRoverBLL.Enums;
+using ReserveRoverBLL.Helpers;
 using ReserveRoverBLL.Services.Abstract;
 using ReserveRoverDAL.Entities;
 using ReserveRoverDAL.Enums;
@@ -16,12 +18,15 @@ public class PlacesService : IPlacesService
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     private readonly IHostingEnvironment _environment;
+    private readonly IIdentityService _identityService;
 
-    public PlacesService(IUnitOfWork unitOfWork, IMapper mapper, IHostingEnvironment environment)
+    public PlacesService(IUnitOfWork unitOfWork, IMapper mapper, IHostingEnvironment environment,
+        IIdentityService identityService)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
         _environment = environment;
+        _identityService = identityService;
     }
 
     public async Task<IEnumerable<PlaceSearchResponse>> Search(PlaceSearchRequest request)
@@ -50,6 +55,28 @@ public class PlacesService : IPlacesService
     {
         var place = await _unitOfWork.PlacesRepository.GetByIdAsync(placeId);
         return await PlaceToPlaceDetails(place);
+    }
+
+    public async Task<IEnumerable<ReviewResponse>> GetPlaceReviews(GetPlaceReviewsRequest request)
+    {
+        var reviews =
+            await _unitOfWork.ReviewsRepository.GetByPlaceAsync(request.PlaceId, request.PageNumber, request.PageSize);
+        var results = new List<ReviewResponse>();
+        var reviewsList = reviews.ToList();
+        
+        var userIdentifiers = reviewsList.Select(review => new UidIdentifier(review.AuthorId)).ToList();
+        var usersResult = await _identityService.GetUsersById(userIdentifiers);
+        var authors = usersResult.Users.ToDictionary(user => user.Uid, user => user);
+        
+        foreach (var review in reviewsList)
+        {
+            var result = _mapper.Map<Review, ReviewResponse>(review);
+            result.AuthorPhotoUrl = authors[review.AuthorId].PhotoUrl;
+            result.AuthorFullName = authors[review.AuthorId].DisplayName;
+            results.Add(result);
+        }
+
+        return results;
     }
 
     public async Task<PlaceDetailsResponse> GetManagersPlace(string managerId)
@@ -121,5 +148,22 @@ public class PlacesService : IPlacesService
             await transaction.RollbackAsync();
             throw;
         }
+    }
+
+    public async Task<ReviewResponse> CreateReview(CreatePlaceReviewRequest request, HttpContext httpContext)
+    {
+        var userId = UserClaimsHelper.GetUserId(httpContext);
+        // const string userId = "M34";
+        var review = _mapper.Map<CreatePlaceReviewRequest, Review>(request);
+        review.AuthorId = userId;
+        review.CreationDate = DateOnly.FromDateTime(DateTime.Now);
+        await _unitOfWork.ReviewsRepository.InsertAsync(review);
+        await _unitOfWork.SaveChangesAsync();
+        
+        var result = _mapper.Map<Review, ReviewResponse>(review);
+        var author = await _identityService.GetUserById(review.AuthorId);
+        result.AuthorFullName = author.DisplayName;
+        result.AuthorPhotoUrl = author.PhotoUrl;
+        return result;
     }
 }

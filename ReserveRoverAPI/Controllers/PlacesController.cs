@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ReserveRoverBLL.DTO.Requests;
 using ReserveRoverBLL.DTO.Responses;
+using ReserveRoverBLL.Enums;
 using ReserveRoverBLL.Services.Abstract;
 using ReserveRoverDAL.Exceptions;
 
@@ -57,6 +58,23 @@ public class PlacesController : ControllerBase
         }
     }
     
+    [AllowAnonymous]
+    [HttpGet("reviews")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<PlaceDetailsResponse>> GetPlaceReviews([FromQuery] GetPlaceReviewsRequest request)
+    {
+        try
+        {
+            var results = await _placesService.GetPlaceReviews(request);
+            return Ok(results);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, new {e.Message});
+        }
+    }
+    
     // [Authorize(Roles = "Manager")]
     [HttpGet("manager/{managerId}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -105,6 +123,23 @@ public class PlacesController : ControllerBase
         try
         {
             var results = await _placesService.CreatePlace(request);
+            return Ok(results);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, new {e.Message});
+        }
+    }
+    
+    [Authorize]
+    [HttpPost("createReview")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<int>> CreatePlaceReview(CreatePlaceReviewRequest request)
+    {
+        try
+        {
+            var results = await _placesService.CreateReview(request, HttpContext);
             return Ok(results);
         }
         catch (Exception e)

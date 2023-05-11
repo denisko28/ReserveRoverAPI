@@ -35,7 +35,7 @@ public class PlacesSeeder : ISeeder<Place>
             Title = "Піца парк",
             OpensAt = TimeOnly.Parse("08:00:00"),
             ClosesAt = TimeOnly.Parse("20:00:00"),
-            AvgMark = null,
+            AvgMark = 4.25m,
             Popularity = 2,
             AvgBill = 300,
             Address = "вул. Небесної сотні 5а",
