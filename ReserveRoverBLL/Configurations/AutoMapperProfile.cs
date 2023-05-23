@@ -14,6 +14,7 @@ public class AutoMapperProfile : Profile
         CreateReservationMaps();
         CreateModerationMaps();
         CreateLocationMaps();
+        CreateCitiesMaps();
     }
 
     private void CreatePlacesMaps()
@@ -59,5 +60,10 @@ public class AutoMapperProfile : Profile
     private void CreateLocationMaps()
     {
         CreateMap<AddPlaceLocationRequest, Location>();
+    }
+
+    private void CreateCitiesMaps()
+    {
+        CreateMap<City, CityResponse>();
     }
 }

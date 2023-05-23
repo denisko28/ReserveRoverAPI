@@ -44,6 +44,7 @@ builder.Services
     .AddTransient<IModerationRepository, ModerationRepository>()
     .AddTransient<IReservationsRepository, ReservationsRepository>()
     .AddTransient<IReviewsRepository, ReviewsRepository>()
+    .AddTransient<ICitiesRepository, CitiesRepository>()
     .AddTransient<IUnitOfWork, UnitOfWork>();
 
 //Add BLL services
@@ -56,6 +57,7 @@ builder.Services
     .AddTransient<IPlacesService, PlacesService>()
     .AddTransient<IModerationService, ModerationService>()
     .AddTransient<IReservationService, ReservationService>()
+    .AddTransient<ICitiesService, CitiesService>()
     .AddTransient<IIdentityService, IdentityService>();
 
 builder.Services.AddControllers();
