@@ -6,6 +6,8 @@ public class TablesHelper
 {
     public class Table
     {
+        public int Capacity { get; set; }
+        
         public List<Reservation> Reservations { get; set; }
 
         public Table()
@@ -35,20 +37,19 @@ public class TablesHelper
     
     public static List<Table> TablesReservationsFromTableSets(TableSet tableSet, List<Reservation> reservations)
     {
-        var tables = Enumerable.Range(1, tableSet.TablesNum).Select(_ => new Table()).ToList();
+        var tables = Enumerable.Range(1, tableSet.TablesNum).Select(_ => 
+            new Table{Capacity = tableSet.TableCapacity}).ToList();
         for (var index = 0; index < reservations.Count; index++)
         {
             var reservation = reservations[index];
-            for (var i = 0; i < tables.Count; i++)
+            foreach (var table in tables)
             {
-                var table = tables[i];
-                if (table.HasTimeFor(reservation))
-                {
-                    table.Reservations.Add(reservation);
-                    reservations.RemoveAt(index);
-                    index--;
-                    break;
-                }
+                if (!table.HasTimeFor(reservation)) continue;
+                
+                table.Reservations.Add(reservation);
+                reservations.RemoveAt(index);
+                index--;
+                break;
             }
         }
 

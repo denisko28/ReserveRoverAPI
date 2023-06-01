@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
@@ -22,7 +23,32 @@ public class ReservationService : IReservationService
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<ReservationResponse>> GetReservationsByPlace(GetReservationsByPlaceRequest request,
+    public async Task<IEnumerable<TimelineReservationResponse>> GetReservationsForTimeline(
+        GetReservationsForTimelineRequest request, HttpContext httpContext)
+    {
+        // var managerId = UserClaimsHelper.GetUserId(httpContext);
+        // var place = await _unitOfWork.PlacesRepository.GetByIdAsync(request.PlaceId);
+        // if (place.ManagerId != managerId)
+        //     throw new ForbiddenAccessException(
+        //         $"You don't have access to the reservations of the place with id: {request.PlaceId}");
+
+        var targetDate = JsonConvert.DeserializeObject<DateOnly>("\"" + request.TargetDate + "\"");
+        var tableSets = await _unitOfWork.TableSetsRepository.GetByPlaceAsync(request.PlaceId);
+
+        var results = new List<TimelineReservationResponse>();
+        foreach (var tableSet in tableSets)
+        {
+            var reservations =
+                await _unitOfWork.ReservationsRepository.GetByTableSetIdAndReservDateAsync(tableSet.Id, targetDate);
+            var tables = TablesHelper.TablesReservationsFromTableSets(tableSet, reservations.ToList());
+            results.AddRange(tables.Select(_mapper.Map<TablesHelper.Table, TimelineReservationResponse>));
+        }
+
+        return results;
+    }
+
+    public async Task<IEnumerable<PlaceReservationResponse>> GetReservationsByPlace(
+        GetReservationsByPlaceRequest request,
         HttpContext httpContext)
     {
         // var managerId = UserClaimsHelper.GetUserId(httpContext);
@@ -34,16 +60,38 @@ public class ReservationService : IReservationService
         var reservations = await _unitOfWork.ReservationsRepository.GetByPlaceAsync(request.PlaceId, request.FromTime,
             request.TillTime, request.PageNumber, request.PageSize);
 
-        return reservations.Select(_mapper.Map<Reservation, ReservationResponse>);
+        return reservations.Select(_mapper.Map<Reservation, PlaceReservationResponse>);
     }
 
-    public async Task<IEnumerable<ReservationResponse>> GetReservationsByUser(GetReservationsByUserRequest request,
+    public async Task<IEnumerable<UserReservationResponse>> GetReservationsByUser(GetReservationsByUserRequest request,
         HttpContext httpContext)
     {
         var reservations = await _unitOfWork.ReservationsRepository.GetByUserAsync(request.UserId, request.FromTime,
             request.TillTime, request.PageNumber, request.PageSize);
 
-        return reservations.Select(_mapper.Map<Reservation, ReservationResponse>);
+        return reservations.Select(_mapper.Map<Reservation, UserReservationResponse>);
+    }
+
+    public async Task<ReservationsCountResponse> GetReservationsCountByUser(GetReservationsCountByUserRequest request,
+        HttpContext httpContext)
+    {
+        var futureCount =
+            await _unitOfWork.ReservationsRepository.CountFromDateByUserAsync(request.UserId, request.DateTime);
+        var pastCount =
+            await _unitOfWork.ReservationsRepository.CountTillDateByUserAsync(request.UserId, request.DateTime);
+        var total = futureCount + pastCount;
+        return new ReservationsCountResponse {TotalCount = total, FutureCount = futureCount, PastCount = pastCount};
+    }
+
+    private static bool IsWithinBoundaries(TimeOnly startTime, TimeOnly endTime, TimeOnly intervalStartTime,
+        TimeOnly intervalEndTime)
+    {
+        if (intervalEndTime > intervalStartTime)
+        {
+            return intervalStartTime >= startTime && intervalEndTime <= endTime;
+        }
+
+        return intervalEndTime >= startTime && intervalStartTime <= endTime;
     }
 
     public async Task<IEnumerable<PlaceTimeOfferResponse>> GetTimeOffers(GetTimeOffersRequest request)
@@ -60,28 +108,28 @@ public class ReservationService : IReservationService
             throw new Exception(
                 $"Desired time should be in boundaries from {place.OpensAt} to {place.ClosesAt.AddHours(-1)}");
 
-        var tableSets = await _unitOfWork.TableSetsRepository.GetByPlaceWithReservationsAsync(request.PlaceId);
-        var tableSetsList = tableSets.ToList();
+        var tableSets = await _unitOfWork.TableSetsRepository.GetByPlaceAsync(request.PlaceId);
 
-        foreach (var tableSet in tableSetsList)
+        foreach (var tableSet in tableSets)
         {
-            if (tableSet.TableCapacity == request.PeopleNum && tableSet.TableCapacity > request.PeopleNum + 2)
+            if (tableSet.TableCapacity < request.PeopleNum || tableSet.TableCapacity > request.PeopleNum + 2)
                 continue;
 
-            var reservations = tableSet.Reservations.Where(r =>
-                    r.ReservDate == reservDate &&
-                    r.BeginTime >= desiredTime.AddHours(-6) &&
-                    r.BeginTime < desiredTime.AddHours(2 + request.Duration))
-                .ToList();
+            var reservations =
+                await _unitOfWork.ReservationsRepository.GetByTableSetIdAndReservDateAsync(tableSet.Id, reservDate);
+            reservations = reservations.Where(r =>
+                r.BeginTime >= desiredTime.AddHours(-6) &&
+                r.BeginTime < desiredTime.AddHours(2 + request.Duration));
 
-            var tables = TablesHelper.TablesReservationsFromTableSets(tableSet, reservations);
+            var tables = TablesHelper.TablesReservationsFromTableSets(tableSet, reservations.ToList());
 
             var fromTime = desiredTime.AddHours(-2);
             var toTime = desiredTime.AddHours(2);
             for (TimeOnly beginTime = fromTime; beginTime <= toTime; beginTime = beginTime.AddMinutes(30))
             {
                 var endTime = beginTime.AddHours(request.Duration);
-                if (beginTime < place.OpensAt || endTime > place.ClosesAt.AddHours(-1))
+
+                if (!IsWithinBoundaries(place.OpensAt, place.ClosesAt, beginTime, endTime))
                     continue;
 
                 foreach (var table in tables)
@@ -143,5 +191,14 @@ public class ReservationService : IReservationService
 
         await _unitOfWork.SaveChangesAsync();
         return success;
+    }
+
+    public async Task UpdateReservationStatus(UpdateReservationStatusRequest request, HttpContext httpContext)
+    {
+        if (!Enum.IsDefined(typeof(ReservationStatus), (int) request.NewStatus))
+            throw new InvalidEnumArgumentException("Passed newStatus argument is out enumerated values!");
+
+        await _unitOfWork.ReservationsRepository.UpdateStatusAsync(request.ReservationId, request.NewStatus);
+        await _unitOfWork.SaveChangesAsync();
     }
 }

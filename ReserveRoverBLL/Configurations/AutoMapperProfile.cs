@@ -1,6 +1,7 @@
 using AutoMapper;
 using ReserveRoverBLL.DTO.Requests;
 using ReserveRoverBLL.DTO.Responses;
+using ReserveRoverBLL.Helpers.Models;
 using ReserveRoverDAL.Entities;
 
 namespace ReserveRoverBLL.Configurations;
@@ -43,7 +44,28 @@ public class AutoMapperProfile : Profile
 
     private void CreateReservationMaps()
     {
-        CreateMap<Reservation, ReservationResponse>();
+        CreateMap<Reservation, UserReservationResponse>()
+            .ForMember(response => response.PlaceImageUrl,
+                options =>
+                    options.MapFrom(reservation => reservation.TableSet.Place.MainImageUrl))
+            .ForMember(response => response.PlaceTitle,
+                options =>
+                    options.MapFrom(reservation => reservation.TableSet.Place.Title));
+        CreateMap<Reservation, PlaceReservationResponse>();
+        CreateMap<TablesHelper.Table, TimelineReservationResponse>()
+            .ForMember(response => response.TableCapacity,
+                options =>
+                    options.MapFrom(table => table.Capacity))
+            .ForMember(response => response.TableReservations,
+                options =>
+                    options.MapFrom(table => table.Reservations.Select(reservation =>
+                        new TimelineReservationResponse.TableReservation
+                        {
+                            Id = reservation.Id.ToString(),
+                            BeginTime = reservation.ReservDate.ToDateTime(reservation.BeginTime),
+                            EndTime = reservation.ReservDate.ToDateTime(reservation.EndTime)
+                        })));
+        
         CreateMap<CreateReservationRequest, Reservation>();
     }
 

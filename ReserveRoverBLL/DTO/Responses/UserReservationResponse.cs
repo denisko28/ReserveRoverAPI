@@ -1,8 +1,12 @@
 namespace ReserveRoverBLL.DTO.Responses;
 
-public class ReservationResponse
+public class UserReservationResponse
 {
     public Guid Id { get; set; }
+
+    public string PlaceImageUrl { get; set; } = null!;
+    
+    public string PlaceTitle { get; set; } = null!;
     
     public int PlaceId { get; set; } 
 

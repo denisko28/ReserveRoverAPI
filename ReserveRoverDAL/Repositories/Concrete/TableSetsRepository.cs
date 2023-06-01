@@ -17,10 +17,9 @@ public class TableSetsRepository : GenericRepository<TableSet>, ITableSetsReposi
                throw new EntityNotFoundException(nameof(TableSet), id);
     }
 
-    public async Task<IEnumerable<TableSet>> GetByPlaceWithReservationsAsync(int placeId)
+    public async Task<IEnumerable<TableSet>> GetByPlaceAsync(int placeId)
     {
         return await Table
-            .Include(set => set.Reservations)
             .Where(set => set.PlaceId == placeId)
             .OrderBy(set => set.TableCapacity)
             .ToListAsync();

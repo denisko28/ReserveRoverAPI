@@ -7,7 +7,7 @@ public interface ITableSetsRepository : IGenericRepository<TableSet>
 {
     Task<TableSet> GetByIdWithReservationsAsync(int id);
     
-    Task<IEnumerable<TableSet>> GetByPlaceWithReservationsAsync(int placeId);
+    Task<IEnumerable<TableSet>> GetByPlaceAsync(int placeId);
     
     Task InsertRangeAsync(IEnumerable<TableSet> tableSets);
 }

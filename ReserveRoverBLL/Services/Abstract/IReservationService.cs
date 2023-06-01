@@ -6,13 +6,21 @@ namespace ReserveRoverBLL.Services.Abstract;
 
 public interface IReservationService
 {
-    Task<IEnumerable<ReservationResponse>> GetReservationsByPlace(GetReservationsByPlaceRequest request,
+    Task<IEnumerable<TimelineReservationResponse>> GetReservationsForTimeline(GetReservationsForTimelineRequest request,
         HttpContext httpContext);
 
-    Task<IEnumerable<ReservationResponse>> GetReservationsByUser(GetReservationsByUserRequest request,
+    Task<IEnumerable<PlaceReservationResponse>> GetReservationsByPlace(GetReservationsByPlaceRequest request,
+        HttpContext httpContext);
+
+    Task<IEnumerable<UserReservationResponse>> GetReservationsByUser(GetReservationsByUserRequest request,
+        HttpContext httpContext);
+
+    Task<ReservationsCountResponse> GetReservationsCountByUser(GetReservationsCountByUserRequest request,
         HttpContext httpContext);
 
     Task<IEnumerable<PlaceTimeOfferResponse>> GetTimeOffers(GetTimeOffersRequest request);
 
     Task<bool> CreateReservation(CreateReservationRequest request, HttpContext httpContext);
+
+    Task UpdateReservationStatus(UpdateReservationStatusRequest request, HttpContext httpContext);
 }
