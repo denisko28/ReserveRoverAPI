@@ -1,5 +1,4 @@
 using ReserveRoverDAL.Entities;
-using ReserveRoverDAL.Enums;
 
 namespace ReserveRoverDAL.Repositories.Abstract;
 
@@ -10,4 +9,6 @@ public interface ITableSetsRepository : IGenericRepository<TableSet>
     Task<IEnumerable<TableSet>> GetByPlaceAsync(int placeId);
     
     Task InsertRangeAsync(IEnumerable<TableSet> tableSets);
+
+    Task UpdateRangeAsync(IEnumerable<TableSet> tableSets);
 }

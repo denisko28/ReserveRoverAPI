@@ -2,8 +2,6 @@ namespace ReserveRoverBLL.DTO.Requests;
 
 public class AddPlaceRequest
 {
-    public string ManagerId { get; set; } = null!;
-
     public int CityId { get; set; }
     
     public string MainImageUrl { get; set; } = null!;
@@ -25,6 +23,4 @@ public class AddPlaceRequest
     public string[] ImageUrls { get; set; } = null!;
 
     public AddPlaceLocationRequest? Location { get; set; }
-    
-    public IEnumerable<AddPlaceTableSetsRequest> TableSets { get; set; } = null!;
 }

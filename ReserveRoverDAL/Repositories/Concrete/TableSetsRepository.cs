@@ -29,4 +29,9 @@ public class TableSetsRepository : GenericRepository<TableSet>, ITableSetsReposi
     {
         await Table.AddRangeAsync(tableSets);
     }
+    
+    public async Task UpdateRangeAsync(IEnumerable<TableSet> tableSets)
+    {
+        await Task.Run(() => Table.UpdateRange(tableSets));
+    }
 }

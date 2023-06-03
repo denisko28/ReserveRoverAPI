@@ -1,15 +1,17 @@
 namespace ReserveRoverBLL.DTO.Requests;
 
-public class AddPlaceTableSetsRequest
+public class UpdateTableSetsRequest
 {
     public int PlaceId { get; set; }
     
-    public IEnumerable<TableSetRequest> TableSets { get; set; }
+    public IEnumerable<TableSetUpdateRequest> TableSets { get; set; }
 
-    public class TableSetRequest
+    public class TableSetUpdateRequest
     {
+        public int Id { get; set; }
+
         public short TableCapacity { get; set; }
-        
+
         public short TablesNum { get; set; }
     }
 }

@@ -63,11 +63,11 @@ public class PlacesService : IPlacesService
             await _unitOfWork.ReviewsRepository.GetByPlaceAsync(request.PlaceId, request.PageNumber, request.PageSize);
         var results = new List<ReviewResponse>();
         var reviewsList = reviews.ToList();
-        
+
         var userIdentifiers = reviewsList.Select(review => new UidIdentifier(review.AuthorId)).ToList();
         var usersResult = await _identityService.GetUsersById(userIdentifiers);
         var authors = usersResult.Users.ToDictionary(user => user.Uid, user => user);
-        
+
         foreach (var review in reviewsList)
         {
             var result = _mapper.Map<Review, ReviewResponse>(review);
@@ -104,24 +104,24 @@ public class PlacesService : IPlacesService
 
         return $"{imagesFolderPath}/{newFileName}";
     }
-    
+
     public async Task SetImages(IEnumerable<string> imageUrls, HttpContext httpContext)
     {
         var imagesUrlsList = imageUrls.ToList();
         if (imagesUrlsList.Count < 1)
             throw new ArgumentException("The number of passed images should be greater than zero");
-        
+
         var mainImageUrl = imagesUrlsList[0];
         imagesUrlsList.RemoveAt(0);
         var managerId = UserClaimsHelper.GetUserId(httpContext);
         var place = await _unitOfWork.PlacesRepository.GetByManagerAsync(managerId);
-        
+
         await using var transaction = await _unitOfWork.DbContext.Database.BeginTransactionAsync();
         try
         {
             place.MainImageUrl = mainImageUrl;
             await _unitOfWork.SaveChangesAsync();
-            
+
             await _unitOfWork.PlaceImagesRepository.DeleteByPlaceAsync(place.Id);
             await _unitOfWork.SaveChangesAsync();
 
@@ -132,7 +132,7 @@ public class PlacesService : IPlacesService
                 await _unitOfWork.PlaceImagesRepository.InsertRangeAsync(placeImages);
                 await _unitOfWork.SaveChangesAsync();
             }
-            
+
             await transaction.CommitAsync();
         }
         catch (Exception)
@@ -142,9 +142,10 @@ public class PlacesService : IPlacesService
         }
     }
 
-    public async Task<int> CreatePlace(AddPlaceRequest placeRequest)
+    public async Task<int> CreatePlace(AddPlaceRequest placeRequest, HttpContext httpContext)
     {
         var place = _mapper.Map<AddPlaceRequest, Place>(placeRequest);
+        place.ManagerId = UserClaimsHelper.GetUserId(httpContext);
         place.ImagesCount = (short) placeRequest.ImageUrls.Length;
         place.SubmissionDateTime = DateTime.Now;
         await using var transaction = await _unitOfWork.DbContext.Database.BeginTransactionAsync();
@@ -171,10 +172,6 @@ public class PlacesService : IPlacesService
                 await _unitOfWork.LocationsRepository.InsertAsync(location);
             }
 
-            var tableSets = placeRequest.TableSets.Select(tableSet => new TableSet
-                {PlaceId = place.Id, TableCapacity = tableSet.TableCapacity, TablesNum = tableSet.TablesNum});
-            await _unitOfWork.TableSetsRepository.InsertRangeAsync(tableSets);
-
             await _unitOfWork.SaveChangesAsync();
             await transaction.CommitAsync();
             return place.Id;
@@ -186,6 +183,25 @@ public class PlacesService : IPlacesService
         }
     }
 
+    public async Task<bool> AddPlaceTableSets(AddPlaceTableSetsRequest request)
+    {
+        var tableSets = request.TableSets.Select(tableSet => new TableSet
+            {PlaceId = request.PlaceId, TableCapacity = tableSet.TableCapacity, TablesNum = tableSet.TablesNum});
+        await _unitOfWork.TableSetsRepository.InsertRangeAsync(tableSets);
+        return true;
+    }
+
+    public async Task<bool> UpdatePlaceTableSets(UpdateTableSetsRequest request)
+    {
+        var tableSets = request.TableSets.Select(tableSet => new TableSet
+        {
+            Id = tableSet.Id, PlaceId = request.PlaceId, TableCapacity = tableSet.TableCapacity,
+            TablesNum = tableSet.TablesNum
+        });
+        await _unitOfWork.TableSetsRepository.UpdateRangeAsync(tableSets);
+        return true;
+    }
+
     public async Task<ReviewResponse> CreateReview(CreatePlaceReviewRequest request, HttpContext httpContext)
     {
         var userId = UserClaimsHelper.GetUserId(httpContext);
@@ -195,7 +211,7 @@ public class PlacesService : IPlacesService
         review.CreationDate = DateOnly.FromDateTime(DateTime.Now);
         await _unitOfWork.ReviewsRepository.InsertAsync(review);
         await _unitOfWork.SaveChangesAsync();
-        
+
         var result = _mapper.Map<Review, ReviewResponse>(review);
         var author = await _identityService.GetUserById(review.AuthorId);
         result.AuthorFullName = author.DisplayName;

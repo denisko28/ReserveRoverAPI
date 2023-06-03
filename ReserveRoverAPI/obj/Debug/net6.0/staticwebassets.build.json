@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Ntgv3su7FbNQyAYh6Di3/3SUOqca4jxZWZGuLgHgt1c=",
+  "Hash": "WhhIrOLZlHC30E662uBe4a2hjyjnr1a1Ta7PHfiXMeU=",
   "Source": "ReserveRoverAPI",
   "BasePath": "_content/ReserveRoverAPI",
   "Mode": "Default",
@@ -15,5 +15,91 @@
       "Pattern": "**"
     }
   ],
-  "Assets": []
+  "Assets": [
+    {
+      "Identity": "/Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverAPI/wwwroot/Images/managers/6rMlkXMuiZP8w0Ixg6pK8WP5A6C2/202306031225260385.png",
+      "SourceId": "ReserveRoverAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverAPI/wwwroot/",
+      "BasePath": "_content/ReserveRoverAPI",
+      "RelativePath": "Images/managers/6rMlkXMuiZP8w0Ixg6pK8WP5A6C2/202306031225260385.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/Images/managers/6rMlkXMuiZP8w0Ixg6pK8WP5A6C2/202306031225260385.png"
+    },
+    {
+      "Identity": "/Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverAPI/wwwroot/Images/managers/6rMlkXMuiZP8w0Ixg6pK8WP5A6C2/202306031225315865.jpeg",
+      "SourceId": "ReserveRoverAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverAPI/wwwroot/",
+      "BasePath": "_content/ReserveRoverAPI",
+      "RelativePath": "Images/managers/6rMlkXMuiZP8w0Ixg6pK8WP5A6C2/202306031225315865.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/Images/managers/6rMlkXMuiZP8w0Ixg6pK8WP5A6C2/202306031225315865.jpeg"
+    },
+    {
+      "Identity": "/Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverAPI/wwwroot/Images/managers/6rMlkXMuiZP8w0Ixg6pK8WP5A6C2/202306031225341835.jpeg",
+      "SourceId": "ReserveRoverAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverAPI/wwwroot/",
+      "BasePath": "_content/ReserveRoverAPI",
+      "RelativePath": "Images/managers/6rMlkXMuiZP8w0Ixg6pK8WP5A6C2/202306031225341835.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/Images/managers/6rMlkXMuiZP8w0Ixg6pK8WP5A6C2/202306031225341835.jpeg"
+    },
+    {
+      "Identity": "/Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverAPI/wwwroot/Images/managers/6rMlkXMuiZP8w0Ixg6pK8WP5A6C2/202306031225372209.jpeg",
+      "SourceId": "ReserveRoverAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverAPI/wwwroot/",
+      "BasePath": "_content/ReserveRoverAPI",
+      "RelativePath": "Images/managers/6rMlkXMuiZP8w0Ixg6pK8WP5A6C2/202306031225372209.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/Images/managers/6rMlkXMuiZP8w0Ixg6pK8WP5A6C2/202306031225372209.jpeg"
+    },
+    {
+      "Identity": "/Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverAPI/wwwroot/Images/managers/6rMlkXMuiZP8w0Ixg6pK8WP5A6C2/202306031225402623.jpeg",
+      "SourceId": "ReserveRoverAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/deniskharitesku/RiderProjects/ReserveRoverAPI/ReserveRoverAPI/wwwroot/",
+      "BasePath": "_content/ReserveRoverAPI",
+      "RelativePath": "Images/managers/6rMlkXMuiZP8w0Ixg6pK8WP5A6C2/202306031225402623.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/Images/managers/6rMlkXMuiZP8w0Ixg6pK8WP5A6C2/202306031225402623.jpeg"
+    }
+  ]
 }

@@ -139,7 +139,41 @@ public class PlacesController : ControllerBase
     {
         try
         {
-            var results = await _placesService.CreatePlace(request);
+            var results = await _placesService.CreatePlace(request, HttpContext);
+            return Ok(results);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, new {e.Message});
+        }
+    }
+    
+    [Authorize(Roles = UserRoles.Manager)]
+    [HttpPost("manager/addTableSets")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<bool>> AddTableSets(AddPlaceTableSetsRequest request)
+    {
+        try
+        {
+            var results = await _placesService.AddPlaceTableSets(request);
+            return Ok(results);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, new {e.Message});
+        }
+    }
+    
+    [Authorize(Roles = UserRoles.Manager)]
+    [HttpPut("manager/updateTableSets")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<bool>> UpdateTableSets(UpdateTableSetsRequest request)
+    {
+        try
+        {
+            var results = await _placesService.UpdatePlaceTableSets(request);
             return Ok(results);
         }
         catch (Exception e)
