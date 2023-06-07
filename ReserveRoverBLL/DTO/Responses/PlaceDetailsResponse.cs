@@ -21,6 +21,8 @@ public class PlaceDetailsResponse
     public decimal AvgBill { get; set; }
 
     public string Address { get; set; } = null!;
+    
+    public DateTime SubmissionDateTime { get; set; }
 
     public DateOnly? PublicDate { get; set; }
     
