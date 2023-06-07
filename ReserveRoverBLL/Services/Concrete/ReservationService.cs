@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using AutoMapper;
+using FirebaseAdmin.Auth;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using ReserveRoverBLL.DTO.Requests;
@@ -16,11 +17,13 @@ public class ReservationService : IReservationService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly IIdentityService _identityService;
 
-    public ReservationService(IUnitOfWork unitOfWork, IMapper mapper)
+    public ReservationService(IUnitOfWork unitOfWork, IMapper mapper, IIdentityService identityService)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _identityService = identityService;
     }
 
     public async Task<IEnumerable<TimelineReservationResponse>> GetReservationsForTimeline(
@@ -36,14 +39,42 @@ public class ReservationService : IReservationService
         var tableSets = await _unitOfWork.TableSetsRepository.GetByPlaceAsync(request.PlaceId);
 
         var results = new List<TimelineReservationResponse>();
+        var userIdentifiers = new List<UidIdentifier>();
         foreach (var tableSet in tableSets)
         {
             var reservations =
                 await _unitOfWork.ReservationsRepository.GetByTableSetIdAndReservDateAsync(tableSet.Id, targetDate);
             var tables = TablesHelper.TablesReservationsFromTableSets(tableSet, reservations.ToList());
-            results.AddRange(tables.Select(_mapper.Map<TablesHelper.Table, TimelineReservationResponse>));
+            foreach (var table in tables)
+            {
+                var tableReservations = new List<TimelineReservationResponse.TableReservation>();
+                foreach (var reservation in table.Reservations)
+                {
+                    userIdentifiers.Add(new UidIdentifier(reservation.UserId));
+                    tableReservations.Add(new TimelineReservationResponse.TableReservation
+                    {
+                        Id = reservation.Id.ToString(),
+                        UserId = reservation.UserId,
+                        BeginTime = reservation.ReservDate.ToDateTime(reservation.BeginTime),
+                        EndTime = reservation.ReservDate.ToDateTime(reservation.EndTime)
+                    });
+                }
+                results.Add(new TimelineReservationResponse
+                {
+                    TableCapacity = table.Capacity,
+                    TableReservations = tableReservations
+                });
+            }
+            
         }
-
+        
+        var usersResult = await _identityService.GetUsersById(userIdentifiers);
+        var users = usersResult.Users.ToDictionary(user => user.Uid, user => user);
+        foreach (var reservation in results.SelectMany(result => result.TableReservations))
+        {
+            reservation.UserName = users[reservation.UserId].DisplayName;
+        }
+        
         return results;
     }
 

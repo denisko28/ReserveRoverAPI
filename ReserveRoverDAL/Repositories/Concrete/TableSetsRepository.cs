@@ -5,21 +5,24 @@ using ReserveRoverDAL.Repositories.Abstract;
 
 namespace ReserveRoverDAL.Repositories.Concrete;
 
-public class TableSetsRepository : GenericRepository<TableSet>, ITableSetsRepository
+public class TableSetsRepository: ITableSetsRepository
 {
-    public TableSetsRepository(ReserveRoverDbContext dBContext) : base(dBContext)
+    private readonly DbSet<TableSet> _tableSets;
+
+    public TableSetsRepository(ReserveRoverDbContext dbContext)
     {
+        _tableSets = dbContext.Set<TableSet>();
     }
 
     public async Task<TableSet> GetByIdWithReservationsAsync(int id)
     {
-        return await Table.Include(set => set.Reservations).FirstOrDefaultAsync(set => set.Id == id) ??
+        return await _tableSets.Include(set => set.Reservations).FirstOrDefaultAsync(set => set.Id == id) ??
                throw new EntityNotFoundException(nameof(TableSet), id);
     }
 
     public async Task<IEnumerable<TableSet>> GetByPlaceAsync(int placeId)
     {
-        return await Table
+        return await _tableSets
             .Where(set => set.PlaceId == placeId)
             .OrderBy(set => set.TableCapacity)
             .ToListAsync();
@@ -27,11 +30,17 @@ public class TableSetsRepository : GenericRepository<TableSet>, ITableSetsReposi
 
     public async Task InsertRangeAsync(IEnumerable<TableSet> tableSets)
     {
-        await Table.AddRangeAsync(tableSets);
+        await _tableSets.AddRangeAsync(tableSets);
     }
     
     public async Task UpdateRangeAsync(IEnumerable<TableSet> tableSets)
     {
-        await Task.Run(() => Table.UpdateRange(tableSets));
+        await Task.Run(() => _tableSets.UpdateRange(tableSets));
+    }
+    
+    public async Task DeleteByIdRangeAsync(IEnumerable<int> ids)
+    {
+        var tableSets = _tableSets.Where(tableSet => ids.Contains(tableSet.Id));
+        await Task.Run(() => _tableSets.RemoveRange(tableSets));
     }
 }
