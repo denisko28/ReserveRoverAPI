@@ -78,9 +78,9 @@ public class ReservationsRepository : IReservationsRepository
     {
         return await _reservations
             .Where(p => p.UserId == userId &&
-                        p.ReservDate < DateOnly.FromDateTime(dateTime) ||
-                        (p.ReservDate == DateOnly.FromDateTime(dateTime) &&
-                         p.BeginTime < TimeOnly.FromDateTime(dateTime)))
+                        (p.ReservDate < DateOnly.FromDateTime(dateTime) ||
+                         (p.ReservDate == DateOnly.FromDateTime(dateTime) &&
+                          p.BeginTime < TimeOnly.FromDateTime(dateTime))))
             .CountAsync();
     }
 
@@ -88,9 +88,9 @@ public class ReservationsRepository : IReservationsRepository
     {
         return await _reservations
             .Where(p => p.UserId == userId &&
-                        p.ReservDate > DateOnly.FromDateTime(dateTime) ||
+                        (p.ReservDate > DateOnly.FromDateTime(dateTime) ||
                         (p.ReservDate == DateOnly.FromDateTime(dateTime) &&
-                         p.BeginTime >= TimeOnly.FromDateTime(dateTime)))
+                         p.BeginTime >= TimeOnly.FromDateTime(dateTime))))
             .CountAsync();
     }
 
