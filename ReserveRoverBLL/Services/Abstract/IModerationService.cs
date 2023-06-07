@@ -6,9 +6,9 @@ namespace ReserveRoverBLL.Services.Abstract;
 
 public interface IModerationService
 {
-    Task<IEnumerable<ModerationResponse>> GetModerations(GetModerationsRequest request);
+    Task<IEnumerable<ModerationResponse>> ModerationsSearch(GetModerationsRequest request);
     
     Task<IEnumerable<ModerationPlaceSearchResponse>> PlacesSearch(ModerationPlaceSearchRequest request);
 
-    Task UpdateModerationStatus(int placeId, short moderationStatus, HttpContext httpContext);
+    Task UpdateModerationStatus(UpdatePlaceModerationStatusRequest request, HttpContext httpContext);
 }

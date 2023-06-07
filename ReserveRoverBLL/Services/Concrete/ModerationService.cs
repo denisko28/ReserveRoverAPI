@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using ReserveRoverBLL.DTO.Requests;
 using ReserveRoverBLL.DTO.Responses;
 using ReserveRoverBLL.Enums;
+using ReserveRoverBLL.Helpers;
 using ReserveRoverBLL.Services.Abstract;
 using ReserveRoverDAL.Entities;
 using ReserveRoverDAL.UnitOfWork.Abstract;
@@ -20,7 +21,7 @@ public class ModerationService : IModerationService
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<ModerationResponse>> GetModerations(GetModerationsRequest request)
+    public async Task<IEnumerable<ModerationResponse>> ModerationsSearch(GetModerationsRequest request)
     {
         var result = await _unitOfWork.ModerationRepository.GetAsync(request.PlaceId, request.ModeratorId, request.FromTime,
             request.TillTime, request.PageNumber, request.PageSize);
@@ -36,12 +37,13 @@ public class ModerationService : IModerationService
         return result.Select(_mapper.Map<Place, ModerationPlaceSearchResponse>);
     }
 
-    public async Task UpdateModerationStatus(int placeId, short moderationStatus, HttpContext httpContext)
+    public async Task UpdateModerationStatus(UpdatePlaceModerationStatusRequest request, HttpContext httpContext)
     {
-        var place = await _unitOfWork.PlacesRepository.GetByIdAsync(placeId);
+        var moderatorId = UserClaimsHelper.GetUserId(httpContext);
+        var place = await _unitOfWork.PlacesRepository.GetByIdAsync(request.PlaceId);
 
-        place.ModerationStatus = moderationStatus;
-        if ((ModerationStatus) moderationStatus == ModerationStatus.Approved)
+        place.ModerationStatus = request.ModerationStatus;
+        if ((ModerationStatus) request.ModerationStatus == ModerationStatus.Approved)
             place.PublicDate = DateOnly.FromDateTime(DateTime.Now);
         else
             place.PublicDate = null;
@@ -50,10 +52,10 @@ public class ModerationService : IModerationService
 
         var moderation = new Moderation
         {
-            PlaceId = placeId,
-            ModeratorId = "Mod1",
+            PlaceId = request.PlaceId,
+            ModeratorId = moderatorId,
             DateTime = DateTime.Now,
-            Status = moderationStatus
+            Status = request.ModerationStatus
         };
         await _unitOfWork.ModerationRepository.InsertAsync(moderation);
 
