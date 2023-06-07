@@ -183,22 +183,40 @@ public class PlacesService : IPlacesService
         }
     }
 
-    public async Task<bool> AddPlaceTableSets(AddPlaceTableSetsRequest request)
+    public async Task<IEnumerable<TableSetResponse>> GetPlaceTableSets(int placeId)
     {
-        var tableSets = request.TableSets.Select(tableSet => new TableSet
-            {PlaceId = request.PlaceId, TableCapacity = tableSet.TableCapacity, TablesNum = tableSet.TablesNum});
-        await _unitOfWork.TableSetsRepository.InsertRangeAsync(tableSets);
-        return true;
+        var entities = await _unitOfWork.TableSetsRepository.GetByPlaceAsync(placeId);
+        return entities.Select(_mapper.Map<TableSet, TableSetResponse>);
     }
 
-    public async Task<bool> UpdatePlaceTableSets(UpdateTableSetsRequest request)
+    public async Task<bool> SetPlaceTableSets(SetPlaceTableSetsRequest request)
     {
-        var tableSets = request.TableSets.Select(tableSet => new TableSet
+        var tableSetsToInsert = new List<TableSet>();
+        var tableSetsToUpdate = new List<TableSet>();
+        foreach (var tableSetRequest in request.TableSets)
         {
-            Id = tableSet.Id, PlaceId = request.PlaceId, TableCapacity = tableSet.TableCapacity,
-            TablesNum = tableSet.TablesNum
-        });
-        await _unitOfWork.TableSetsRepository.UpdateRangeAsync(tableSets);
+            var tableSet = _mapper.Map<SetPlaceTableSetsRequest.TableSetRequest, TableSet>(tableSetRequest);
+            if (tableSetRequest.Id == null)
+                tableSetsToInsert.Add(tableSet);
+            else
+                tableSetsToUpdate.Add(tableSet);
+        }
+
+        await using var transaction = await _unitOfWork.DbContext.Database.BeginTransactionAsync();
+        try
+        {
+            await _unitOfWork.TableSetsRepository.UpdateRangeAsync(tableSetsToUpdate);
+            await _unitOfWork.TableSetsRepository.InsertRangeAsync(tableSetsToInsert);
+            await _unitOfWork.TableSetsRepository.DeleteByIdRangeAsync(request.IdsToDelete);
+            await _unitOfWork.SaveChangesAsync();
+            await transaction.CommitAsync();
+        }
+        catch (Exception)
+        {
+            await transaction.RollbackAsync();
+            throw;
+        }
+
         return true;
     }
 

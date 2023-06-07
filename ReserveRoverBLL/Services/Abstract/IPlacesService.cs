@@ -19,10 +19,10 @@ public interface IPlacesService
     Task SetImages(IEnumerable<string> imageUrls, HttpContext httpContext);
 
     Task<int> CreatePlace(AddPlaceRequest placeRequest, HttpContext httpContext);
-    
-    Task<bool> AddPlaceTableSets(AddPlaceTableSetsRequest request);
 
-    Task<bool> UpdatePlaceTableSets(UpdateTableSetsRequest request);
+    Task<IEnumerable<TableSetResponse>> GetPlaceTableSets(int placeId);
+    
+    Task<bool> SetPlaceTableSets(SetPlaceTableSetsRequest request);
 
     Task<ReviewResponse> CreateReview(CreatePlaceReviewRequest request, HttpContext httpContext);
 }

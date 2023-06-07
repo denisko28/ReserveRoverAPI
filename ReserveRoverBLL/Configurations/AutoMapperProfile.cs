@@ -29,11 +29,16 @@ public class AutoMapperProfile : Profile
             .ForMember(response => response.CityName,
                 options =>
                     options.MapFrom(place => place.City.Name));
+
+        CreateMap<TableSet, TableSetResponse>();
+
         CreateMap<AddPlaceRequest, Place>()
             .ForMember(place => place.Location, 
                 option => option.Ignore())
             .ForMember(place => place.TableSets, 
                 option => option.Ignore());
+        
+        CreateMap<SetPlaceTableSetsRequest.TableSetRequest, TableSet>();
     }
 
     private void CreateReviewsMaps()
@@ -52,19 +57,6 @@ public class AutoMapperProfile : Profile
                 options =>
                     options.MapFrom(reservation => reservation.TableSet.Place.Title));
         CreateMap<Reservation, PlaceReservationResponse>();
-        CreateMap<TablesHelper.Table, TimelineReservationResponse>()
-            .ForMember(response => response.TableCapacity,
-                options =>
-                    options.MapFrom(table => table.Capacity))
-            .ForMember(response => response.TableReservations,
-                options =>
-                    options.MapFrom(table => table.Reservations.Select(reservation =>
-                        new TimelineReservationResponse.TableReservation
-                        {
-                            Id = reservation.Id.ToString(),
-                            BeginTime = reservation.ReservDate.ToDateTime(reservation.BeginTime),
-                            EndTime = reservation.ReservDate.ToDateTime(reservation.EndTime)
-                        })));
         
         CreateMap<CreateReservationRequest, Reservation>();
     }

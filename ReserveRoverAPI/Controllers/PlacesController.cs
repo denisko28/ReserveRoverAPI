@@ -149,14 +149,14 @@ public class PlacesController : ControllerBase
     }
     
     [Authorize(Roles = UserRoles.Manager)]
-    [HttpPost("manager/addTableSets")]
+    [HttpGet("manager/placeTableSets")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<bool>> AddTableSets(AddPlaceTableSetsRequest request)
+    public async Task<ActionResult<TableSetResponse>> GetPlaceTableSets(int placeId)
     {
         try
         {
-            var results = await _placesService.AddPlaceTableSets(request);
+            var results = await _placesService.GetPlaceTableSets(placeId);
             return Ok(results);
         }
         catch (Exception e)
@@ -166,14 +166,14 @@ public class PlacesController : ControllerBase
     }
     
     [Authorize(Roles = UserRoles.Manager)]
-    [HttpPut("manager/updateTableSets")]
+    [HttpPost("manager/placeTableSets")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<bool>> UpdateTableSets(UpdateTableSetsRequest request)
+    public async Task<ActionResult<bool>> SetPlaceTableSets(SetPlaceTableSetsRequest request)
     {
         try
         {
-            var results = await _placesService.UpdatePlaceTableSets(request);
+            var results = await _placesService.SetPlaceTableSets(request);
             return Ok(results);
         }
         catch (Exception e)
