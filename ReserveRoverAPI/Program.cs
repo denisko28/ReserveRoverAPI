@@ -47,6 +47,8 @@ builder.Services
     .AddTransient<ICitiesRepository, CitiesRepository>()
     .AddTransient<IUnitOfWork, UnitOfWork>();
 
+builder.Services.AddCoreAdmin();
+
 //Add BLL services
 var mapperConfig = new MapperConfiguration(mc =>
     mc.AddProfile(new AutoMapperProfile()));
@@ -102,5 +104,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCoreAdminCustomTitle("ReserveRover Admin");
+app.MapDefaultControllerRoute();
 
 app.Run();
