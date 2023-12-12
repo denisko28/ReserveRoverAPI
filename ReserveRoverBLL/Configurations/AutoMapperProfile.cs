@@ -16,6 +16,7 @@ public class AutoMapperProfile : Profile
         CreateModerationMaps();
         CreateLocationMaps();
         CreateCitiesMaps();
+        CreateFriendsMaps();
     }
 
     private void CreatePlacesMaps()
@@ -79,5 +80,10 @@ public class AutoMapperProfile : Profile
     private void CreateCitiesMaps()
     {
         CreateMap<City, CityResponse>();
+    }
+
+    private void CreateFriendsMaps()
+    {
+        CreateMap<PublicUser, PublicUserResponse>();
     }
 }

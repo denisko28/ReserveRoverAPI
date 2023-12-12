@@ -23,6 +23,10 @@ namespace ReserveRoverDAL.UnitOfWork.Abstract
         IReviewsRepository ReviewsRepository { get; }
         
         ICitiesRepository CitiesRepository { get; }
+        
+        IPublicUsersRepository PublicUsersRepository { get; }
+        
+        IFriendshipRepository FriendshipRepository { get; }
 
         Task SaveChangesAsync();
     }

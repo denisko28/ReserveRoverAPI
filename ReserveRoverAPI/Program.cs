@@ -4,11 +4,15 @@ using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
+using ReserveRoverAPI.Hubs;
+using ReserveRoverAPI.Middleware;
 using ReserveRoverBLL.Configurations;
 using ReserveRoverBLL.FirebaseAuth;
+using ReserveRoverBLL.Helpers;
 using ReserveRoverBLL.Services.Abstract;
 using ReserveRoverBLL.Services.Concrete;
 using ReserveRoverDAL;
@@ -45,6 +49,8 @@ builder.Services
     .AddTransient<IReservationsRepository, ReservationsRepository>()
     .AddTransient<IReviewsRepository, ReviewsRepository>()
     .AddTransient<ICitiesRepository, CitiesRepository>()
+    .AddTransient<IPublicUsersRepository, PublicUsersRepository>()
+    .AddTransient<IFriendshipRepository, FriendshipRepository>()
     .AddTransient<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddCoreAdmin();
@@ -56,15 +62,19 @@ var mapper = mapperConfig.CreateMapper();
 
 builder.Services
     .AddSingleton(mapper)
+    .AddSingleton<IUserIdProvider, CustomUserIdProvider>()
     .AddTransient<IPlacesService, PlacesService>()
     .AddTransient<IModerationService, ModerationService>()
     .AddTransient<IReservationService, ReservationService>()
     .AddTransient<ICitiesService, CitiesService>()
-    .AddTransient<IIdentityService, IdentityService>();
+    .AddTransient<IIdentityService, IdentityService>()
+    .AddTransient<IFriendsService, FriendsService>()
+    .AddTransient<IChatService, ChatService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSignalR();
 builder.Services.AddSwaggerGen(options =>
 {
     options.MapType<DateOnly>(() => new OpenApiSchema
@@ -100,6 +110,7 @@ app.UseCors(options => options
 
 app.UseStaticFiles();
 
+app.UseMiddleware<WebSocketsMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -107,5 +118,7 @@ app.MapControllers();
 
 app.UseCoreAdminCustomTitle("ReserveRover Admin");
 app.MapDefaultControllerRoute();
+
+app.MapHub<ChatHub>("/chatHub").RequireAuthorization();;
 
 app.Run();

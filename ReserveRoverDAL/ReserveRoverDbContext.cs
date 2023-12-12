@@ -1,31 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ReserveRoverDAL.Configurations;
-using ReserveRoverDAL.Entities;
 
 namespace ReserveRoverDAL;
 
 public class ReserveRoverDbContext : DbContext
 {
-    public virtual DbSet<City> Cities { get; set; }
-    
-    public virtual DbSet<Location> Locations { get; set; }
-    
-    public virtual DbSet<Moderation> Moderations { get; set; }
-    
-    public virtual DbSet<Place> Places { get; set; }
-    
-    public virtual DbSet<PlaceImage> PlaceImages { get; set; }
-    
-    public virtual DbSet<PlacePaymentMethod> PlacePaymentMethods { get; set; }
-    
-    public virtual DbSet<PlaceDescription> PlaceDescriptions { get; set; }
-    
-    public virtual DbSet<Reservation> Reservations { get; set; }
-    
-    public virtual DbSet<Review> Reviews { get; set; }
-    
-    public virtual DbSet<TableSet> TableSets { get; set; }
-    
     public ReserveRoverDbContext(DbContextOptions<ReserveRoverDbContext> options)
         : base(options)
     {
@@ -46,5 +25,9 @@ public class ReserveRoverDbContext : DbContext
         modelBuilder.ApplyConfiguration(new ReservationsConfiguration());
         modelBuilder.ApplyConfiguration(new ReviewsConfiguration());
         modelBuilder.ApplyConfiguration(new TablesConfiguration());
+        modelBuilder.ApplyConfiguration(new FriendshipsConfiguration());
+        modelBuilder.ApplyConfiguration(new ChatsConfiguration());
+        modelBuilder.ApplyConfiguration(new ChatsMessagesConfiguration());
+        modelBuilder.ApplyConfiguration(new PublicUsersConfiguration());
     }
 }
