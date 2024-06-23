@@ -18,6 +18,6 @@ public class CitiesConfiguration : IEntityTypeConfiguration<City>
             .HasMaxLength(80)
             .HasColumnName("name");
         
-        new CitiesSeeder().Seed(builder);
+        // new CitiesSeeder().Seed(builder);
     }
 }

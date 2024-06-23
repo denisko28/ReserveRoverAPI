@@ -21,7 +21,7 @@ public class ReviewsConfiguration : IEntityTypeConfiguration<Review>
             .IsFixedLength()
             .HasColumnName("author_id");
         builder.Property(e => e.Comment)
-            .HasMaxLength(1000)
+            .HasMaxLength(5000)
             .HasColumnName("comment");
         builder.Property(e => e.CreationDate).HasColumnName("creation_date");
         builder.Property(e => e.Mark)
@@ -33,6 +33,6 @@ public class ReviewsConfiguration : IEntityTypeConfiguration<Review>
             .HasForeignKey(d => d.PlaceId)
             .HasConstraintName("reviews_place_id_fkey");
         
-        new ReviewsSeeder().Seed(builder);
+        // new ReviewsSeeder().Seed(builder);
     }
 }

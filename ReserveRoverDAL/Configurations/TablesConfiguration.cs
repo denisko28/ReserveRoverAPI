@@ -22,6 +22,6 @@ public class TablesConfiguration : IEntityTypeConfiguration<TableSet>
             .HasForeignKey(d => d.PlaceId)
             .HasConstraintName("tables_place_id_fkey");
 
-        new TableSetsSeeder().Seed(builder);
+        // new TableSetsSeeder().Seed(builder);
     }
 }

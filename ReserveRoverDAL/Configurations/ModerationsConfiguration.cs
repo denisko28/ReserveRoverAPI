@@ -29,6 +29,6 @@ public class ModerationsConfiguration : IEntityTypeConfiguration<Moderation>
             .HasForeignKey(d => d.PlaceId)
             .HasConstraintName("moderation_place_id_fkey");
         
-        new ModerationsSeeder().Seed(builder);
+        // new ModerationsSeeder().Seed(builder);
     }
 }

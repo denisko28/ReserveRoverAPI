@@ -20,6 +20,6 @@ public class PlacesPaymentMethodsConfiguration : IEntityTypeConfiguration<PlaceP
             .HasForeignKey(d => d.PlaceId)
             .HasConstraintName("place_payment_methods_place_id_fkey");
         
-        new PlacesPaymentsSeeder().Seed(builder);
+        // new PlacesPaymentsSeeder().Seed(builder);
     }
 }

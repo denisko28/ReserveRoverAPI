@@ -27,6 +27,6 @@ public class LocationsConfiguration : IEntityTypeConfiguration<Location>
             .HasForeignKey<Location>(d => d.PlaceId)
             .HasConstraintName("locations_place_id_fkey");
         
-        new LocationsSeeder().Seed(builder);
+        // new LocationsSeeder().Seed(builder);
     }
 }

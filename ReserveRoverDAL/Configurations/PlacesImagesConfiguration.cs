@@ -23,6 +23,6 @@ public class PlacesImagesConfiguration : IEntityTypeConfiguration<PlaceImage>
             .HasForeignKey(d => d.PlaceId)
             .HasConstraintName("place_images_place_id_fkey");
 
-        new PlacesImagesSeeder().Seed(builder);
+        // new PlacesImagesSeeder().Seed(builder);
     }
 }

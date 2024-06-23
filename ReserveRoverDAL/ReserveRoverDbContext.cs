@@ -1,10 +1,24 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ReserveRoverDAL.Configurations;
+using ReserveRoverDAL.Entities;
 
 namespace ReserveRoverDAL;
 
 public class ReserveRoverDbContext : DbContext
 {
+    public DbSet<City> Cities { get; set; }
+    public DbSet<Friendship> Friendships { get; set; }
+    public DbSet<Location> Locations { get; set; }
+    public DbSet<Moderation> Moderations { get; set; }
+    public DbSet<Place> Palaces { get; set; }
+    public DbSet<PlaceImage> PlaceImages { get; set; }
+    public DbSet<PlacePaymentMethod> PlacePaymentMethods { get; set; }
+    public DbSet<PlaceDescription> PlaceDescriptions { get; set; }
+    public DbSet<PublicUser> PublicUsers { get; set; }
+    public DbSet<Reservation> Reservations { get; set; }
+    public DbSet<Review> Reviews { get; set; }
+    public DbSet<TableSet> TableSets { get; set; }
+    
     public ReserveRoverDbContext(DbContextOptions<ReserveRoverDbContext> options)
         : base(options)
     {

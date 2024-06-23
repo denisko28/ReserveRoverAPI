@@ -23,6 +23,6 @@ public class PlacesDescriptionsConfiguration : IEntityTypeConfiguration<PlaceDes
             .HasForeignKey<PlaceDescription>(d => d.PlaceId)
             .HasConstraintName("places_descriptions_place_id_fkey");
 
-        new PlacesDescriptionsSeeder().Seed(builder);
+        // new PlacesDescriptionsSeeder().Seed(builder);
     }
 }

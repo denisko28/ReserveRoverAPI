@@ -1,1 +1,7 @@
 ./ReserveRoverAPI/ReserveRoverAPI/wwwroot/Images/
+bin/
+obj/
+applicationhost.config
+.suo
+packages/
+build/

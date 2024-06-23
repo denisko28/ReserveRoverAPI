@@ -116,8 +116,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseCoreAdminCustomTitle("ReserveRover Admin");
 app.MapDefaultControllerRoute();
+app.UseCoreAdminCustomTitle("ReserveRover Admin");
 
 app.MapHub<ChatHub>("/chatHub").RequireAuthorization();;
 

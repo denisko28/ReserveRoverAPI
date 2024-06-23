@@ -34,6 +34,6 @@ public class ReservationsConfiguration : IEntityTypeConfiguration<Reservation>
             .HasForeignKey(d => d.TableSetId)
             .HasConstraintName("reservations_table_id_fkey");
         
-        new ReservationsSeeder().Seed(builder);
+        // new ReservationsSeeder().Seed(builder);
     }
 }

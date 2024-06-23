@@ -53,6 +53,6 @@ public class PlacesConfiguration : IEntityTypeConfiguration<Place>
             .HasIndex(p => p.SearchVector)
             .HasMethod("GIN");
 
-        new PlacesSeeder().Seed(builder);
+        // new PlacesSeeder().Seed(builder);
     }
 }
