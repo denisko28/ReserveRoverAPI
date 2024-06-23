@@ -1,0 +1,37 @@
+@startuml Reservation
+
+class TableReservation
+{
+    id
+    userId
+    userName
+    beginTime
+    endTime
+}
+
+class ReservationService
+{
+    UnitOfWork unitOfWork;
+    Mapper mapper;
+    IdentityService identityService;
+
+    TimelineReservationResponse[] GetReservationsForTimeline(
+        GetReservationsForTimelineRequest request, HttpContext httpContext)
+
+    PlaceReservationResponse[] GetReservationsByPlace(
+        GetReservationsByPlaceRequest request, HttpContext httpContext)
+
+    IEnumerable<UserReservationResponse> GetReservationsByUser(GetReservationsByUserRequest request,
+        HttpContext httpContext)
+
+    ReservationsCountResponse GetReservationsCountByUser(GetReservationsCountByUserRequest request,
+        HttpContext httpContext)
+
+    IEnumerable<PlaceTimeOfferResponse> GetTimeOffers(GetTimeOffersRequest request)
+
+    bool CreateReservation(CreateReservationRequest request, HttpContext httpContext)
+
+    void UpdateReservationStatus(UpdateReservationStatusRequest request, HttpContext httpContext)
+}
+
+@enduml
